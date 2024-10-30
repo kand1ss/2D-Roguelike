@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class WindPullVisual : ProjectileVisualBase
+﻿public class WindPullVisual : ProjectileVisualBase
 {
     private const string TORNADO = "Tornado";
 

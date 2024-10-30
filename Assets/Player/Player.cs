@@ -1,15 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 6f;
     public static Player Instance { get; private set; }
+    
+    private PlayerWeaponController weaponController;
+    public PlayerWeaponController WeaponController => weaponController;
+    
+    [SerializeField] private float moveSpeed = 6f;
 
+    
     private void Awake()
     {
         Instance = this;
+        
+        weaponController = GetComponentInChildren<PlayerWeaponController>();
     }
 
     private void Update()

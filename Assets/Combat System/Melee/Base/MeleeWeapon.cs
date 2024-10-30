@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static IStrikeDamage;
+
 public abstract class MeleeWeapon : WeaponBase, IStrikeDamage
 {
     [SerializeField] protected float baseMinDamageAmount;

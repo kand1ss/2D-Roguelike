@@ -1,12 +1,8 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 
-public class ActiveWeapon : MonoBehaviour
+public class PlayerWeaponController : MonoBehaviour
 {
-    public static ActiveWeapon Instance { get; private set; }
-
     private WeaponBase chosenWeapon;
     public WeaponBase ChosenWeapon => chosenWeapon;
 
@@ -18,14 +14,12 @@ public class ActiveWeapon : MonoBehaviour
     private void Awake()
     {
         chosenWeapon = firstWeapon;
-        AttachChosenWeapon();
-
-        Instance = this;
     }
 
     private void Start()
     {
         InitializeInputEvents();
+        AttachChosenWeapon();
     }
     private void OnDestroy()
     {
@@ -34,13 +28,13 @@ public class ActiveWeapon : MonoBehaviour
 
     private void InitializeInputEvents()
     {
-        ButtonsInputService.Instance.OnWeaponSwap += ChangeCurrentWeapon;
-        ButtonsInputService.Instance.OnUseWeapon += UseWeaponAction;
+        InputService.ButtonsController.WeaponInput.OnWeaponSwap += ChangeCurrentWeapon;
+        InputService.ButtonsController.WeaponInput.OnUseWeapon += UseWeaponAction;
     }
     private void FinalizeInputEvents()
     {
-        ButtonsInputService.Instance.OnWeaponSwap -= ChangeCurrentWeapon;
-        ButtonsInputService.Instance.OnUseWeapon -= UseWeaponAction;
+        InputService.ButtonsController.WeaponInput.OnWeaponSwap -= ChangeCurrentWeapon;
+        InputService.ButtonsController.WeaponInput.OnUseWeapon -= UseWeaponAction;
     }
     
     private void UseWeaponAction() => chosenWeapon.UseWeapon();
@@ -61,11 +55,17 @@ public class ActiveWeapon : MonoBehaviour
 
     private void AttachChosenWeapon()
     {
+        var weaponVisual = chosenWeapon.GetComponentInChildren<WeaponVisualBase>();
+        weaponVisual.AttachPlayerEvents();
+        
         chosenWeapon.gameObject.SetActive(true);
         chosenWeapon.InitWeapon();
     }
     private void DetachChosenWeapon()
     {
+        var weaponVisual = chosenWeapon.GetComponentInChildren<WeaponVisualBase>();
+        weaponVisual.DetachPlayerEvents();
+        
         chosenWeapon.gameObject.SetActive(false);
         chosenWeapon.DetachWeapon();
     }

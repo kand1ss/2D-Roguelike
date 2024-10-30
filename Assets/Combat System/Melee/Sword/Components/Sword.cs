@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SwordAttackManager))]
 [RequireComponent(typeof(SwordCollisionManager))]
@@ -51,19 +48,10 @@ public class Sword : MeleeWeapon, IChargingWeapon
         swordVisual.OnAttackAnimationEnds -= comboManager.SetAttackRegisteredFalse;
     }
 
-    private void Start()
-    {
-        SetupEventHandlers();
-    }
-
-    private void OnDestroy()
-    {
-        DetachEventHandlers();
-    }
-
     public override void InitWeapon()
     {
-        ButtonsInputService.Instance.OnStrongAttack += ChargeAttack;
+        SetupEventHandlers();
+        InputService.ButtonsController.WeaponInput.OnUseWeaponPressed += ChargeAttack;
         
         attackManager.InitializeComponent();
         collisionManager.InitializeComponent();
@@ -73,7 +61,8 @@ public class Sword : MeleeWeapon, IChargingWeapon
 
     public override void DetachWeapon()
     {
-        ButtonsInputService.Instance.OnStrongAttack -= ChargeAttack;
+        DetachEventHandlers();
+        InputService.ButtonsController.WeaponInput.OnUseWeaponPressed -= ChargeAttack;
         
         attackManager.FinalizeComponent();
         collisionManager.FinalizeComponent();

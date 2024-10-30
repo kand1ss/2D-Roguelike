@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,17 +12,15 @@ public class SwordVisual : WeaponVisualBase
 
     public event UnityAction OnAttackAnimationEnds;
 
-    private void Awake()
-    {
-        base.InitiateFields();
-    }
-
     private void Start()
     {
         sword.GetAttackManager().OnWeaponAttack += AttackAnimation;
-
-        ActiveWeapon.Instance.OnWeaponChanged += ResetAnimation;
     }
+    private void OnDestroy()
+    {
+        sword.GetAttackManager().OnWeaponAttack -= AttackAnimation;
+    }
+
     private void AttackAnimation(SwordAttackType attackType)
     {
         if (attackType == SwordAttackType.Strong)
@@ -36,13 +35,6 @@ public class SwordVisual : WeaponVisualBase
             Animator.SetFloat(ATTACK_SPEED, sword.CurrentAttackSpeed);
         }
     }
-
-    private void ResetAnimation()
-    {
-        transform.localRotation = InitialRotation;
-        transform.localPosition = InitialPosition;
-    }
-
     private void OnAttackEnds()
     {
         OnAttackAnimationEnds?.Invoke();

@@ -1,29 +1,30 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class InputService : MonoBehaviour
 {
     public static InputService Instance { get; private set; }
 
-    private PlayerInputSystem playerInputSystem;
-    public PlayerInputSystem PlayerInput => playerInputSystem;
+    public InputSystem PlayerInput { get; private set; }
+    public static ButtonsInputService ButtonsController { get; private set; }
 
     private void Awake()
     {
-        playerInputSystem = new PlayerInputSystem();
-        playerInputSystem.Enable();
+        ButtonsController = GetComponent<ButtonsInputService>();
+        
+        PlayerInput = new InputSystem();
+        PlayerInput.Enable();
 
         Instance = this;
     }
 
     public Vector2 GetMovementVector()
     {
-        return playerInputSystem.Player.Move.ReadValue<Vector2>();
+        return PlayerInput.Player.Move.ReadValue<Vector2>();
     }
     
     public void DisableMovement()
     {
-        playerInputSystem.Player.Move.Disable();
+        PlayerInput.Player.Move.Disable();
     }
 
     public Vector2 GetCursorPositionInWorldPoint()

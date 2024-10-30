@@ -16,7 +16,7 @@ public class ProjectileMagic : Magic
 
         Vector3 castPosition = Player.Instance.transform.position;
 
-        if (ActiveWeapon.Instance.ChosenWeapon is Staff staff)
+        if (Player.Instance.WeaponController.ChosenWeapon is Staff staff)
             castPosition = staff.GetCastComponent().magicInstantiateTransform.position;
 
         ProjectileBase projectile = Instantiate(spellProjectile, castPosition, Quaternion.identity);

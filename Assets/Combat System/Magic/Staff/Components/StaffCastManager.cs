@@ -20,13 +20,13 @@ public class StaffCastManager : ChargeHandler
 
     public void InitializeComponent()
     {
-        ButtonsInputService.Instance.OnUseWeaponCanceled += StopCharging;
+        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
         
         OnChargeAttackCompleted += CastMagic;
     }
     public void FinalizeComponent()
     {
-        ButtonsInputService.Instance.OnUseWeaponCanceled -= StopCharging;
+        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
         
         OnChargeAttackCompleted -= CastMagic;
     }
@@ -47,8 +47,13 @@ public class StaffCastManager : ChargeHandler
     
     private void CastMagic()
     {
+        var chosenSpellIndex = staffMagicSelector.ChosenSpellIndex;
+        var cooldownTime = staffMagicSelector.CurrentMagic.Spells[chosenSpellIndex].castCooldown;
+        
         currentCastTimeCooldown = Time.time;
         Debug.Log("Casting magic");
-        staffMagicSelector.CurrentMagic.CastSpell(staffMagicSelector.ChosenSpellIndex);
+        staffMagicSelector.CurrentMagic.CastSpell(chosenSpellIndex);
+        
+        CooldownBar.Instance.ShowProgressBar(cooldownTime);
     }
 }

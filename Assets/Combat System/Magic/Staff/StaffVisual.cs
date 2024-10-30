@@ -7,11 +7,6 @@ public class StaffVisual : WeaponVisualBase
 
     [SerializeField] private Staff staff;
 
-    private void Awake()
-    {
-        base.InitiateFields();
-    }
-
     private void Start()
     {
         SubscribeToEvents();
@@ -27,23 +22,27 @@ public class StaffVisual : WeaponVisualBase
         staff.GetCastComponent().OnChargeAttackStart += StartChargeCastAnimation;
         staff.GetCastComponent().OnChargeAttackCompleted += CastAnimation;
 
-        ActiveWeapon.Instance.OnWeaponChanged += ResetAnimation;
-        ButtonsInputService.Instance.OnUseWeaponCanceled += StopChargeCastAnimation;
+        Player.Instance.WeaponController.OnWeaponChanged += ResetAnimation;
+        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopChargeCastAnimation;
     }
 
     private void UnsubscribeFromEvents()
     {
         staff.GetCastComponent().OnChargeAttackStart -= StartChargeCastAnimation;
         staff.GetCastComponent().OnChargeAttackCompleted -= CastAnimation;
-
-        ActiveWeapon.Instance.OnWeaponChanged -= ResetAnimation;
-        ButtonsInputService.Instance.OnUseWeaponCanceled -= StopChargeCastAnimation;
     }
 
-    private void ResetAnimation()
+    public override void AttachPlayerEvents()
     {
-        transform.localRotation = InitialRotation;
-        transform.localPosition = InitialPosition;
+        base.AttachPlayerEvents();
+        
+        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopChargeCastAnimation;
+    }
+    public override void DetachPlayerEvents()
+    {
+        base.DetachPlayerEvents();
+        
+        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopChargeCastAnimation;
     }
 
     private void StartChargeCastAnimation(float arg0)
@@ -60,5 +59,4 @@ public class StaffVisual : WeaponVisualBase
         Animator.SetBool(CHARGE_CAST, false);
         Animator.SetTrigger(CAST);
     }
-
 }

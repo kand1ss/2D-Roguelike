@@ -21,14 +21,14 @@ public class SwordAttackManager : ChargeHandler
 
     public void InitializeComponent()
     {
-        ButtonsInputService.Instance.OnStrongAttackCanceled += StopCharging;
+        InputService.ButtonsController.WeaponInput.OnUseWeaponPressedCanceled += StopCharging;
         
         OnChargeAttackCompleted += StrongAttack;
     }
 
     public void FinalizeComponent()
     {
-        ButtonsInputService.Instance.OnStrongAttackCanceled -= StopCharging;
+        InputService.ButtonsController.WeaponInput.OnUseWeaponPressedCanceled -= StopCharging;
         
         OnChargeAttackCompleted -= StrongAttack;
     }

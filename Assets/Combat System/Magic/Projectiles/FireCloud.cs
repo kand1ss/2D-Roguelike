@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-using static IStrikeDamage;
-
 public class FireCloud : ProjectileBase, IStrikeDamage
 {
     [SerializeField] private float fireMinDamage = 1f;

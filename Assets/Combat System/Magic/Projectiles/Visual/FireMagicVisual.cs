@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class FireMagicVisual : ProjectileVisualBase
+﻿public class FireMagicVisual : ProjectileVisualBase
 {
     private const string HIT = "Hit";
 

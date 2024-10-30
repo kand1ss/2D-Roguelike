@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Staff))]
@@ -24,14 +23,14 @@ public class StaffMagicSelector : MonoBehaviour
 
     public void InitializeComponent()
     {
-        ButtonsInputService.Instance.OnSpellSwap += SwapChosenSpell;
-        ButtonsInputService.Instance.OnMagicSwap += SwapCurrentMagic;
+        InputService.ButtonsController.MagicInput.OnSpellSwap += SwapChosenSpell;
+        InputService.ButtonsController.MagicInput.OnMagicSwap += SwapCurrentMagic;
     }
 
     public void FinalizeComponent()
     {
-        ButtonsInputService.Instance.OnSpellSwap -= SwapChosenSpell;
-        ButtonsInputService.Instance.OnMagicSwap -= SwapCurrentMagic;
+        InputService.ButtonsController.MagicInput.OnSpellSwap -= SwapChosenSpell;
+        InputService.ButtonsController.MagicInput.OnMagicSwap -= SwapCurrentMagic;
     }
     
     private void SwapChosenSpell()

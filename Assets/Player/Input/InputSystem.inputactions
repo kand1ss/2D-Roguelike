@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInputSystem",
+    "name": "InputSystem",
     "maps": [
         {
             "name": "Player",
@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Sword_StrongAttack",
+                    "name": "UseWeaponPressed",
                     "type": "Button",
                     "id": "d5cb2f87-c667-4f24-8abf-577dbc7b9b10",
                     "expectedControlType": "Button",
@@ -244,7 +244,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sword_StrongAttack",
+                    "action": "UseWeaponPressed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
