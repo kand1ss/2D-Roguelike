@@ -1,38 +1,38 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using Zenject;
 
 public class WeaponVisualBase : MonoBehaviour
 {
+    protected PlayerWeaponController weaponController;
+    
     protected Animator Animator;
 
-    protected Quaternion InitialRotation;
-    protected Vector3 InitialPosition;
+    private Quaternion initialRotation;
+    private Vector3 initialPosition;
+
+    [Inject]
+    private void Construct(PlayerWeaponController weapon)
+    {
+        weaponController = weapon;
+    }
 
     private void Awake()
     {
-        InitiateFields();
-    }
-
-    protected void InitiateFields()
-    {
-        InitialRotation = transform.localRotation;
-        InitialPosition = transform.localPosition;
-
         Animator = GetComponent<Animator>();
     }
     
     public virtual void AttachPlayerEvents()
     {
-        Player.Instance.WeaponController.OnWeaponChanged -= ResetAnimation;
+        weaponController.OnWeaponChanged += ResetAnimation;
     }
     public virtual void DetachPlayerEvents()
     {
-        Player.Instance.WeaponController.OnWeaponChanged -= ResetAnimation;
+        weaponController.OnWeaponChanged -= ResetAnimation;
     }
     
     protected void ResetAnimation()
     {
-        transform.localRotation = InitialRotation;
-        transform.localPosition = InitialPosition;
+        transform.localRotation = initialRotation;
+        transform.localPosition = initialPosition;
     }
 }

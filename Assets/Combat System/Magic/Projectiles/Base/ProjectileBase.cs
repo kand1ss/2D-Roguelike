@@ -3,12 +3,13 @@ using UnityEngine.Events;
 
 public class ProjectileBase : MonoBehaviour, IProjectileEvents
 {
+    protected ProjectileVisualBase ProjectileVisual;
+    
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] protected float projectileRange = 8f;
+    
     public float ProjectileSpeed => projectileSpeed;
 
-
-    protected ProjectileVisualBase ProjectileVisual;
 
     public event UnityAction OnProjectileImpact;
     public event UnityAction OnProjectileLaunch;

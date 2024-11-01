@@ -25,7 +25,7 @@ public class SwordComboManager : MonoBehaviour
             comboChecker.AddCombo(combo);
     }
 
-    public void FinalizeComboAttacks()
+    public void FinalizeComponent()
     {
         comboChecker.ClearCombo();
     }
@@ -40,7 +40,7 @@ public class SwordComboManager : MonoBehaviour
         attackRegistered = false;
     }
 
-    public void AddEntityToCombo(Entity entity)
+    public void AddEntityToCombo(ICharacter entity)
     {
         comboChecker.AddEntityInList(entity);
 
@@ -51,7 +51,7 @@ public class SwordComboManager : MonoBehaviour
         attackRegistered = true;
     }
 
-    public void RemoveEntityFromCombo(Entity entity)
+    public void RemoveEntityFromCombo(ICharacter entity)
     {
         comboChecker.RemoveEntityFromList(entity);
     }

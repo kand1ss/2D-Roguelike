@@ -23,7 +23,7 @@ public class WindPullProjectile : ProjectileBase
 
         TurnSpellParticles(false);
 
-        targetPosition = InputService.Instance.GetCursorPositionInWorldPoint();
+        targetPosition = CoordinateManager.GetCursorPositionInWorldPoint();
         distanceToTarget = Vector3.Distance(StartPosition, targetPosition);
     }
 

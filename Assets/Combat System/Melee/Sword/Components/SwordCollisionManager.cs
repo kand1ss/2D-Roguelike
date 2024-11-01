@@ -3,27 +3,18 @@ using UnityEngine.Events;
 
 public class SwordCollisionManager : MonoBehaviour
 {
-    private PolygonCollider2D strongAttackCollision;
-    private SwordCollisionHandler strongAttackHandler;
-    private PolygonCollider2D weakAttackCollision;
-    private SwordCollisionHandler weakAttackHandler;
-
-
-    public event UnityAction<Entity> OnEntityEnterCollision;
-    public event UnityAction<Entity> OnEntityExitCollision;
+    [SerializeField] private PolygonCollider2D strongAttackCollision;
+    [SerializeField] private SwordCollisionHandler strongAttackHandler;
+    [SerializeField] private PolygonCollider2D weakAttackCollision;
+    [SerializeField] private SwordCollisionHandler weakAttackHandler;
+    
+    public event UnityAction<ICharacter> OnEntityEnterCollision;
+    public event UnityAction<ICharacter> OnEntityExitCollision;
+    
 
     private void Awake()
     {
-        InitiateCollision();
         DisableWeaponCollision();
-    }
-
-    private void InitiateCollision()
-    {
-        strongAttackHandler = transform.Find("StrongAttack").GetComponent<SwordCollisionHandler>();
-        weakAttackHandler = transform.Find("WeakAttack").GetComponent<SwordCollisionHandler>();
-        strongAttackCollision = transform.Find("StrongAttack").GetComponent<PolygonCollider2D>();
-        weakAttackCollision = transform.Find("WeakAttack").GetComponent<PolygonCollider2D>();
     }
 
     public void InitializeComponent()
@@ -65,6 +56,8 @@ public class SwordCollisionManager : MonoBehaviour
     {
         if (!collision.TryGetComponent(out Entity entity)) 
             return;
+        
+        CinemachineShake.Instance.Shake(0.2f, 0.8f);
         
         Debug.Log("Sword collide");
 

@@ -6,7 +6,7 @@ public class ComboSequenceController : MonoBehaviour
 {
     private List<SwordAttackType> lastRegisteredAttacksList = new List<SwordAttackType>();
     private List<Combo> activeComboList = new List<Combo>();
-    private List<Entity> currentEntitiesInCollision = new List<Entity>();
+    private List<ICharacter> currentEntitiesInCollision = new();
 
     public SwordAttackType lastAttackType;
 
@@ -45,19 +45,19 @@ public class ComboSequenceController : MonoBehaviour
         activeComboList.Clear();
     }
 
-    public void AddEntityInList(Entity entity)
+    public void AddEntityInList(ICharacter entity)
     {
         if (!currentEntitiesInCollision.Contains(entity))
             currentEntitiesInCollision.Add(entity);
     }
 
-    public void RemoveEntityFromList(Entity entity)
+    public void RemoveEntityFromList(ICharacter entity)
     {
         if (currentEntitiesInCollision.Contains(entity))
             currentEntitiesInCollision.Remove(entity);
     }
 
-    public IList<Entity> GetEntityList() => currentEntitiesInCollision;
+    public IList<ICharacter> GetEntityList() => currentEntitiesInCollision;
 
     public void RegisterAttack(SwordAttackType attackType)
     {

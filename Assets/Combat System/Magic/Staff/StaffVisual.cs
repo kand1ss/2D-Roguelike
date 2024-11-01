@@ -1,11 +1,20 @@
 using UnityEngine;
+using Zenject;
 
 public class StaffVisual : WeaponVisualBase
 {
+    private IInputProvider inputProvider;
+    
     private const string CHARGE_CAST = "ChargeCast";
     private const string CAST = "Cast";
 
     [SerializeField] private Staff staff;
+
+    [Inject]
+    private void Construct(IInputProvider input)
+    {
+        inputProvider = input;
+    }
 
     private void Start()
     {
@@ -21,9 +30,6 @@ public class StaffVisual : WeaponVisualBase
     {
         staff.GetCastComponent().OnChargeAttackStart += StartChargeCastAnimation;
         staff.GetCastComponent().OnChargeAttackCompleted += CastAnimation;
-
-        Player.Instance.WeaponController.OnWeaponChanged += ResetAnimation;
-        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopChargeCastAnimation;
     }
 
     private void UnsubscribeFromEvents()
@@ -36,13 +42,13 @@ public class StaffVisual : WeaponVisualBase
     {
         base.AttachPlayerEvents();
         
-        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopChargeCastAnimation;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopChargeCastAnimation;
     }
     public override void DetachPlayerEvents()
     {
         base.DetachPlayerEvents();
         
-        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopChargeCastAnimation;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopChargeCastAnimation;
     }
 
     private void StartChargeCastAnimation(float arg0)

@@ -1,31 +1,24 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ButtonsInputService : MonoBehaviour
+public class ButtonsInputService : IDisposable
 {
     public WeaponInput WeaponInput { get; private set; }
     public MagicInput MagicInput { get; private set; }
 
-    private void Awake()
+    public ButtonsInputService(InputSystem playerInput)
     {
-        WeaponInput = new WeaponInput(InputService.Instance.PlayerInput);
-        MagicInput = new MagicInput(InputService.Instance.PlayerInput);
-    }
-
-    private void Start()
-    {
+        WeaponInput = new WeaponInput(playerInput);
+        MagicInput = new MagicInput(playerInput);
+        
         WeaponInput.InitializeEvents();
         MagicInput.InitializeEvents();
     }
 
-    private void OnDestroy()
+    public void Dispose()
     {
         WeaponInput.FinalizeEvents();
         MagicInput.FinalizeEvents();
-    }
-
-    private void Update()
-    {
-        WeaponInput.Update();
     }
 }

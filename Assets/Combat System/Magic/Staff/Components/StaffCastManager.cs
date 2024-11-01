@@ -1,9 +1,13 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(Staff))]
 [RequireComponent(typeof(StaffMagicSelector))]
 public class StaffCastManager : ChargeHandler
 {
+    private IInputProvider inputProvider;
+    
     private Staff staff;
     private StaffMagicSelector staffMagicSelector;
     
@@ -11,6 +15,12 @@ public class StaffCastManager : ChargeHandler
     
     [SerializeField] private float currentCastTimeCooldown;
     public float CurrentCastTimeCooldown => currentCastTimeCooldown;
+
+    [Inject]
+    private void Construct(IInputProvider input, ICharacter character)
+    {
+        inputProvider = input;
+    }
 
     private void Awake()
     {
@@ -20,13 +30,13 @@ public class StaffCastManager : ChargeHandler
 
     public void InitializeComponent()
     {
-        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
         
         OnChargeAttackCompleted += CastMagic;
     }
     public void FinalizeComponent()
     {
-        InputService.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
         
         OnChargeAttackCompleted -= CastMagic;
     }

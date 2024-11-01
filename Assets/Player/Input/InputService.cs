@@ -1,20 +1,22 @@
+using System;
 using UnityEngine;
 
-public class InputService : MonoBehaviour
+public class InputService : IInputProvider
 {
-    public static InputService Instance { get; private set; }
-
     public InputSystem PlayerInput { get; private set; }
-    public static ButtonsInputService ButtonsController { get; private set; }
+    public ButtonsInputService ButtonsController { get; private set; }
 
-    private void Awake()
+    public InputService()
     {
-        ButtonsController = GetComponent<ButtonsInputService>();
-        
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         PlayerInput = new InputSystem();
         PlayerInput.Enable();
-
-        Instance = this;
+        
+        ButtonsController = new ButtonsInputService(PlayerInput);
     }
 
     public Vector2 GetMovementVector()
@@ -25,11 +27,5 @@ public class InputService : MonoBehaviour
     public void DisableMovement()
     {
         PlayerInput.Player.Move.Disable();
-    }
-
-    public Vector2 GetCursorPositionInWorldPoint()
-    {
-        Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return cursorPosition;
     }
 }

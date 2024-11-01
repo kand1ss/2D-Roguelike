@@ -13,9 +13,6 @@ public class WeaponInput
     public event UnityAction OnUseWeaponPressedCanceled;
     
     public event UnityAction OnWeaponSwap;
-    
-    private bool isAttackButtonHold = false;
-    private bool isStrongAttackButtonHold = false;
 
     public WeaponInput(InputSystem inputSystem)
     {
@@ -44,38 +41,27 @@ public class WeaponInput
         _inputSystem.Player.SwapWeapon.performed -= SwapWeapon;
     }
     
-    public void Update()
+    private void UseWeapon(InputAction.CallbackContext callbackContext)
     {
-        StrongAttackButtonCheck();
-        AttackButtonCheck();
+        OnUseWeapon?.Invoke();
     }
-
-    private void StrongAttackButtonCheck()
-    {
-        if (isStrongAttackButtonHold)
-            OnUseWeaponPressed?.Invoke();
-    }
-
-    private void AttackButtonCheck()
-    {
-        if (isAttackButtonHold)
-            OnUseWeapon?.Invoke();
-    }
-    
-    private void UseWeapon(InputAction.CallbackContext callbackContext) => isAttackButtonHold = true;
 
     private void CancelUseWeapon(InputAction.CallbackContext callbackContext)
     {
         OnUseWeaponCanceled?.Invoke();
-        isAttackButtonHold = false;
     }
 
-    private void StartStrongAttack(InputAction.CallbackContext callbackContext) => isStrongAttackButtonHold = true;
+    private void StartStrongAttack(InputAction.CallbackContext callbackContext)
+    {
+        OnUseWeaponPressed?.Invoke();
+    }
 
     private void StopStrongAttack(InputAction.CallbackContext callbackContext)
     {
         OnUseWeaponPressedCanceled?.Invoke();
-        isStrongAttackButtonHold = false;
     }
-    private void SwapWeapon(InputAction.CallbackContext callbackContext) => OnWeaponSwap?.Invoke();
+    private void SwapWeapon(InputAction.CallbackContext callbackContext)
+    {
+        OnWeaponSwap?.Invoke();
+    }
 }

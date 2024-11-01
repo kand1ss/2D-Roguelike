@@ -1,8 +1,11 @@
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(Staff))]
 public class StaffMagicSelector : MonoBehaviour
 {
+    private IInputProvider inputProvider;
+    
     private Staff staff;
     
     private Magic currentMagic;
@@ -14,6 +17,12 @@ public class StaffMagicSelector : MonoBehaviour
     private int chosenSpellIndex;
     public int ChosenSpellIndex => chosenSpellIndex;
 
+    [Inject]
+    private void Construct(IInputProvider input)
+    {
+        inputProvider = input;
+    }
+
     private void Awake()
     {
         staff = GetComponent<Staff>();
@@ -23,14 +32,14 @@ public class StaffMagicSelector : MonoBehaviour
 
     public void InitializeComponent()
     {
-        InputService.ButtonsController.MagicInput.OnSpellSwap += SwapChosenSpell;
-        InputService.ButtonsController.MagicInput.OnMagicSwap += SwapCurrentMagic;
+        inputProvider.ButtonsController.MagicInput.OnSpellSwap += SwapChosenSpell;
+        inputProvider.ButtonsController.MagicInput.OnMagicSwap += SwapCurrentMagic;
     }
 
     public void FinalizeComponent()
     {
-        InputService.ButtonsController.MagicInput.OnSpellSwap -= SwapChosenSpell;
-        InputService.ButtonsController.MagicInput.OnMagicSwap -= SwapCurrentMagic;
+        inputProvider.ButtonsController.MagicInput.OnSpellSwap -= SwapChosenSpell;
+        inputProvider.ButtonsController.MagicInput.OnMagicSwap -= SwapCurrentMagic;
     }
     
     private void SwapChosenSpell()

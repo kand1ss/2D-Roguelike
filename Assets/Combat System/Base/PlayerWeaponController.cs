@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 public class PlayerWeaponController : MonoBehaviour
 {
+    private Player player;
+    private IInputProvider inputProvider;
+    
     private WeaponBase chosenWeapon;
     public WeaponBase ChosenWeapon => chosenWeapon;
 
@@ -10,6 +14,13 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private WeaponBase secondWeapon;
 
     public event UnityAction OnWeaponChanged;
+
+    [Inject]
+    private void Construct(Player player, IInputProvider input)
+    {
+        this.player = player;
+        inputProvider = input;
+    }
 
     private void Awake()
     {
@@ -28,16 +39,16 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void InitializeInputEvents()
     {
-        InputService.ButtonsController.WeaponInput.OnWeaponSwap += ChangeCurrentWeapon;
-        InputService.ButtonsController.WeaponInput.OnUseWeapon += UseWeaponAction;
+        inputProvider.ButtonsController.WeaponInput.OnWeaponSwap += ChangeCurrentWeapon;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeapon += UseChosenWeapon;
     }
     private void FinalizeInputEvents()
     {
-        InputService.ButtonsController.WeaponInput.OnWeaponSwap -= ChangeCurrentWeapon;
-        InputService.ButtonsController.WeaponInput.OnUseWeapon -= UseWeaponAction;
+        inputProvider.ButtonsController.WeaponInput.OnWeaponSwap -= ChangeCurrentWeapon;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeapon -= UseChosenWeapon;
     }
     
-    private void UseWeaponAction() => chosenWeapon.UseWeapon();
+    public void UseChosenWeapon() => chosenWeapon.UseWeapon();
 
     private void ChangeCurrentWeapon()
     {
@@ -77,8 +88,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void FollowMousePosition()
     {
-        Vector3 mousePosition = InputService.Instance.GetCursorPositionInWorldPoint();
-        Vector3 playerPosition = Player.Instance.transform.position;
+        Vector3 mousePosition = CoordinateManager.GetCursorPositionInWorldPoint();
+        Vector3 playerPosition = player.transform.position;
 
         Vector3 direction = mousePosition - playerPosition;
 

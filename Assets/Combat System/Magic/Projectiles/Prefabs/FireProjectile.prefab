@@ -5237,5 +5237,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 20
   projectileRange: 12
-  projectileMinDamage: 10
-  projectileMaxDamage: 10
+  projectileMinDamage: 4
+  projectileMaxDamage: 8

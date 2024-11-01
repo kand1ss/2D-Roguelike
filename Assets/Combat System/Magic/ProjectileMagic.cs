@@ -1,7 +1,18 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class ProjectileMagic : Magic
 {
+    private ICharacter character;
+    private PlayerWeaponController weaponController;
+
+    [Inject]
+    private void Construct(ICharacter character, PlayerWeaponController weaponController)
+    {
+        this.character = character;
+        this.weaponController = weaponController;
+    }
+    
     public override void CastSpell(int spellIndex)
     {
         Debug.Log(Spells[spellIndex].spellName);
@@ -9,14 +20,14 @@ public class ProjectileMagic : Magic
         InstantiateSpellProjectile(Spells[spellIndex].projectilePrefab);
     }
 
-    private static void InstantiateSpellProjectile(ProjectileBase spellProjectile)
+    private void InstantiateSpellProjectile(ProjectileBase spellProjectile)
     {
-        Vector3 cursorPosition = InputService.Instance.GetCursorPositionInWorldPoint();
-        Vector2 projectileDir = cursorPosition - Player.Instance.transform.position;
+        Vector3 cursorPosition = CoordinateManager.GetCursorPositionInWorldPoint();
+        Vector2 projectileDir = cursorPosition - character.transform.position;
 
-        Vector3 castPosition = Player.Instance.transform.position;
+        Vector3 castPosition = character.transform.position;
 
-        if (Player.Instance.WeaponController.ChosenWeapon is Staff staff)
+        if (weaponController.ChosenWeapon is Staff staff)
             castPosition = staff.GetCastComponent().magicInstantiateTransform.position;
 
         ProjectileBase projectile = Instantiate(spellProjectile, castPosition, Quaternion.identity);
