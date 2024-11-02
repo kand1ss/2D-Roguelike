@@ -122,6 +122,124 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &14760289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1226876419652948726, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
+  m_PrefabInstance: {fileID: 1528791124}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &14760294
+TrailRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14760289}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Time: 0.15
+  m_PreviewTimeScale: 1
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.33333555
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.9959016
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 47802
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    textureScale: {x: 1, y: 1}
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_MinVertexDistance: 0.1
+  m_MaskInteraction: 0
+  m_Autodestruct: 0
+  m_Emitting: 1
+  m_ApplyActiveColorSpace: 1
 --- !u!1 &120889156
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +826,22 @@ PrefabInstance:
       propertyPath: playerInstance
       value: 
       objectReference: {fileID: 1042702799}
+    - target: {fileID: 1821558818240597463, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
+      propertyPath: <StatsManager>k__BackingField.maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821558818240597463, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
+      propertyPath: <Skills>k__BackingField.magicalSkillLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821558818240597463, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
+      propertyPath: <Skills>k__BackingField.physicalSkillLevel
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821558818240597463, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
+      propertyPath: <Resists>k__BackingField.physicalDamageResistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2930528709008231259, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
       propertyPath: _monoInstallers.Array.size
       value: 1
@@ -776,10 +910,17 @@ PrefabInstance:
       propertyPath: strongAttackCollision
       value: 
       objectReference: {fileID: 1503631226}
+    - target: {fileID: 7505117008049274910, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1226876419652948726, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 14760294}
   m_SourcePrefab: {fileID: 100100000, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
 --- !u!4 &1548714245 stripped
 Transform:
@@ -1254,6 +1395,14 @@ PrefabInstance:
     - target: {fileID: 1508316362262882332, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: m_Name
       value: Square (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127420770254268356, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: <Skills>k__BackingField.magicalSkillLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127420770254268356, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: <Skills>k__BackingField.physicalSkillLevel
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

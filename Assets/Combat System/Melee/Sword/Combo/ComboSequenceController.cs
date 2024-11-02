@@ -57,8 +57,6 @@ public class ComboSequenceController : MonoBehaviour
             currentEntitiesInCollision.Remove(entity);
     }
 
-    public IList<ICharacter> GetEntityList() => currentEntitiesInCollision;
-
     public void RegisterAttack(SwordAttackType attackType)
     {
         lastRegisteredAttacksList.Add(attackType);

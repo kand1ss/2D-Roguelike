@@ -33,7 +33,7 @@ public class FireProjectile : ProjectileBase, IStrikeDamage
             return;
         
         CinemachineShake.Instance.Shake(0.2f, 0.7f);
-        DamageService.SendDamage(attackTarget, this);
+        DamageService.SendDamageToTarget(ProjectileSender ,attackTarget, this);
             
         ProjectileImpact();
 

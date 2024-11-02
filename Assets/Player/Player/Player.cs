@@ -5,14 +5,11 @@ public class Player : MonoBehaviour, ICharacter
 {
     private IInputProvider inputProvider;
     public PlayerState PlayerState { get; private set; } = PlayerState.Idle;
-    
-    public float MaxHealth => maxHealth;
-    [SerializeField] private float maxHealth;
-    public float CurrentHealth => currentHealth;
-    private float currentHealth;
 
     [field: SerializeField] public CharacterResists Resists { get; private set; }
-
+    [field: SerializeField] public CharacterStatsManager StatsManager { get; private set; }
+    [field: SerializeField] public CharacterSkills Skills { get; private set; }
+    
 
     private PlayerWeaponController weaponController;
     public PlayerWeaponController WeaponController => weaponController;
@@ -29,8 +26,6 @@ public class Player : MonoBehaviour, ICharacter
     
     private void Awake()
     {
-        currentHealth = maxHealth;
-        
         rigidBody = GetComponent<Rigidbody2D>();
         weaponController = GetComponentInChildren<PlayerWeaponController>();
     }
@@ -39,11 +34,6 @@ public class Player : MonoBehaviour, ICharacter
     {
         HandleMovement();
         UpdateState();
-    }
-    
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
     }
 
     private void HandleMovement()

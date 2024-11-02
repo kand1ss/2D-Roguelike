@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class ProjectileBase : MonoBehaviour, IProjectileEvents
 {
+    public ICharacter ProjectileSender;
     protected ProjectileVisualBase ProjectileVisual;
     
     [SerializeField] private float projectileSpeed = 10f;

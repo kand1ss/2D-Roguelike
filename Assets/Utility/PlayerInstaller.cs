@@ -26,6 +26,7 @@ public class PlayerInstaller : MonoInstaller
         weaponController = playerInstance.GetComponentInChildren<PlayerWeaponController>();
         
         Container
-            .BindInstance<PlayerWeaponController>(weaponController);
+            .BindInterfacesAndSelfTo<PlayerWeaponController>()
+            .FromInstance(weaponController);
     }
 }

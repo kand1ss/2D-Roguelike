@@ -171,8 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de14fd28f715f4a45896c203d6353c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
   <Resists>k__BackingField:
-    physicalDamageResistance: 40
+    resistanceCap: 80
+    physicalDamageResistance: 10
     magicalDamageResistance: 15
+  <StatsManager>k__BackingField:
+    maxHealth: 100
+  <Skills>k__BackingField:
+    physicalSkillLevel: 0
+    magicalSkillLevel: 0

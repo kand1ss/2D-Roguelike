@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
 
-public class PlayerWeaponController : MonoBehaviour
+public class PlayerWeaponController : MonoBehaviour, IWeaponController
 {
     private Player player;
     private IInputProvider inputProvider;
@@ -39,18 +39,18 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void InitializeInputEvents()
     {
-        inputProvider.ButtonsController.WeaponInput.OnWeaponSwap += ChangeCurrentWeapon;
+        inputProvider.ButtonsController.WeaponInput.OnWeaponSwap += SwapCurrentWeapon;
         inputProvider.ButtonsController.WeaponInput.OnUseWeapon += UseChosenWeapon;
     }
     private void FinalizeInputEvents()
     {
-        inputProvider.ButtonsController.WeaponInput.OnWeaponSwap -= ChangeCurrentWeapon;
+        inputProvider.ButtonsController.WeaponInput.OnWeaponSwap -= SwapCurrentWeapon;
         inputProvider.ButtonsController.WeaponInput.OnUseWeapon -= UseChosenWeapon;
     }
     
     public void UseChosenWeapon() => chosenWeapon.UseWeapon();
 
-    private void ChangeCurrentWeapon()
+    private void SwapCurrentWeapon()
     {
         if (chosenWeapon is IChargingWeapon chargingWeapon && chargingWeapon.ChargeHandle.IsCharging == true)
             return;

@@ -2,11 +2,10 @@ using UnityEngine;
 
 public interface ICharacter
 {
-     public float CurrentHealth { get; }
-
      CharacterResists Resists { get; }
+     CharacterStatsManager StatsManager { get; }
+     CharacterSkills Skills { get; }
      
      Transform transform { get; }
      Rigidbody2D rigidBody { get; }
-     void TakeDamage(float damage);
 }

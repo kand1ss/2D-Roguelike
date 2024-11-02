@@ -8,7 +8,7 @@ public class SwordAttackManager : ChargeHandler
     private IInputProvider inputProvider;
 
     // CHANGE
-    private PlayerWeaponController playerWeapon;
+    private IWeaponController attackerWeapon;
     
     [SerializeField] private float currentStrongAttackSpeed;
 
@@ -32,7 +32,7 @@ public class SwordAttackManager : ChargeHandler
         inputProvider = input;
         attacker = character;
 
-        this.playerWeapon = playerWeapon;
+        this.attackerWeapon = playerWeapon;
     }
 
     public void InitializeComponent()
@@ -64,12 +64,9 @@ public class SwordAttackManager : ChargeHandler
 
     public void StrikeDamage(ICharacter attackTarget)
     {
-        if (!playerWeapon.ChosenWeapon is Sword)
-            return;
+        var weapon = (Sword)attackerWeapon.ChosenWeapon;
         
-        Sword weapon = (Sword)playerWeapon.ChosenWeapon;
-        
-        DamageService.SendDamage(attacker, attackTarget, weapon);
+        DamageService.SendDamageToTarget(attacker, attackTarget, weapon);
     }
 
     public void StartChargingStrongAttack()
