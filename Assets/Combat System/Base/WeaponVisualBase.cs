@@ -16,7 +16,7 @@ public class WeaponVisualBase : MonoBehaviour
         weaponController = weapon;
     }
 
-    private void Awake()
+    protected void Awake()
     {
         Animator = GetComponent<Animator>();
     }

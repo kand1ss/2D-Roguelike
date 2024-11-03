@@ -1,11 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour, ICharacter
+public class Player : MonoBehaviour, ICharacterEffectSusceptible
 {
     private IInputProvider inputProvider;
     public PlayerState PlayerState { get; private set; } = PlayerState.Idle;
 
+
+    public CharacterEffectManager EffectManager { get; private set; } = new();
     [field: SerializeField] public CharacterResists Resists { get; private set; }
     [field: SerializeField] public CharacterStatsManager StatsManager { get; private set; }
     [field: SerializeField] public CharacterSkills Skills { get; private set; }
@@ -15,8 +18,6 @@ public class Player : MonoBehaviour, ICharacter
     public PlayerWeaponController WeaponController => weaponController;
 
     public Rigidbody2D rigidBody { get; private set; }
-    
-    [SerializeField] private float walkingMoveSpeed = 6f;
 
     [Inject]
     private void Construct(IInputProvider input)
@@ -34,12 +35,13 @@ public class Player : MonoBehaviour, ICharacter
     {
         HandleMovement();
         UpdateState();
+        EffectManager.UpdateEffects();
     }
 
     private void HandleMovement()
     {
         Vector3 movementVector = inputProvider.GetMovementVector();
-        var moveSpeed = walkingMoveSpeed;
+        var moveSpeed = StatsManager.WalkingMoveSpeed;
         
         if(Input.GetKey(KeyCode.LeftShift))
             moveSpeed *= 1.7f;

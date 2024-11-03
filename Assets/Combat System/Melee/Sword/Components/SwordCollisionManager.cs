@@ -57,7 +57,7 @@ public class SwordCollisionManager : MonoBehaviour
         if (!collision.TryGetComponent(out Entity entity)) 
             return;
         
-        CinemachineShake.Instance.Shake(0.2f, 0.8f);
+        CinemachineShake.Instance.Shake(0.2f, 1.1f);
         
         Debug.Log("Sword collide");
 

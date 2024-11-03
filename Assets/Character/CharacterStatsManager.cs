@@ -9,7 +9,7 @@ public class CharacterStatsManager
     [SerializeField] private int maxHealth;
     public int MaxHealth => maxHealth;
     
-    private int currentHealth;
+    [SerializeField] private int currentHealth;
 
     public int CurrentHealth
     {
@@ -20,6 +20,9 @@ public class CharacterStatsManager
                 currentHealth = value;
         }
     }
+    
+    [SerializeField] private float walkingMoveSpeed = 6f;
+    public float WalkingMoveSpeed => walkingMoveSpeed;
 
     public CharacterStatsManager()
     {

@@ -9,8 +9,17 @@ public class SwordVisual : WeaponVisualBase
     private const string ATTACK_SPEED = "AttackSpeed";
 
     [SerializeField] private Sword sword;
+    private TrailRenderer trail;
 
     public event UnityAction OnAttackAnimationEnds;
+
+    private void Awake()
+    {
+        base.Awake();
+        
+        trail = GetComponentInChildren<TrailRenderer>();
+        trail.emitting = false;
+    }
 
     private void Start()
     {
@@ -23,6 +32,7 @@ public class SwordVisual : WeaponVisualBase
 
     private void AttackAnimation(SwordAttackType attackType)
     {
+        trail.emitting = true;
         if (attackType == SwordAttackType.Strong)
         {
             Animator.SetTrigger(STRONG_ATTACK);
@@ -38,5 +48,6 @@ public class SwordVisual : WeaponVisualBase
     private void OnAttackEnds()
     {
         OnAttackAnimationEnds?.Invoke();
+        trail.emitting = false;
     }
 }

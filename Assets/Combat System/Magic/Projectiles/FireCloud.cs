@@ -20,7 +20,12 @@ public class FireCloud : ProjectileBase, IStrikeDamage
     {
         ProjectileImpact();
 
-        // ADD - тут должна быть реализована логика нанесения урона
+        if (!collision.TryGetComponent<ICharacterEffectSusceptible>(out ICharacterEffectSusceptible character))
+            return;
+        
+        character.EffectManager.ApplyEffect(
+            new BurningEffect(character, fireMinDamage, fireMaxDamage, burnDuration));
+        
         Debug.Log($"Cloud Projectile: Collision Enter");
     }
 }

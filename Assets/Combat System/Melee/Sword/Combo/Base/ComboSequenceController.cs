@@ -78,7 +78,6 @@ public class ComboSequenceController : MonoBehaviour
         {
             if (CompareSequences(combo.GetAttackSequence, lastRegisteredAttacksList))
             {
-                Debug.Log("Push Combo!");
                 combo.UseCombo(currentEntitiesInCollision);
             }
         }

@@ -3,14 +3,12 @@ using UnityEngine;
 
 public abstract class Combo
 {
-    protected ICharacter character;
     protected readonly List<SwordAttackType> ExpectedAttackSequence = new List<SwordAttackType>();
     public List<SwordAttackType> GetAttackSequence => ExpectedAttackSequence;
 
-    protected Combo(ICharacter character)
+    protected Combo()
     {
         InitCombo();
-        this.character = character;
     }
 
     protected abstract void InitCombo();

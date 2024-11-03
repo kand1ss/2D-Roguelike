@@ -74,6 +74,7 @@ public class Sword : MeleeWeapon, IChargingWeapon
         collisionManager.InitializeComponent();
         
         comboManager.InitiateComboAttacks(new PushCombo(character));
+        comboManager.InitiateComboAttacks(new BleedingCombo(character));
     }
 
     public override void DetachWeapon()

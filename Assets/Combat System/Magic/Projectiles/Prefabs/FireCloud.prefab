@@ -122,8 +122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 6
   projectileRange: 6
-  fireMinDamage: 1
-  fireMaxDamage: 2
+  fireMinDamage: 2
+  fireMaxDamage: 5
   burnDuration: 4
 --- !u!1 &4318509844791331279
 GameObject:
