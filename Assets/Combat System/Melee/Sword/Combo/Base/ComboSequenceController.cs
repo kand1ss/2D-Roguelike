@@ -79,6 +79,7 @@ public class ComboSequenceController : MonoBehaviour
             if (CompareSequences(combo.GetAttackSequence, lastRegisteredAttacksList))
             {
                 combo.UseCombo(currentEntitiesInCollision);
+                CinemachineShake.Instance.Shake(0.2f, 2.5f);
             }
         }
 

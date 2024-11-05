@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 public class BowShootManager : ChargeHandler
 {
     private ICharacter weaponOwner;
+    private IInputProvider inputProvider;
     private IWeaponController weaponController;
 
     private Bow bow;
@@ -17,22 +17,30 @@ public class BowShootManager : ChargeHandler
     [SerializeField] private float arrowSpeed;
 
     [Inject]
-    private void Construct(ICharacter character, IWeaponController weaponController)
+    private void Construct(ICharacter character, IInputProvider input, IWeaponController weaponController)
     {
         weaponOwner = character;
         this.weaponController = weaponController;
+        inputProvider = input;
     }
 
     public void InitializeComponent()
     {
         bow = GetComponent<Bow>();
+        
         OnChargeAttackCompleted += Shoot;
+        
+        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += weaponOwner.StatsManager.IncreaseWalkingSpeed;
     }
 
     public void FinalizeComponent()
     {
         bow = null;
+        
         OnChargeAttackCompleted -= Shoot;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
+        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= weaponOwner.StatsManager.IncreaseWalkingSpeed;
     }
 
     private void Shoot()
@@ -42,6 +50,8 @@ public class BowShootManager : ChargeHandler
         InstantiateArrow(bow.GetArrowManager().ChoosenArrow);
         cooldownTime = Time.time;
         
+        CinemachineShake.Instance.Shake(0.15f, 1.4f);
+        
         CooldownBar.Instance.ShowProgressBar(shootCooldownRate);
     }
 
@@ -49,6 +59,8 @@ public class BowShootManager : ChargeHandler
     {
         if (Time.time < cooldownTime + shootCooldownRate)
             return;
+
+        weaponOwner.StatsManager.DecreaseWalkingSpeed();
         
         StartCharging(shootHoldTime);
     }
@@ -61,6 +73,7 @@ public class BowShootManager : ChargeHandler
         Vector3 shootPosition = arrowInstantiate.position;
 
         Arrow projectile = Instantiate(arrow, shootPosition, Quaternion.identity);
+        projectile.Sender = weaponOwner;
 
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
 

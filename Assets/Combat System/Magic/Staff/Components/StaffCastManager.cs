@@ -22,20 +22,20 @@ public class StaffCastManager : ChargeHandler
         inputProvider = input;
     }
 
-    private void Awake()
+    public void InitializeComponent()
     {
         staff = GetComponent<Staff>();
         staffMagicSelector = staff.GetMagicComponent();
-    }
-
-    public void InitializeComponent()
-    {
+        
         inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
         
         OnChargeAttackCompleted += CastMagic;
     }
     public void FinalizeComponent()
     {
+        staff = null;
+        staffMagicSelector = null;
+        
         inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
         
         OnChargeAttackCompleted -= CastMagic;

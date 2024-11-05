@@ -1,8 +1,13 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class CharacterResists
 {
+    [SerializeField] public List<EffectType> ownerEffectResistances;
+    
     [SerializeField] private int resistanceCap = 80;
 
     [SerializeField] private float physicalDamageResistance;

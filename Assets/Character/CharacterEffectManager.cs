@@ -1,20 +1,40 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CharacterEffectManager
 {
+    private readonly List<EffectType> ownerEffectResists;
+    
     public List<IEffect> ActiveEffects { get; private set; } = new();
     private readonly List<IEffect> effectsToRemove = new();
+    
+    public UnityAction OnEffectAdded { get; }
+    public UnityAction OnEffectRemoved { get; }
+
+    public CharacterEffectManager(List<EffectType> resists)
+    {
+        ownerEffectResists = resists;
+    }
 
     public void ApplyEffect(IEffect effect)
     {
-        if(!ActiveEffects.Contains(effect))
-            ActiveEffects.Add(effect);
+        if (!ownerEffectResists.Contains(effect.EffectType))
+        {
+            if (!ActiveEffects.Contains(effect))
+            {
+                ActiveEffects.Add(effect);
+                OnEffectAdded?.Invoke();
+            }
+        }
+        else
+            Debug.Log($"Сущность устойчива к эффекту: {effect.EffectType}");
     }
 
     public void RemoveEffect(IEffect effect)
     {
         effectsToRemove.Add(effect);
+        OnEffectRemoved?.Invoke();
     }
 
     public void ClearAllEffects()
@@ -29,7 +49,7 @@ public class CharacterEffectManager
     {
         foreach (var effect in ActiveEffects)
         {
-            if (effect is ITickableEffect tickableEffect)
+            if (effect is TimedEffect tickableEffect)
                 tickableEffect.CheckPerSecond(Time.deltaTime);
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Entity : MonoBehaviour, ICharacterEffectSusceptible
 {
-    public CharacterEffectManager EffectManager { get; private set; } = new();
+    public CharacterEffectManager EffectManager { get; private set; }
     [field: SerializeField] public CharacterResists Resists { get; private set; }
     [field: SerializeField] public CharacterStatsManager StatsManager { get; set; }
     [field: SerializeField] public CharacterSkills Skills { get; private set; }
@@ -14,6 +14,8 @@ public class Entity : MonoBehaviour, ICharacterEffectSusceptible
     
     public void Awake()
     {
+        EffectManager = new CharacterEffectManager(Resists.ownerEffectResistances);
+        
         rigidBody = GetComponent<Rigidbody2D>();
     }
 

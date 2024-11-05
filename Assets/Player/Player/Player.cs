@@ -8,7 +8,7 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible
     public PlayerState PlayerState { get; private set; } = PlayerState.Idle;
 
 
-    public CharacterEffectManager EffectManager { get; private set; } = new();
+    public CharacterEffectManager EffectManager { get; private set; }
     [field: SerializeField] public CharacterResists Resists { get; private set; }
     [field: SerializeField] public CharacterStatsManager StatsManager { get; private set; }
     [field: SerializeField] public CharacterSkills Skills { get; private set; }
@@ -27,6 +27,8 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible
     
     private void Awake()
     {
+        EffectManager = new CharacterEffectManager(Resists.ownerEffectResistances);
+        
         rigidBody = GetComponent<Rigidbody2D>();
         weaponController = GetComponentInChildren<PlayerWeaponController>();
     }

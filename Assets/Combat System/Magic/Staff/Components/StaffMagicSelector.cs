@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -25,19 +26,21 @@ public class StaffMagicSelector : MonoBehaviour
 
     private void Awake()
     {
-        staff = GetComponent<Staff>();
-        
         currentMagic = firstMagicSlot;
     }
 
     public void InitializeComponent()
     {
+        staff = GetComponent<Staff>();
+        
         inputProvider.ButtonsController.MagicInput.OnSpellSwap += SwapChosenSpell;
         inputProvider.ButtonsController.MagicInput.OnMagicSwap += SwapCurrentMagic;
     }
 
     public void FinalizeComponent()
     {
+        staff = null;
+        
         inputProvider.ButtonsController.MagicInput.OnSpellSwap -= SwapChosenSpell;
         inputProvider.ButtonsController.MagicInput.OnMagicSwap -= SwapCurrentMagic;
     }

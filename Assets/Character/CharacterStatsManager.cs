@@ -22,7 +22,15 @@ public class CharacterStatsManager
     }
     
     [SerializeField] private float walkingMoveSpeed = 6f;
-    public float WalkingMoveSpeed => walkingMoveSpeed;
+    public float WalkingMoveSpeed
+    {
+        get => walkingMoveSpeed;
+        set
+        {
+            if(value > 0 && value < 8)
+                walkingMoveSpeed = value;
+        }
+    }
 
     public CharacterStatsManager()
     {
@@ -33,5 +41,15 @@ public class CharacterStatsManager
     {
         CurrentHealth -= damage;
         OnHealthChanged?.Invoke(CurrentHealth);
+    }
+
+    public void DecreaseWalkingSpeed()
+    {
+        walkingMoveSpeed /= 2;
+    }
+
+    public void IncreaseWalkingSpeed()
+    {
+        walkingMoveSpeed *= 2;
     }
 }

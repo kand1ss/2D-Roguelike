@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 823226241025489690}
   - component: {fileID: 7222069066257395876}
-  - component: {fileID: 6586077294415298682}
   - component: {fileID: 7252878399755988814}
+  - component: {fileID: 6586077294415298682}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -62,18 +62,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6586077294415298682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936543497580805712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d5e5a33b8f0faa41bfa373dd6af1674, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &7252878399755988814
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -119,6 +107,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.86001325, y: 0.20634261}
   m_EdgeRadius: 0
+--- !u!114 &6586077294415298682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936543497580805712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5e5a33b8f0faa41bfa373dd6af1674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowMinDamage: 5
+  arrowMaxDamage: 10
 --- !u!1 &2945289077081291404
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +195,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.2
+  m_Time: 0.1
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3

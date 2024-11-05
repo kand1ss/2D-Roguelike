@@ -4,6 +4,8 @@
 [RequireComponent(typeof(StaffMagicSelector))]
 public class Staff : WeaponBase, IChargingWeapon
 {
+    private StaffVisual visual;
+    
     private StaffMagicSelector magicSelector;
     private StaffCastManager castManager;
 
@@ -11,22 +13,29 @@ public class Staff : WeaponBase, IChargingWeapon
 
     public StaffMagicSelector GetMagicComponent() => magicSelector;
     public StaffCastManager GetCastComponent() => castManager;
-
-    private void Awake()
+    
+    public override void InitWeapon()
     {
         castManager = GetComponent<StaffCastManager>();
         magicSelector = GetComponent<StaffMagicSelector>();
-    }
-    public override void InitWeapon()
-    {
+
         castManager.InitializeComponent();
         magicSelector.InitializeComponent();
+        
+        visual = GetComponentInChildren<StaffVisual>();
+        visual.InitiateVisual();
     }
 
     public override void DetachWeapon()
     {
+        visual.FinalizeVisual();
+        visual = null;
+
         castManager.FinalizeComponent();
         magicSelector.FinalizeComponent();
+
+        castManager = null;
+        magicSelector = null;
     }
 
     public override void UseWeapon()

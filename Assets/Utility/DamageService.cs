@@ -24,7 +24,7 @@ public static class DamageService
         Debug.Log("-------- Damage Service ---------");
         Debug.Log($"Target Physical Resist: {(1 - targetResists.GetPhysicalDamageResistance) * 100}%");
         Debug.Log($"Target Magical Resist: {(1 - targetResists.GetMagicalDamageResistance) * 100}%");
-        Debug.Log($"Attack Distance: {distanceMultiplier}");
+        Debug.Log($"Distance Multiplier: {distanceMultiplier}");
         Debug.Log($"Calculated Damage: {resultDamage}");
         
         target.StatsManager.TakeDamage(resultDamage);
@@ -55,7 +55,7 @@ public static class DamageService
     private static float GetDistanceMultiplier(ICharacter attacker, ICharacter target)
     {
         var distance = Vector2.Distance(attacker.transform.position, target.transform.position);
-        return distance <= 1 ? 1 : 1 + 0.35f * Mathf.Log(distance);
+        return distance <= 1 ? 1 : 1 + 0.25f * Mathf.Log(distance);
     }
 
     private static int CalculateFinalDamage(float weaponDamage, float resistModifier, float skillMultiplier, float distance)

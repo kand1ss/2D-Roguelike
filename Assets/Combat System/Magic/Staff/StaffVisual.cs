@@ -16,23 +16,13 @@ public class StaffVisual : WeaponVisualBase
         inputProvider = input;
     }
 
-    private void Start()
-    {
-        SubscribeToEvents();
-    }
-
-    private void OnDestroy()
-    {
-        UnsubscribeFromEvents();
-    }
-
-    private void SubscribeToEvents()
+    public void InitiateVisual()
     {
         staff.GetCastComponent().OnChargeAttackStart += StartChargeCastAnimation;
         staff.GetCastComponent().OnChargeAttackCompleted += CastAnimation;
     }
 
-    private void UnsubscribeFromEvents()
+    public void FinalizeVisual()
     {
         staff.GetCastComponent().OnChargeAttackStart -= StartChargeCastAnimation;
         staff.GetCastComponent().OnChargeAttackCompleted -= CastAnimation;

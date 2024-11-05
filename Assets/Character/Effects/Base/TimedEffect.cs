@@ -1,11 +1,17 @@
 
-public abstract class TimedEffect : ITickableEffect
+using UnityEngine.Events;
+
+public abstract class TimedEffect
 {
     private const float EffectInterval = 1f;
-    
+
     private float remainingDuration;
     private float intervalTimer;
-    
+
+    public UnityAction OnEffectAdded;
+    public UnityAction OnEffectApplied;
+    public UnityAction OnEffectRemoved;
+
     protected TimedEffect(float duration)
     {
         remainingDuration = duration;
@@ -20,15 +26,12 @@ public abstract class TimedEffect : ITickableEffect
             remainingDuration -= 1f;
             if (remainingDuration <= 0)
             {
-                RemoveEffect();
+                OnEffectRemoved?.Invoke();
                 return;
             }
-            ApplyEffect();
+            OnEffectApplied?.Invoke();
         
             intervalTimer = EffectInterval;
         }
     }
-
-    public abstract void ApplyEffect();
-    public abstract void RemoveEffect();
 }

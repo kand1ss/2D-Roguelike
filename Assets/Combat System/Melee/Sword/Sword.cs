@@ -6,7 +6,7 @@ using Zenject;
 [RequireComponent(typeof(SwordComboManager))]
 public class Sword : MeleeWeapon, IChargingWeapon
 {
-    private ICharacter character;
+    private ICharacter weaponOwner;
     private IInputProvider inputProvider;
     
     private SwordVisual swordVisual;
@@ -25,17 +25,7 @@ public class Sword : MeleeWeapon, IChargingWeapon
     private void Construct(IInputProvider input, ICharacter weaponOwner)
     {
         inputProvider = input;
-        character = weaponOwner;
-    }
-
-
-    private void Awake()
-    {
-        swordVisual = GetComponentInChildren<SwordVisual>();
-
-        collisionManager = GetComponent<SwordCollisionManager>();
-        comboManager = GetComponent<SwordComboManager>();
-        attackManager = GetComponent<SwordAttackManager>();
+        this.weaponOwner = weaponOwner;
     }
 
     private void SetupEventHandlers()
@@ -65,27 +55,47 @@ public class Sword : MeleeWeapon, IChargingWeapon
         swordVisual.OnAttackAnimationEnds -= comboManager.SetAttackRegisteredFalse;
     }
 
+    private void InitializeManagers()
+    {
+        swordVisual = GetComponentInChildren<SwordVisual>();
+
+        collisionManager = GetComponent<SwordCollisionManager>();
+        comboManager = GetComponent<SwordComboManager>();
+        attackManager = GetComponent<SwordAttackManager>();
+    }
+
+    private void FinalizeManagers()
+    {
+        swordVisual = null;
+
+        collisionManager = null;
+        comboManager = null;
+        attackManager = null;
+    }
+
     public override void InitWeapon()
     {
+        InitializeManagers();
         SetupEventHandlers();
         inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressed += ChargeAttack;
-        
+
         attackManager.InitializeComponent();
         collisionManager.InitializeComponent();
-        
-        comboManager.InitiateComboAttacks(new PushCombo(character));
-        comboManager.InitiateComboAttacks(new BleedingCombo(character));
+
+        comboManager.InitiateComboAttacks(new PushCombo(weaponOwner));
+        comboManager.InitiateComboAttacks(new BleedingCombo(weaponOwner));
     }
 
     public override void DetachWeapon()
     {
         DetachEventHandlers();
         inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressed -= ChargeAttack;
-        
+
         attackManager.FinalizeComponent();
         collisionManager.FinalizeComponent();
-        
         comboManager.FinalizeComponent();
+        
+        FinalizeManagers();
     }
 
     public override void UseWeapon()

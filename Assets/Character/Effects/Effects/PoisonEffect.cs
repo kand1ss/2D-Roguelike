@@ -1,29 +1,27 @@
-
-
 using UnityEngine;
 
-public class BleedingEffect : TimedEffect, IEffect
+public class PoisonEffect : TimedEffect, IEffect
 {
     private readonly ICharacterEffectSusceptible target;
 
     private readonly float minDamage;
     private readonly float maxDamage;
-    
-    public EffectType EffectType => EffectType.Bleeding;
 
-    public BleedingEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage, float duration) : base(duration)
+    public EffectType EffectType => EffectType.Poison;
+    
+    public PoisonEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage, float duration) : base(duration)
     {
         this.target = target;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
-        
+
         OnEffectApplied += ApplyEffect;
         OnEffectRemoved += RemoveEffect;
     }
-    
+
     public void ApplyEffect()
     {
-        Debug.Log($"{target.GetType().Name}: Bleeding effect");
+        Debug.Log($"{target}: Poison Effect!");
         DamageService.SendDamageByEffect(target, minDamage, maxDamage);
     }
 
