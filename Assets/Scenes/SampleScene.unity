@@ -880,6 +880,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2860264551535363927, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860264551535363927, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860264551535363927, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860264551535363927, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4127420770254268356, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: <Resists>k__BackingField.EffectResistances.Array.size
       value: 1
@@ -887,6 +903,22 @@ PrefabInstance:
     - target: {fileID: 4127420770254268356, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: <Resists>k__BackingField.EffectResistances.Array.data[0]
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350807835785735867, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350807835785735867, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350807835785735867, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350807835785735867, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1066,6 +1098,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2860264551535363927, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860264551535363927, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860264551535363927, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860264551535363927, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350807835785735867, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350807835785735867, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350807835785735867, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350807835785735867, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1190,18 +1254,6 @@ PrefabInstance:
     - target: {fileID: 1508316362262882332, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: m_Name
       value: Square (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4127420770254268356, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
-      propertyPath: <Skills>k__BackingField.magicalSkillLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4127420770254268356, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
-      propertyPath: <Skills>k__BackingField.physicalSkillLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4127420770254268356, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
-      propertyPath: <Resists>k__BackingField.EffectResistances.Array.size
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

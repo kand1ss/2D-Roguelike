@@ -8,9 +8,9 @@ public class CharacterEffectManager
     
     public List<IEffect> ActiveEffects { get; private set; } = new();
     private readonly List<IEffect> effectsToRemove = new();
-    
-    public UnityAction OnEffectAdded { get; }
-    public UnityAction OnEffectRemoved { get; }
+
+    public UnityAction<IEffect> OnEffectAdded;
+    public UnityAction<IEffect> OnEffectRemoved;
 
     public CharacterEffectManager(List<EffectType> resists)
     {
@@ -24,7 +24,7 @@ public class CharacterEffectManager
             if (!ActiveEffects.Contains(effect))
             {
                 ActiveEffects.Add(effect);
-                OnEffectAdded?.Invoke();
+                OnEffectAdded?.Invoke(effect);
             }
         }
         else
@@ -34,7 +34,7 @@ public class CharacterEffectManager
     public void RemoveEffect(IEffect effect)
     {
         effectsToRemove.Add(effect);
-        OnEffectRemoved?.Invoke();
+        OnEffectRemoved?.Invoke(effect);
     }
 
     public void ClearAllEffects()

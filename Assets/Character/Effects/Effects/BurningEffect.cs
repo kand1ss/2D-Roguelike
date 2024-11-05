@@ -10,6 +10,7 @@ public class BurningEffect : TimedEffect, IEffect
     private readonly float maxDamage;
 
     public EffectType EffectType => EffectType.Burning;
+    public Sprite EffectIcon => Resources.Load<Sprite>("Sprites/Effects/BurningEffect");
     
     public BurningEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage, float duration) : base(duration)
     {

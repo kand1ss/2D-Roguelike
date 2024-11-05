@@ -8,6 +8,7 @@ public class PoisonEffect : TimedEffect, IEffect
     private readonly float maxDamage;
 
     public EffectType EffectType => EffectType.Poison;
+    public Sprite EffectIcon => Resources.Load<Sprite>("Sprites/Effects/BurningEffect");
     
     public PoisonEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage, float duration) : base(duration)
     {

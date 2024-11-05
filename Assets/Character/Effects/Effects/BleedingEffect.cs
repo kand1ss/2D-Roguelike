@@ -10,6 +10,7 @@ public class BleedingEffect : TimedEffect, IEffect
     private readonly float maxDamage;
     
     public EffectType EffectType => EffectType.Bleeding;
+    public Sprite EffectIcon => Resources.Load<Sprite>("Sprites/Effects/BleedingEffect");
 
     public BleedingEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage, float duration) : base(duration)
     {
