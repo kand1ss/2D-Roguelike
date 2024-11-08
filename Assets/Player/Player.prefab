@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstWeapon: {fileID: 2673017035181238622}
-  secondWeapon: {fileID: 555830882841768171}
+  secondWeapon: {fileID: 385443937295940221}
 --- !u!1 &4850006957849522635
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,6 +359,7 @@ GameObject:
   - component: {fileID: 1821558818240597463}
   - component: {fileID: 2930528709008231259}
   - component: {fileID: 1090475946236013147}
+  - component: {fileID: 8927136787929897874}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -424,12 +425,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Resists>k__BackingField:
+    ownerEffectResistances: 
     resistanceCap: 80
-    physicalDamageResistance: 0
-    magicalDamageResistance: 0
+    physicalDamageResistance: 15
+    magicalDamageResistance: 30
   <StatsManager>k__BackingField:
     maxHealth: 100
-    currentHealth: 0
+    currentHealth: 100
     walkingMoveSpeed: 4
   <Skills>k__BackingField:
     physicalSkillLevel: 4
@@ -465,6 +467,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInstance: {fileID: 1821558818240597463}
+--- !u!61 &8927136787929897874
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6490171760927257027}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.03660676, y: -0.061011255}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3532806, y: 0.16898873}
+  m_EdgeRadius: 0
 --- !u!1 &7056447758719014603
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,8 +775,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowInstantiate: {fileID: 882555335940824391}
-  shootCooldownRate: 1
-  shootHoldTime: 2
+  shootCooldownRate: 0.5
+  shootHoldTime: 1
+  arrowSpeed: 35
 --- !u!114 &4081940390424721583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,6 +864,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e574ccd4994b9146a6042229edda694, type: 3}
+--- !u!114 &385443937295940221 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2688834042248300497, guid: 8e574ccd4994b9146a6042229edda694, type: 3}
+  m_PrefabInstance: {fileID: 2308648313264160172}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18348546d068cbb45a9c96c8a728f2bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &766346489104139154 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3074669346342157886, guid: 8e574ccd4994b9146a6042229edda694, type: 3}

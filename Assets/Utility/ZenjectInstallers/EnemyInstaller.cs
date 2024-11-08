@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class EnemyInstaller : MonoInstaller
 {
-    [SerializeField] private Entity entity;
+    [SerializeField] private Enemy entity;
 
     public override void InstallBindings()
     {
+        Container
+            .BindInterfacesAndSelfTo<Enemy>()
+            .FromInstance(entity)
+            .AsSingle();
         Container
             .BindInterfacesAndSelfTo<Entity>()
             .FromInstance(entity)

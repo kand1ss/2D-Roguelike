@@ -17,7 +17,10 @@ public class CharacterStatsManager
         set
         {
             if (value <= maxHealth)
+            {
                 currentHealth = value;
+                OnHealthChanged?.Invoke(value);
+            }
         }
     }
     
@@ -40,7 +43,6 @@ public class CharacterStatsManager
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
-        OnHealthChanged?.Invoke(CurrentHealth);
     }
 
     public void DecreaseWalkingSpeed()

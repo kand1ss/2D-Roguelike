@@ -21,11 +21,11 @@ public class CharacterEffectManager
     {
         if (!ownerEffectResists.Contains(effect.EffectType))
         {
-            if (!ActiveEffects.Contains(effect))
-            {
-                ActiveEffects.Add(effect);
-                OnEffectAdded?.Invoke(effect);
-            }
+            if (ActiveEffects.Contains(effect)) 
+                return;
+            
+            ActiveEffects.Add(effect);
+            OnEffectAdded?.Invoke(effect);
         }
         else
             Debug.Log($"Сущность устойчива к эффекту: {effect.EffectType}");
