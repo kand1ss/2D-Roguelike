@@ -1,17 +1,22 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Player player;
+    private ICharacter player;
     
     [SerializeField] private Image healthBar;
     [SerializeField] private Image healthBackground;
     
     private Coroutine healthBackgroundCoroutine;
+
+    [Inject]
+    private void Construct(ICharacter player)
+    {
+        this.player = player;
+    }
 
     private void Start()
     {

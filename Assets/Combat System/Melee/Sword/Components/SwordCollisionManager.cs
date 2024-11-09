@@ -54,7 +54,7 @@ public class SwordCollisionManager : MonoBehaviour
 
     private void HandleTriggerEnter(Collider2D collision)
     {
-        if (!collision.TryGetComponent(out Entity entity)) 
+        if (!collision.TryGetComponent(out ICharacter entity)) 
             return;
         
         CinemachineShake.Instance.Shake(0.2f, 1.1f);
@@ -65,7 +65,7 @@ public class SwordCollisionManager : MonoBehaviour
     }
     private void HandleTriggerExit(Collider2D collision)
     {
-        if (!collision.TryGetComponent(out Entity entity)) 
+        if (!collision.TryGetComponent(out ICharacter entity)) 
             return;
         
         OnEntityExitCollision?.Invoke(entity);

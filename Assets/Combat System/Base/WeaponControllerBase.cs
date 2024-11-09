@@ -1,0 +1,51 @@
+using System;
+using UnityEngine;
+using UnityEngine.Events;
+using Zenject;
+
+public abstract class WeaponControllerBase : MonoBehaviour, IWeaponController
+{
+    private ICharacter controllerOwner;
+
+    [SerializeField] protected WeaponBase chosenWeapon;
+    public WeaponBase ChosenWeapon => chosenWeapon;
+    
+    public void UseChosenWeapon() => ChosenWeapon.UseWeapon();
+    
+
+    public event UnityAction OnWeaponChanged;
+    
+
+    [Inject]
+    private void Construct(ICharacter character)
+    {
+        controllerOwner = character;
+    }
+    
+    private void Update()
+    {
+        FollowDirection();
+    }
+
+    public void FollowDirection()
+    {
+        Vector3 mousePosition = GetFollowDirectionTarget();
+        Vector3 characterPosition = controllerOwner.transform.position;
+
+        Vector3 direction = mousePosition - characterPosition;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        if (mousePosition.x < characterPosition.x)
+            transform.rotation = Quaternion.Euler(180, 0, -angle);
+        else
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    protected abstract Vector2 GetFollowDirectionTarget();
+
+    public void WeaponChanged()
+    {
+        OnWeaponChanged?.Invoke();
+    }
+}

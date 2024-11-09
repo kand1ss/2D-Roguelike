@@ -8,7 +8,7 @@ public class Enemy : Entity, IEnemyAI
     private NavMeshAgent navMeshAgent;
     public NavMeshAgent agent => navMeshAgent;
 
-    private new void Awake()
+    protected override void Awake()
     {
         base.Awake();
         
@@ -17,5 +17,11 @@ public class Enemy : Entity, IEnemyAI
         navMeshAgent.updateUpAxis = false;
         
         fsm = new Fsm();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        fsm.Update();
     }
 }

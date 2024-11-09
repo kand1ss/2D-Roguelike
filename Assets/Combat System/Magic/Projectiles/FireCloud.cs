@@ -22,6 +22,9 @@ public class FireCloud : ProjectileBase, IStrikeDamage
 
         if (!collision.TryGetComponent<ICharacterEffectSusceptible>(out ICharacterEffectSusceptible character))
             return;
+
+        if (character == ProjectileSender)
+            return;
         
         character.EffectManager.ApplyEffect(
             new BurningEffect(character, fireMinDamage, fireMaxDamage, burnDuration));

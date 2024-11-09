@@ -3,7 +3,7 @@ using Zenject;
 
 public class WeaponVisualBase : MonoBehaviour
 {
-    protected PlayerWeaponController weaponController;
+    protected WeaponControllerBase weaponController;
     
     protected Animator Animator;
 
@@ -11,7 +11,7 @@ public class WeaponVisualBase : MonoBehaviour
     private Vector3 initialPosition;
 
     [Inject]
-    private void Construct(PlayerWeaponController weapon)
+    private void Construct(WeaponControllerBase weapon)
     {
         weaponController = weapon;
     }

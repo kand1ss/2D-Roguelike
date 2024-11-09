@@ -6,10 +6,9 @@ public class SwordAttackManager : ChargeHandler
 {
     private ICharacter attacker;
     private IInputProvider inputProvider;
-
-    // CHANGE
-    private IWeaponController attackerWeapon;
     
+    private IWeaponController attackerWeapon;
+
     [SerializeField] private float currentStrongAttackSpeed;
 
     [SerializeField] private float weakAttackCooldownRate;
@@ -27,25 +26,28 @@ public class SwordAttackManager : ChargeHandler
     public event UnityAction<SwordAttackType> OnWeaponAttack;
 
     [Inject]
-    private void Construct(IInputProvider input, ICharacter character, PlayerWeaponController playerWeapon)
+    private void Construct([InjectOptional] IInputProvider input, ICharacter character,
+        IWeaponController entityWeapon)
     {
         inputProvider = input;
         attacker = character;
 
-        this.attackerWeapon = playerWeapon;
+        this.attackerWeapon = entityWeapon;
     }
 
     public void InitializeComponent()
     {
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressedCanceled += StopCharging;
-        
+        if (inputProvider != null)
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressedCanceled += StopCharging;
+
         OnChargeAttackCompleted += StrongAttack;
     }
 
     public void FinalizeComponent()
     {
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressedCanceled -= StopCharging;
-        
+        if (inputProvider != null)
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressedCanceled -= StopCharging;
+
         OnChargeAttackCompleted -= StrongAttack;
     }
 
@@ -59,13 +61,15 @@ public class SwordAttackManager : ChargeHandler
         attackCooldownTimer = Time.time;
 
         OnWeaponAttack?.Invoke(SwordAttackType.Weak);
-        CooldownBar.Instance.ShowProgressBar(weakAttackCooldownRate);
+        
+        if (attacker is Player)
+            CooldownBar.Instance.ShowProgressBar(weakAttackCooldownRate);
     }
 
     public void StrikeDamage(ICharacter attackTarget)
     {
         var weapon = (Sword)attackerWeapon.ChosenWeapon;
-        
+
         DamageService.SendDamageToTarget(attacker, attackTarget, weapon);
     }
 
@@ -83,7 +87,8 @@ public class SwordAttackManager : ChargeHandler
 
         OnWeaponAttack?.Invoke(SwordAttackType.Strong);
         attackCooldownTimer = Time.time;
-        
-        CooldownBar.Instance.ShowProgressBar(strongAttackCooldownRate);
+
+        if (attacker is Player) 
+            CooldownBar.Instance.ShowProgressBar(strongAttackCooldownRate);
     }
 }

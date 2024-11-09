@@ -6,7 +6,7 @@ using Zenject;
 
 public class EffectIcons : MonoBehaviour
 {
-    private Entity containerOwner;
+    private ICharacterEffectSusceptible containerOwner;
     
     [SerializeField] private GameObject effectIconPrefab;
     private GameObject effectIconsContainer;
@@ -14,7 +14,7 @@ public class EffectIcons : MonoBehaviour
     readonly List<GameObject> activeEffectIcons = new List<GameObject>();
 
     [Inject]
-    private void Construct(Entity containerOwner)
+    private void Construct(ICharacterEffectSusceptible containerOwner)
     {
         this.containerOwner = containerOwner;
     }

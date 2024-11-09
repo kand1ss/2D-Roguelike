@@ -21,11 +21,11 @@ public class SwordVisual : WeaponVisualBase
         trail.emitting = false;
     }
 
-    private void Start()
+    public void InitVisual()
     {
         sword.GetAttackManager().OnWeaponAttack += AttackAnimation;
     }
-    private void OnDestroy()
+    public void FinalizeVisual()
     {
         sword.GetAttackManager().OnWeaponAttack -= AttackAnimation;
     }

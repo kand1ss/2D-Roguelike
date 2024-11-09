@@ -2,23 +2,16 @@ using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
 
-public class PlayerWeaponController : MonoBehaviour, IWeaponController
+public class PlayerWeaponController : WeaponControllerBase
 {
-    private Player player;
     private IInputProvider inputProvider;
-    
-    private WeaponBase chosenWeapon;
-    public WeaponBase ChosenWeapon => chosenWeapon;
 
     [SerializeField] private WeaponBase firstWeapon;
     [SerializeField] private WeaponBase secondWeapon;
 
-    public event UnityAction OnWeaponChanged;
-
     [Inject]
-    private void Construct(Player player, IInputProvider input)
+    private void Construct(IInputProvider input)
     {
-        this.player = player;
         inputProvider = input;
     }
 
@@ -32,6 +25,7 @@ public class PlayerWeaponController : MonoBehaviour, IWeaponController
         InitializeInputEvents();
         AttachChosenWeapon();
     }
+    
     private void OnDestroy()
     {
         FinalizeInputEvents();
@@ -48,8 +42,6 @@ public class PlayerWeaponController : MonoBehaviour, IWeaponController
         inputProvider.ButtonsController.WeaponInput.OnUseWeapon -= UseChosenWeapon;
     }
     
-    public void UseChosenWeapon() => chosenWeapon.UseWeapon();
-
     private void SwapCurrentWeapon()
     {
         if (chosenWeapon is IChargingWeapon chargingWeapon && chargingWeapon.ChargeHandle.IsCharging == true)
@@ -59,7 +51,7 @@ public class PlayerWeaponController : MonoBehaviour, IWeaponController
         chosenWeapon = (chosenWeapon == firstWeapon) ? secondWeapon : firstWeapon;
         AttachChosenWeapon();
 
-        OnWeaponChanged?.Invoke();
+        WeaponChanged();
 
         Debug.Log($"Оружие изменено: {chosenWeapon.GetType().Name}");
     }
@@ -81,23 +73,8 @@ public class PlayerWeaponController : MonoBehaviour, IWeaponController
         chosenWeapon.DetachWeapon();
     }
 
-    private void Update()
+    protected override Vector2 GetFollowDirectionTarget()
     {
-        FollowMousePosition();
-    }
-
-    private void FollowMousePosition()
-    {
-        Vector3 mousePosition = CoordinateManager.GetCursorPositionInWorldPoint();
-        Vector3 playerPosition = player.transform.position;
-
-        Vector3 direction = mousePosition - playerPosition;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        if (mousePosition.x < playerPosition.x)
-            transform.rotation = Quaternion.Euler(180, 0, -angle);
-        else
-            transform.rotation = Quaternion.Euler(0, 0, angle);
+        return CoordinateManager.GetCursorPositionInWorldPoint();
     }
 }

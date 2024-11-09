@@ -6,6 +6,8 @@ public class ProjectileMagic : Magic
     private ICharacter character;
     private IWeaponController weaponController;
 
+    [SerializeField] private Player player;
+
     [Inject]
     private void Construct(ICharacter character, IWeaponController weaponController)
     {
@@ -22,13 +24,20 @@ public class ProjectileMagic : Magic
 
     private void InstantiateSpellProjectile(ProjectileBase spellProjectile)
     {
-        Vector3 cursorPosition = CoordinateManager.GetCursorPositionInWorldPoint();
-        Vector2 projectileDir = cursorPosition - character.transform.position;
-
         Vector3 castPosition = character.transform.position;
-
+        
         if (weaponController.ChosenWeapon is Staff staff)
             castPosition = staff.GetCastComponent().magicInstantiateTransform.position;
+
+        Vector3 cursorPosition;
+        
+        if(character is Player)
+            cursorPosition = CoordinateManager.GetCursorPositionInWorldPoint();
+        else
+            cursorPosition = player.transform.position;
+
+        Vector2 projectileDir = cursorPosition - castPosition;
+
 
         ProjectileBase projectile = Instantiate(spellProjectile, castPosition, Quaternion.identity);
         projectile.ProjectileSender = character;

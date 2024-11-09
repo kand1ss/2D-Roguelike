@@ -5,7 +5,7 @@ using Zenject;
 public class PushCombo : Combo
 {
     private readonly ICharacter comboInitiator;
-    private float pushPower = 8f;
+    private float pushPower = 14f;
 
     public PushCombo(ICharacter comboInitiator) : base()
     {

@@ -31,6 +31,9 @@ public class FireProjectile : ProjectileBase, IStrikeDamage
 
         if (!collision.TryGetComponent(out ICharacter attackTarget))
             return;
+
+        if (attackTarget == ProjectileSender)
+            return;
         
         CinemachineShake.Instance.Shake(0.2f, 0.7f);
         DamageService.SendDamageToTarget(ProjectileSender ,attackTarget, this);

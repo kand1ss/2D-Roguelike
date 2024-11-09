@@ -12,14 +12,14 @@ public class Entity : MonoBehaviour, ICharacterEffectSusceptible
     
     public Rigidbody2D rigidBody { get; private set; }
     
-    protected void Awake()
+    protected virtual void Awake()
     {
         EffectManager = new CharacterEffectManager(Resists.ownerEffectResistances);
         
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         StatsManager.OnHealthChanged += CheckIsDeath;
         StatsManager.CurrentHealth = StatsManager.MaxHealth;
@@ -31,7 +31,7 @@ public class Entity : MonoBehaviour, ICharacterEffectSusceptible
             Destroy(gameObject);
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         EffectManager.UpdateEffects();
     }

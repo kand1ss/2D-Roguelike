@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(SwordAttackManager))]
@@ -8,7 +9,7 @@ public class Sword : MeleeWeapon, IChargingWeapon
 {
     private ICharacter weaponOwner;
     private IInputProvider inputProvider;
-    
+
     private SwordVisual swordVisual;
 
     private SwordCollisionManager collisionManager;
@@ -22,7 +23,7 @@ public class Sword : MeleeWeapon, IChargingWeapon
     public SwordAttackManager GetAttackManager() => attackManager;
 
     [Inject]
-    private void Construct(IInputProvider input, ICharacter weaponOwner)
+    private void Construct([InjectOptional] IInputProvider input, ICharacter weaponOwner)
     {
         inputProvider = input;
         this.weaponOwner = weaponOwner;
@@ -34,20 +35,21 @@ public class Sword : MeleeWeapon, IChargingWeapon
         collisionManager.OnEntityExitCollision += comboManager.RemoveEntityFromCombo;
 
         collisionManager.OnEntityEnterCollision += attackManager.StrikeDamage;
-        
+
         attackManager.OnWeaponAttack += collisionManager.EnableAttackCollision;
         attackManager.OnWeaponAttack += comboManager.SetLastRegisteredAttack;
 
         swordVisual.OnAttackAnimationEnds += collisionManager.DisableWeaponCollision;
         swordVisual.OnAttackAnimationEnds += comboManager.SetAttackRegisteredFalse;
     }
+
     private void DetachEventHandlers()
     {
         collisionManager.OnEntityEnterCollision -= comboManager.AddEntityToCombo;
         collisionManager.OnEntityExitCollision -= comboManager.RemoveEntityFromCombo;
-        
+
         collisionManager.OnEntityEnterCollision -= attackManager.StrikeDamage;
-        
+
         attackManager.OnWeaponAttack -= collisionManager.EnableAttackCollision;
         attackManager.OnWeaponAttack -= comboManager.SetLastRegisteredAttack;
 
@@ -62,12 +64,15 @@ public class Sword : MeleeWeapon, IChargingWeapon
         collisionManager = GetComponent<SwordCollisionManager>();
         comboManager = GetComponent<SwordComboManager>();
         attackManager = GetComponent<SwordAttackManager>();
+        
+        swordVisual.InitVisual();
     }
 
     private void FinalizeManagers()
     {
+        swordVisual.FinalizeVisual();
         swordVisual = null;
-
+        
         collisionManager = null;
         comboManager = null;
         attackManager = null;
@@ -77,7 +82,9 @@ public class Sword : MeleeWeapon, IChargingWeapon
     {
         InitializeManagers();
         SetupEventHandlers();
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressed += ChargeAttack;
+
+        if (inputProvider != null)
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressed += ChargeAttack;
 
         attackManager.InitializeComponent();
         collisionManager.InitializeComponent();
@@ -89,12 +96,14 @@ public class Sword : MeleeWeapon, IChargingWeapon
     public override void DetachWeapon()
     {
         DetachEventHandlers();
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressed -= ChargeAttack;
+
+        if (inputProvider != null)
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponPressed -= ChargeAttack;
 
         attackManager.FinalizeComponent();
         collisionManager.FinalizeComponent();
         comboManager.FinalizeComponent();
-        
+
         FinalizeManagers();
     }
 

@@ -4,14 +4,14 @@ using Zenject;
 public class StaffVisual : WeaponVisualBase
 {
     private IInputProvider inputProvider;
-    
+
     private const string CHARGE_CAST = "ChargeCast";
     private const string CAST = "Cast";
 
     [SerializeField] private Staff staff;
 
     [Inject]
-    private void Construct(IInputProvider input)
+    private void Construct([InjectOptional] IInputProvider input)
     {
         inputProvider = input;
     }
@@ -31,20 +31,24 @@ public class StaffVisual : WeaponVisualBase
     public override void AttachPlayerEvents()
     {
         base.AttachPlayerEvents();
-        
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopChargeCastAnimation;
+
+        if (inputProvider != null)
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopChargeCastAnimation;
     }
+
     public override void DetachPlayerEvents()
     {
         base.DetachPlayerEvents();
-        
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopChargeCastAnimation;
+
+        if (inputProvider != null)
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopChargeCastAnimation;
     }
 
     private void StartChargeCastAnimation(float arg0)
     {
         Animator.SetBool(CHARGE_CAST, true);
     }
+
     private void StopChargeCastAnimation()
     {
         Animator.SetBool(CHARGE_CAST, false);

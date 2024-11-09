@@ -19,7 +19,7 @@ public class StaffMagicSelector : MonoBehaviour
     public int ChosenSpellIndex => chosenSpellIndex;
 
     [Inject]
-    private void Construct(IInputProvider input)
+    private void Construct([InjectOptional] IInputProvider input)
     {
         inputProvider = input;
     }
@@ -32,17 +32,24 @@ public class StaffMagicSelector : MonoBehaviour
     public void InitializeComponent()
     {
         staff = GetComponent<Staff>();
-        
-        inputProvider.ButtonsController.MagicInput.OnSpellSwap += SwapChosenSpell;
-        inputProvider.ButtonsController.MagicInput.OnMagicSwap += SwapCurrentMagic;
+
+
+        if (inputProvider != null)
+        {
+            inputProvider.ButtonsController.MagicInput.OnSpellSwap += SwapChosenSpell;
+            inputProvider.ButtonsController.MagicInput.OnMagicSwap += SwapCurrentMagic;
+        }
     }
 
     public void FinalizeComponent()
     {
         staff = null;
-        
-        inputProvider.ButtonsController.MagicInput.OnSpellSwap -= SwapChosenSpell;
-        inputProvider.ButtonsController.MagicInput.OnMagicSwap -= SwapCurrentMagic;
+
+        if (inputProvider != null)
+        {
+            inputProvider.ButtonsController.MagicInput.OnSpellSwap -= SwapChosenSpell;
+            inputProvider.ButtonsController.MagicInput.OnMagicSwap -= SwapCurrentMagic;
+        }
     }
     
     private void SwapChosenSpell()

@@ -7,63 +7,70 @@ using Zenject;
 public class StaffCastManager : ChargeHandler
 {
     private IInputProvider inputProvider;
-    
+    private ICharacter weaponOwner;
+
     private Staff staff;
     private StaffMagicSelector staffMagicSelector;
-    
+
     [SerializeField] public Transform magicInstantiateTransform;
-    
-    [SerializeField] private float currentCastTimeCooldown;
-    public float CurrentCastTimeCooldown => currentCastTimeCooldown;
+
+    [SerializeField] private float castTimeCooldownRate;
+    private float currentCastTimeCooldown;
 
     [Inject]
-    private void Construct(IInputProvider input, ICharacter character)
+    private void Construct([InjectOptional] IInputProvider input, ICharacter character)
     {
         inputProvider = input;
+        weaponOwner = character;
     }
 
     public void InitializeComponent()
     {
         staff = GetComponent<Staff>();
         staffMagicSelector = staff.GetMagicComponent();
-        
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
-        
+
+        if (inputProvider != null)
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
+
         OnChargeAttackCompleted += CastMagic;
     }
+
     public void FinalizeComponent()
     {
         staff = null;
         staffMagicSelector = null;
-        
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
-        
+
+        if (inputProvider != null)
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
+
         OnChargeAttackCompleted -= CastMagic;
     }
 
     public void HandleAttack()
     {
-        var castTimeCooldown = CurrentCastTimeCooldown;
         var chosenSpellIndex = staffMagicSelector.ChosenSpellIndex;
         var holdTime = staffMagicSelector.CurrentMagic.Spells[chosenSpellIndex].holdTime;
+
+        if (IsCharging)
+            return;
+        if (Time.time < currentCastTimeCooldown + staffMagicSelector.CurrentMagic.Spells[chosenSpellIndex].castCooldown)
+            return;
         
-        if(IsCharging)
-            return;
-        if(Time.time < castTimeCooldown + staffMagicSelector.CurrentMagic.Spells[chosenSpellIndex].castCooldown)
-            return;
+        currentCastTimeCooldown = Time.time + castTimeCooldownRate;
 
         StartCharging(holdTime);
     }
-    
+
     private void CastMagic()
     {
         var chosenSpellIndex = staffMagicSelector.ChosenSpellIndex;
         var cooldownTime = staffMagicSelector.CurrentMagic.Spells[chosenSpellIndex].castCooldown;
-        
+
         currentCastTimeCooldown = Time.time;
         Debug.Log("Casting magic");
         staffMagicSelector.CurrentMagic.CastSpell(chosenSpellIndex);
-        
-        CooldownBar.Instance.ShowProgressBar(cooldownTime);
+
+        if (weaponOwner is Player)
+            CooldownBar.Instance.ShowProgressBar(cooldownTime);
     }
 }

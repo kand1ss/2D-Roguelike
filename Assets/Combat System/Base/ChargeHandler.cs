@@ -7,6 +7,8 @@ public class ChargeHandler : MonoBehaviour, IChargeable
     private bool isCharging;
     public bool IsCharging => isCharging;
     
+    [SerializeField] private ActionProgressBar progressBar;
+    
     public event UnityAction<float> OnChargeAttackStart;
     public event UnityAction OnChargeAttackStopped;
     public event UnityAction OnChargeAttackCompleted;
@@ -15,14 +17,14 @@ public class ChargeHandler : MonoBehaviour, IChargeable
 
     private void Start()
     {
-        OnChargeAttackStart += ActionProgressBar.Instance.ShowProgressBar;
-        OnChargeAttackStopped += ActionProgressBar.Instance.HideProgressBar;
+        OnChargeAttackStart += progressBar.ShowProgressBar;
+        OnChargeAttackStopped += progressBar.HideProgressBar;
     }
 
     private void OnDestroy()
     {
-        OnChargeAttackStart -= ActionProgressBar.Instance.ShowProgressBar;
-        OnChargeAttackStopped -= ActionProgressBar.Instance.HideProgressBar;
+        OnChargeAttackStart -= progressBar.ShowProgressBar;
+        OnChargeAttackStopped -= progressBar.HideProgressBar;
     }
 
     public void StartCharging(float holdTime)

@@ -17,7 +17,7 @@ public class BowShootManager : ChargeHandler
     [SerializeField] private float arrowSpeed;
 
     [Inject]
-    private void Construct(ICharacter character, IInputProvider input, IWeaponController weaponController)
+    private void Construct(ICharacter character, [InjectOptional] IInputProvider input, IWeaponController weaponController)
     {
         weaponOwner = character;
         this.weaponController = weaponController;
@@ -29,9 +29,12 @@ public class BowShootManager : ChargeHandler
         bow = GetComponent<Bow>();
         
         OnChargeAttackCompleted += Shoot;
-        
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += weaponOwner.StatsManager.IncreaseWalkingSpeed;
+
+        if (inputProvider == null)
+        {
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += weaponOwner.StatsManager.IncreaseWalkingSpeed;
+        }
     }
 
     public void FinalizeComponent()
@@ -39,8 +42,12 @@ public class BowShootManager : ChargeHandler
         bow = null;
         
         OnChargeAttackCompleted -= Shoot;
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
-        inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= weaponOwner.StatsManager.IncreaseWalkingSpeed;
+
+        if (inputProvider == null)
+        {
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
+            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= weaponOwner.StatsManager.IncreaseWalkingSpeed;
+        }
     }
 
     private void Shoot()
