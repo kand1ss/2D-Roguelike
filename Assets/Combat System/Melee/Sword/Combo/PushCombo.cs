@@ -23,8 +23,19 @@ public class PushCombo : Combo
     {
         foreach (var entity in entities)
         {
-            Vector3 cursorPosition = CoordinateManager.GetCursorPositionInWorldPoint();
+            Vector3 cursorPosition;
+            
+            if(comboInitiator is Player)
+                cursorPosition = CoordinateManager.GetCursorPositionInWorldPoint();
+            else
+                cursorPosition = entity.transform.position;
+            
+            Debug.LogWarning(cursorPosition);
+            Debug.LogWarning(comboInitiator.transform.position);
+            
             Vector2 pushDirection = (cursorPosition - comboInitiator.transform.position).normalized;
+            
+            Debug.LogWarning(pushDirection);
 
             entity.rigidBody.AddForce(pushDirection * pushPower, ForceMode2D.Impulse);
         }

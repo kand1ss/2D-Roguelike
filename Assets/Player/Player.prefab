@@ -681,9 +681,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Resists>k__BackingField:
     ownerEffectResistances: 
-    resistanceCap: 80
-    physicalDamageResistance: 55
-    magicalDamageResistance: 30
+    physicalDamageResistance: 80
+    magicalDamageResistance: 80
   <StatsManager>k__BackingField:
     maxHealth: 100
     currentHealth: 100
@@ -1277,6 +1276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d614e314df4974815092979385eef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressBar: {fileID: 1113755865970141952}
   arrowInstantiate: {fileID: 882555335940824391}
   shootCooldownRate: 0.5
   shootHoldTime: 1
@@ -1350,6 +1350,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.316
       objectReference: {fileID: 0}
+    - target: {fileID: 4399879812250250885, guid: 8e574ccd4994b9146a6042229edda694, type: 3}
+      propertyPath: progressBar
+      value: 
+      objectReference: {fileID: 1113755865970141952}
+    - target: {fileID: 4399879812250250885, guid: 8e574ccd4994b9146a6042229edda694, type: 3}
+      propertyPath: castTimeCooldownRate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5201234597239537074, guid: 8e574ccd4994b9146a6042229edda694, type: 3}
       propertyPath: m_Name
       value: Staff
@@ -1411,6 +1419,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7171944923269277843}
     m_Modifications:
+    - target: {fileID: 1832817519203724725, guid: 194f14dfd2582ca45a864f354cf10aaa, type: 3}
+      propertyPath: progressBar
+      value: 
+      objectReference: {fileID: 1113755865970141952}
     - target: {fileID: 1832817519203724725, guid: 194f14dfd2582ca45a864f354cf10aaa, type: 3}
       propertyPath: weakAttackCooldownRate
       value: 0.4
@@ -1648,6 +1660,17 @@ PrefabInstance:
       addedObject: {fileID: 8837315668163833024}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e9a32a6ef7b21e4c940a01bebbdfea8, type: 3}
+--- !u!114 &1113755865970141952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3907571926817231837, guid: 3e9a32a6ef7b21e4c940a01bebbdfea8, type: 3}
+  m_PrefabInstance: {fileID: 4129414903906875613}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3898b2cab2af44b4298276b40947fdde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3110503334698078794 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1325213552843844247, guid: 3e9a32a6ef7b21e4c940a01bebbdfea8, type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3431190466765895168}
   - component: {fileID: 1698357756230031425}
   - component: {fileID: 6450212593616539102}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StrongAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 2808287531761701117}
   - component: {fileID: 5703536977159554006}
   - component: {fileID: 2284611523876152597}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SwordVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 597415232846768345}
   - component: {fileID: 5158848609446490467}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 6166068274859935561}
   - component: {fileID: 5113101665926022275}
   - component: {fileID: 4110842276641528087}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WeakAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 5808569245814042807}
   - component: {fileID: 4342625578778999014}
   - component: {fileID: 1832817519203724725}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,6 +479,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4804d0011b00a243ba8a1b053af2301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strongAttackCollision: {fileID: 0}
+  strongAttackHandler: {fileID: 0}
+  weakAttackCollision: {fileID: 0}
+  weakAttackHandler: {fileID: 0}
 --- !u!114 &4342625578778999014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b1e6c3f256e6c4d9eff6910a7c13ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressBar: {fileID: 0}
   currentStrongAttackSpeed: 1.85
   weakAttackCooldownRate: 0.4
   strongAttackCooldownRate: 0.6

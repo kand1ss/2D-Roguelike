@@ -30,7 +30,7 @@ public class CharacterStatsManager
         get => walkingMoveSpeed;
         set
         {
-            if(value > 0 && value < 8)
+            if(value > 0)
                 walkingMoveSpeed = value;
         }
     }
@@ -43,15 +43,5 @@ public class CharacterStatsManager
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
-    }
-
-    public void DecreaseWalkingSpeed()
-    {
-        walkingMoveSpeed /= 2;
-    }
-
-    public void IncreaseWalkingSpeed()
-    {
-        walkingMoveSpeed *= 2;
     }
 }

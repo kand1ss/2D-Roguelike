@@ -3,7 +3,7 @@ using Zenject;
 
 public class WeaponVisualBase : MonoBehaviour
 {
-    protected WeaponControllerBase weaponController;
+    private WeaponControllerBase weaponController;
     
     protected Animator Animator;
 

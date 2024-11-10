@@ -29,14 +29,14 @@ public abstract class WeaponControllerBase : MonoBehaviour, IWeaponController
 
     public void FollowDirection()
     {
-        Vector3 mousePosition = GetFollowDirectionTarget();
+        Vector3 directionTarget = GetFollowDirectionTarget();
         Vector3 characterPosition = controllerOwner.transform.position;
 
-        Vector3 direction = mousePosition - characterPosition;
+        Vector3 direction = directionTarget - characterPosition;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        if (mousePosition.x < characterPosition.x)
+        if (directionTarget.x < characterPosition.x)
             transform.rotation = Quaternion.Euler(180, 0, -angle);
         else
             transform.rotation = Quaternion.Euler(0, 0, angle);

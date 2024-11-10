@@ -1,34 +1,25 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [System.Serializable]
 public class CharacterResists
 {
     [SerializeField] public List<EffectType> ownerEffectResistances;
-    
-    [SerializeField] private int resistanceCap = 80;
 
+    [Range(0, 80)] 
     [SerializeField] private float physicalDamageResistance;
+
+    [Range(0, 80)] 
     [SerializeField] private float magicalDamageResistance;
 
     public float SetPhysicalResistance
     {
-        set
-        {
-            if (value <= resistanceCap)
-                physicalDamageResistance = value;
-        }
+        set => physicalDamageResistance = value;
     }
-    
+
     public float SetMagicalResistance
     {
-        set
-        {
-            if (value <= resistanceCap)
-                magicalDamageResistance = value;
-        }
+        set => magicalDamageResistance = value;
     }
 
     public float GetPhysicalDamageResistance => (1 - physicalDamageResistance / 100);

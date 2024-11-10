@@ -1,37 +1,37 @@
 
+using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class TimedEffect
 {
-    private const float EffectInterval = 1f;
-
-    private float remainingDuration;
+    private const float EffectApplyInterval = 1f;
     private float intervalTimer;
 
-    public UnityAction OnEffectAdded;
-    public UnityAction OnEffectApplied;
-    public UnityAction OnEffectRemoved;
+    private float remainingDuration;
+    
+    protected UnityAction EffectApplied;
+    protected UnityAction EffectRemoved;
 
     protected TimedEffect(float duration)
     {
         remainingDuration = duration;
-        intervalTimer = EffectInterval;
+        intervalTimer = EffectApplyInterval;
     }
 
-    public void CheckPerSecond(float deltaTime)
+    public void CheckPerSecond()
     {
-        intervalTimer -= deltaTime;
+        intervalTimer -= Time.deltaTime;
         if (intervalTimer <= 0)
         {
             remainingDuration -= 1f;
             if (remainingDuration <= 0)
             {
-                OnEffectRemoved?.Invoke();
+                EffectRemoved?.Invoke();
                 return;
             }
-            OnEffectApplied?.Invoke();
+            EffectApplied?.Invoke();
         
-            intervalTimer = EffectInterval;
+            intervalTimer = EffectApplyInterval;
         }
     }
 }

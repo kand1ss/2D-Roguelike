@@ -1,33 +1,11 @@
 using UnityEngine;
 
-public class PoisonEffect : TimedEffect, IEffect
+public class PoisonEffect : DamageEffectBase
 {
-    private readonly ICharacterEffectSusceptible target;
+    public override EffectType EffectType => EffectType.Poison;
+    public override Sprite EffectIcon => Resources.Load<Sprite>("Sprites/Effects/PoisonEffect");
 
-    private readonly float minDamage;
-    private readonly float maxDamage;
-
-    public EffectType EffectType => EffectType.Poison;
-    public Sprite EffectIcon => Resources.Load<Sprite>("Sprites/Effects/BurningEffect");
-    
-    public PoisonEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage, float duration) : base(duration)
+    public PoisonEffect(ICharacterEffectSusceptible effectTarget, float minDamage, float maxDamage, float duration) : base(effectTarget, minDamage, maxDamage, duration)
     {
-        this.target = target;
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
-
-        OnEffectApplied += ApplyEffect;
-        OnEffectRemoved += RemoveEffect;
-    }
-
-    public void ApplyEffect()
-    {
-        Debug.Log($"{target}: Poison Effect!");
-        DamageService.SendDamageByEffect(target, minDamage, maxDamage);
-    }
-
-    public void RemoveEffect()
-    {
-        target.EffectManager.RemoveEffect(this);
     }
 }

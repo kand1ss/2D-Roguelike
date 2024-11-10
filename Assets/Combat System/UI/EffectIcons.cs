@@ -26,14 +26,14 @@ public class EffectIcons : MonoBehaviour
 
     private void Start()
     {
-        containerOwner.EffectManager.OnEffectAdded += AddEffectIcon;
-        containerOwner.EffectManager.OnEffectRemoved += RemoveEffectIcon;
+        containerOwner.EffectManager.EffectAdded += AddEffectIcon;
+        containerOwner.EffectManager.EffectRemoved += RemoveEffectIcon;
     }
 
     private void OnDestroy()
     {
-        containerOwner.EffectManager.OnEffectAdded -= AddEffectIcon;
-        containerOwner.EffectManager.OnEffectRemoved -= RemoveEffectIcon;
+        containerOwner.EffectManager.EffectAdded -= AddEffectIcon;
+        containerOwner.EffectManager.EffectRemoved -= RemoveEffectIcon;
     }
 
     private void AddEffectIcon(IEffect effect)

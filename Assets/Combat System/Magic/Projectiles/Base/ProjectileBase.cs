@@ -11,10 +11,10 @@ public class ProjectileBase : MonoBehaviour, IProjectileEvents
     
     public float ProjectileSpeed => projectileSpeed;
 
-
     public event UnityAction OnProjectileImpact;
     public event UnityAction OnProjectileLaunch;
     public event UnityAction OnProjectileDestroy;
+    
 
     protected Collider2D ProjectileCollision;
     protected Rigidbody2D ProjectileRb;

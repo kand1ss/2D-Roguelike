@@ -5,6 +5,7 @@ using UnityEngine;
 public class SwordComboManager : MonoBehaviour
 {
     private ComboSequenceController comboChecker;
+    public ComboSequenceController ComboController => comboChecker;
 
     public bool attackRegistered = false;
 

@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections;
+using UnityEngine;
 
 public class ComboSequenceController : MonoBehaviour
 {
@@ -45,6 +45,11 @@ public class ComboSequenceController : MonoBehaviour
         activeComboList.Clear();
     }
 
+    public IList<Combo> GetActiveComboList()
+    {
+        return activeComboList;
+    }
+
     public void AddEntityInList(ICharacter entity)
     {
         if (!currentEntitiesInCollision.Contains(entity))
@@ -55,6 +60,11 @@ public class ComboSequenceController : MonoBehaviour
     {
         if (currentEntitiesInCollision.Contains(entity))
             currentEntitiesInCollision.Remove(entity);
+    }
+
+    public void ClearLastRegisteredAttackList()
+    {
+        lastRegisteredAttacksList.Clear();
     }
 
     public void RegisterAttack(SwordAttackType attackType)

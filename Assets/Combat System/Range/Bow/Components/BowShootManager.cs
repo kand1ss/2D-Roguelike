@@ -30,11 +30,8 @@ public class BowShootManager : ChargeHandler
         
         OnChargeAttackCompleted += Shoot;
 
-        if (inputProvider == null)
-        {
+        if (inputProvider != null)
             inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += StopCharging;
-            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled += weaponOwner.StatsManager.IncreaseWalkingSpeed;
-        }
     }
 
     public void FinalizeComponent()
@@ -44,10 +41,7 @@ public class BowShootManager : ChargeHandler
         OnChargeAttackCompleted -= Shoot;
 
         if (inputProvider == null)
-        {
             inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= StopCharging;
-            inputProvider.ButtonsController.WeaponInput.OnUseWeaponCanceled -= weaponOwner.StatsManager.IncreaseWalkingSpeed;
-        }
     }
 
     private void Shoot()
@@ -66,8 +60,6 @@ public class BowShootManager : ChargeHandler
     {
         if (Time.time < cooldownTime + shootCooldownRate)
             return;
-
-        weaponOwner.StatsManager.DecreaseWalkingSpeed();
         
         StartCharging(shootHoldTime);
     }

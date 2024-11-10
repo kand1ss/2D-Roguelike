@@ -7,6 +7,10 @@ public class Enemy : Entity, IEnemyAI
     
     private NavMeshAgent navMeshAgent;
     public NavMeshAgent agent => navMeshAgent;
+    
+    [SerializeField] protected Player player;
+    public float DistanceToPlayer => Vector3.Distance(player.transform.position, transform.position);
+
 
     protected override void Awake()
     {

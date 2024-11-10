@@ -31,8 +31,6 @@ public class EnemyStateChasing : FsmState
 
     private void Chasing()
     {
-        Debug.Log("Chasing State: [CHASING]");
-
         enemy.agent.SetDestination(target.transform.position);
     }
 

@@ -3,18 +3,18 @@ using UnityEngine.AI;
 
 public class EnemyStateRoaming : FsmState
 {
-    private readonly IEnemyAI enemy;
+    private readonly Enemy enemy;
 
-    private float roamingMaxDistance;
-    private float roamingMinDistance;
+    private readonly float roamingMaxDistance;
+    private readonly float roamingMinDistance;
 
-    private float roamingMaxTime = 4f;
+    private readonly float roamingMaxTime = 4f;
     private float roamingTimer;
     
     private Vector3 startPosition;
     private Vector3 roamPosition;
 
-    public EnemyStateRoaming(IEnemyAI enemy, Fsm fsm, float roamDistanceMax, float roamDistanceMin) : base(fsm)
+    public EnemyStateRoaming(Enemy enemy, Fsm fsm, float roamDistanceMax, float roamDistanceMin) : base(fsm)
     {
         this.enemy = enemy;
         roamingMaxDistance = roamDistanceMax;
@@ -33,6 +33,11 @@ public class EnemyStateRoaming : FsmState
     }
 
     public override void Update()
+    {
+        CheckStateTransitions();
+    }
+
+    private void CheckStateTransitions()
     {
         IdleStateTransition();
     }

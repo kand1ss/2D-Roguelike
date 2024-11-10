@@ -32,6 +32,8 @@ public static class DamageService
 
     public static void SendDamageByEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage)
     {
+        Debug.LogWarning("Damage Service called");
+
         var effectDamage = Mathf.FloorToInt(Random.Range(minDamage, maxDamage));
         
         target.StatsManager.TakeDamage(effectDamage);

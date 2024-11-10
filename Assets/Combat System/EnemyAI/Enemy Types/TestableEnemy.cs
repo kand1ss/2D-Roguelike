@@ -11,16 +11,12 @@ public class TestableEnemy : Enemy, IEnemyWithWeapon
     [SerializeField] private float roamingDistanceMax;
 
     [SerializeField] private float chasingStartDistance;
-    [SerializeField] private float attackingStartDistance;
-
-    [SerializeField] private Player player;
     
-
+    [SerializeField] private float attackingStartDistance;
+    [SerializeField] private float attackInterval;
+    
     [SerializeField] private EnemyWeaponController weaponController;
     public EnemyWeaponController WeaponController => weaponController;
-
-    float distanceToPlayer => Vector3.Distance(player.transform.position, transform.position);
-
 
     protected override void Start()
     {
@@ -29,7 +25,7 @@ public class TestableEnemy : Enemy, IEnemyWithWeapon
         fsm.AddState(new EnemyStateIdle(this, fsm, idleTime));
         fsm.AddState(new EnemyStateRoaming(this, fsm, roamingDistanceMax, roamingDistanceMin));
         fsm.AddState(new EnemyStateChasing(this, fsm, player, chasingStartDistance));
-        fsm.AddState(new EnemyStateAttacking(this, fsm, player, attackingStartDistance));
+        fsm.AddState(new EnemyStateAttacking(this, fsm, player, attackingStartDistance, attackInterval));
         
         fsm.SetState<EnemyStateIdle>();
     }
@@ -49,18 +45,25 @@ public class TestableEnemy : Enemy, IEnemyWithWeapon
 
     private void ChasingStateTransition()
     {
-        if (distanceToPlayer <= chasingStartDistance)
-            fsm.SetState<EnemyStateChasing>();
+        if (fsm.CurrentState is not EnemyStateChasing && fsm.CurrentState is not EnemyStateAttacking)
+        {
+            if (DistanceToPlayer <= chasingStartDistance)
+                fsm.SetState<EnemyStateChasing>();
+        }
     }
 
     private void AttackingStateTransition()
     {
-        if (distanceToPlayer <= attackingStartDistance)
-            fsm.SetState<EnemyStateAttacking>();
+        if (fsm.CurrentState is not EnemyStateAttacking)
+        {
+            if (DistanceToPlayer <= attackingStartDistance)
+                fsm.SetState<EnemyStateAttacking>();
+        }
     }
 
     private void OnDestroy()
     {
+        fsm.CurrentState.Exit();
         weaponController.ChosenWeapon.DetachWeapon();
     }
 }
