@@ -48,10 +48,6 @@ public class EnemyStateAttacking : FsmState
             
             attackTimer = attackInterval;
         }
-        
-        // var distanceToPlayer = Vector3.Distance(target.transform.position, enemy.transform.position);
-        // if(distanceToPlayer > 0.4f)
-        //     enemy.agent.SetDestination(target.transform.position);
 
         enemy.agent.SetDestination(target.transform.position);
         
@@ -82,7 +78,7 @@ public class EnemyStateAttacking : FsmState
 
             comboAttackList = comboList[comboIndex].GetAttackSequence;
             
-            enemyWithSword.GetComboManager().ComboController.ClearLastRegisteredAttackList();
+            //enemyWithSword.GetComboManager().ComboController.ClearLastRegisteredAttackList();
             
             attackIndexPointer = 0;
         }
@@ -94,18 +90,21 @@ public class EnemyStateAttacking : FsmState
             return;
         
         var currentAttack = comboAttackList[attackIndexPointer];
-        if (currentAttack == SwordAttackType.Strong)
-            sword.ChargeAttack();
-        else if (currentAttack == SwordAttackType.Weak)
-            sword.UseWeapon();
+        
+        switch (currentAttack)
+        {
+            case SwordAttackType.Strong:
+                sword.ChargeAttack();
+                break;
+            case SwordAttackType.Weak:
+                sword.UseWeapon();
+                break;
+        }
 
         attackIndexPointer++;
         
-        if (attackIndexPointer >= comboAttackList.Count)
-        {
-            attackIndexPointer = 0;
+        if (attackIndexPointer == comboAttackList.Count)
             SelectNewCombo();
-        }
     }
 
     public override void Exit()
