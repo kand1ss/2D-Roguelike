@@ -11,11 +11,6 @@ public class FireCloud : ProjectileBase, IStrikeDamage
 
     public DamageType CurrentDamageType => DamageType.Magical;
 
-    private void DisableProjectileCollision()
-    {
-        ProjectileCollision.enabled = false;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         ProjectileImpact();
@@ -28,7 +23,5 @@ public class FireCloud : ProjectileBase, IStrikeDamage
         
         character.EffectManager.ApplyEffect(
             new BurningEffect(character, fireMinDamage, fireMaxDamage, burnDuration));
-        
-        Debug.Log($"Cloud Projectile: Collision Enter");
     }
 }

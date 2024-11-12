@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class DamageEffectBase : TimedEffect, IEffect
@@ -30,5 +31,20 @@ public abstract class DamageEffectBase : TimedEffect, IEffect
     public virtual void RemoveEffect()
     {
         effectTarget.EffectManager.RemoveEffect(this);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is DamageEffectBase other)
+        {
+            return this.EffectType == other.EffectType && this.EffectIcon == other.EffectIcon;
+        }
+
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(EffectType, effectTarget);
     }
 }

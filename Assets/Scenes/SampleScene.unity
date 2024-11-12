@@ -1501,6 +1501,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1508316362262882332, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2248935182871012950, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: player
       value: 
@@ -1529,6 +1533,14 @@ PrefabInstance:
       propertyPath: <Resists>k__BackingField.magicalDamageResistance
       value: 30.3
       objectReference: {fileID: 0}
+    - target: {fileID: 5455042270110833142, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: <Resists>k__BackingField.ownerEffectResistances.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455042270110833142, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: <Resists>k__BackingField.ownerEffectResistances.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1542,10 +1554,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1670188060}
     m_Modifications:
-    - target: {fileID: 1094673153345765613, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
-      propertyPath: m_Acceleration
-      value: 16
-      objectReference: {fileID: 0}
     - target: {fileID: 2249694210745042190, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
       propertyPath: player
       value: 
@@ -1554,30 +1562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 3777889938987507109, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4237760976566866225, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1083235911}
-    - target: {fileID: 4237760976566866225, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
-      propertyPath: attackInterval
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4237760976566866225, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
-      propertyPath: chasingStartDistance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4237760976566866225, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
-      propertyPath: attackingStartDistance
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4237760976566866225, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
-      propertyPath: <Resists>k__BackingField.physicalDamageResistance
-      value: 50.1
-      objectReference: {fileID: 0}
     - target: {fileID: 6090540227707989074, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
       propertyPath: player
       value: 

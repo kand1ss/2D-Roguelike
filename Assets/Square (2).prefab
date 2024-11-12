@@ -472,7 +472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7758955912466643146
 Transform:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3777889938987507109}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10.73, y: -6.93, z: -0.001964194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Resists>k__BackingField:
     ownerEffectResistances: 
-    physicalDamageResistance: 10
+    physicalDamageResistance: 50.1
     magicalDamageResistance: 15
   <StatsManager>k__BackingField:
     maxHealth: 100
@@ -668,13 +668,13 @@ MonoBehaviour:
   <Skills>k__BackingField:
     physicalSkillLevel: 5
     magicalSkillLevel: 5
+  player: {fileID: 0}
   idleTime: 2
   roamingDistanceMin: 6
   roamingDistanceMax: 10
-  chasingStartDistance: 5
-  attackingStartDistance: 6
-  attackInterval: 0
-  player: {fileID: 0}
+  chasingStartDistance: 2
+  attackingStartDistance: 8
+  attackInterval: 0.6
   weaponController: {fileID: 2249694210745042190}
 --- !u!195 &1094673153345765613
 NavMeshAgent:
@@ -687,7 +687,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3
-  m_Acceleration: 8
+  m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0

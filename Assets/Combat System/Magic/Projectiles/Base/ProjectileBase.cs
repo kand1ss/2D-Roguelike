@@ -9,6 +9,8 @@ public class ProjectileBase : MonoBehaviour, IProjectileEvents
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] protected float projectileRange = 8f;
     
+    public float ProjectileRange => projectileRange;
+    
     public float ProjectileSpeed => projectileSpeed;
 
     public event UnityAction OnProjectileImpact;
@@ -38,6 +40,8 @@ public class ProjectileBase : MonoBehaviour, IProjectileEvents
     protected virtual void Start()
     {
         OnProjectileLaunch?.Invoke();
+        
+        ProjectileCollision.enabled = true;
 
         ProjectileVisual.OnHitAnimationEnds += DestroyProjectile;
     }

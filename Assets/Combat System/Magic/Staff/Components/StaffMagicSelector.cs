@@ -16,7 +16,11 @@ public class StaffMagicSelector : MonoBehaviour
     [SerializeField] private Magic secondMagicSlot;
 
     private int chosenSpellIndex;
-    public int ChosenSpellIndex => chosenSpellIndex;
+    public int ChosenSpellIndex
+    {
+        get => chosenSpellIndex;
+        set => chosenSpellIndex = value;
+    }
 
     [Inject]
     private void Construct([InjectOptional] IInputProvider input)
