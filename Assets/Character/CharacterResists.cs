@@ -6,20 +6,30 @@ public class CharacterResists
 {
     [SerializeField] public List<EffectType> ownerEffectResistances;
 
-    [Range(0, 80)] 
+    [Range(0, 80)]
     [SerializeField] private float physicalDamageResistance;
 
-    [Range(0, 80)] 
+    [Range(0, 80)]
     [SerializeField] private float magicalDamageResistance;
 
-    public float SetPhysicalResistance
+    public float PhysicalResistance
     {
-        set => physicalDamageResistance = value;
+        get => physicalDamageResistance;
+        set
+        {
+            if (value <= 80 && value >= 0)
+                physicalDamageResistance = value;
+        }
     }
 
-    public float SetMagicalResistance
+    public float MagicalResistance
     {
-        set => magicalDamageResistance = value;
+        get => magicalDamageResistance;
+        set
+        {
+            if (value <= 80 && value >= 0)
+                magicalDamageResistance = value;
+        }
     }
 
     public float GetPhysicalDamageResistance => (1 - physicalDamageResistance / 100);

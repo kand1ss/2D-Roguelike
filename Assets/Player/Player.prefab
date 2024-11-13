@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 882555335940824391}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShootPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4927478297849568461}
   - component: {fileID: 6824534394041513292}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 2400780451325501841}
   - component: {fileID: 576499304887938706}
   - component: {fileID: 1344448913859048196}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BowVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Resists>k__BackingField:
     ownerEffectResistances: 
-    physicalDamageResistance: 80
+    physicalDamageResistance: 65
     magicalDamageResistance: 80
   <StatsManager>k__BackingField:
     maxHealth: 100
@@ -781,7 +781,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1143,7 +1143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5754407063305533968}
   - component: {fileID: 5434286181964226296}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1229,7 +1229,7 @@ GameObject:
   - component: {fileID: 555830882841768171}
   - component: {fileID: 7792833911245241334}
   - component: {fileID: 4081940390424721583}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -5,10 +5,10 @@ using UnityEngine.Events;
 public class CharacterStatsManager
 {
     public UnityAction<float> OnHealthChanged;
-    
+
     [SerializeField] private int maxHealth;
     public int MaxHealth => maxHealth;
-    
+
     [SerializeField] private int currentHealth;
 
     public int CurrentHealth
@@ -16,21 +16,23 @@ public class CharacterStatsManager
         get => currentHealth;
         set
         {
-            if (value <= maxHealth)
-            {
+            if (value > maxHealth)
+                currentHealth = maxHealth;
+            else
                 currentHealth = value;
-                OnHealthChanged?.Invoke(value);
-            }
+            
+            OnHealthChanged?.Invoke(currentHealth);
         }
     }
-    
+
     [SerializeField] private float walkingMoveSpeed = 6f;
+
     public float WalkingMoveSpeed
     {
         get => walkingMoveSpeed;
         set
         {
-            if(value > 0)
+            if (value > 0)
                 walkingMoveSpeed = value;
         }
     }

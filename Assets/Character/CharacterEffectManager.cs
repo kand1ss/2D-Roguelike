@@ -5,8 +5,8 @@ using UnityEngine.Events;
 public class CharacterEffectManager
 {
     private readonly List<EffectType> characterEffectResists;
-    
     public List<IEffect> ActiveEffects { get; private set; } = new();
+    
     private readonly List<IEffect> effectsToRemove = new();
 
     public UnityAction<IEffect> EffectAdded;

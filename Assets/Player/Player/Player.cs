@@ -1,14 +1,17 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour, ICharacterEffectSusceptible
+public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
 {
     private IInputProvider inputProvider;
+    
     public PlayerState PlayerState { get; private set; } = PlayerState.Idle;
 
 
     public CharacterEffectManager EffectManager { get; private set; }
+    [field: SerializeField] public CharacterPotionManager PotionManager { get; set; }
     [field: SerializeField] public CharacterResists Resists { get; private set; }
     [field: SerializeField] public CharacterStatsManager StatsManager { get; private set; }
     [field: SerializeField] public CharacterSkills Skills { get; private set; }
@@ -28,9 +31,17 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible
     private void Awake()
     {
         EffectManager = new CharacterEffectManager(Resists.ownerEffectResistances);
+        PotionManager = new CharacterPotionManager();
         
         rigidBody = GetComponent<Rigidbody2D>();
         weaponController = GetComponentInChildren<PlayerWeaponController>();
+    }
+
+    private void Start()
+    {
+        PotionManager.ReplaceChosenPotion(new HealPotion(this, 10));
+        // PotionManager.ReplaceChosenPotion(new PhysicalSkillPotion(this, 5, 4f));
+        PotionManager.InitPlayerInput(inputProvider);
     }
 
     private void Update()
@@ -38,6 +49,7 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible
         HandleMovement();
         UpdateState();
         EffectManager.UpdateEffects();
+        PotionManager.UpdateTemporaryBuff();
     }
 
     private void HandleMovement()

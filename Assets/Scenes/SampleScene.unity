@@ -1020,37 +1020,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 11752994563621096, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 323977410978288976, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1226876419652948726, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1665625659071051401, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2576196740806989763, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2613365608045003455, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3181248439089744547, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4850006957849522635, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
+    - target: {fileID: 1821558818240597463, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
+      propertyPath: <PotionManager>k__BackingField.<ActivePotionBuffs>k__BackingField.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4991979740383514209, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1092,45 +1064,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5096134489575475253, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739465334213243160, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5741161680023225084, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5925184158896844057, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 6490171760927257027, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7168254100264976395, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 7505117008049274910, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8118819769394383209, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8396196560433181864, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9066178680687995848, guid: f26328efbc0cb754383ea1862dcee525, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1535,7 +1471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5455042270110833142, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: <Resists>k__BackingField.ownerEffectResistances.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5455042270110833142, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: <Resists>k__BackingField.ownerEffectResistances.Array.data[0]

@@ -80,6 +80,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UsePotion"",
+                    ""type"": ""Button"",
+                    ""id"": ""5182dd76-6a7c-465c-82f3-2f7761173931"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -302,6 +311,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""SwapWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b98da1d-6247-4ad3-aae7-4808ff8e4b3e"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UsePotion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -316,6 +336,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_Player_SwapSpell = m_Player.FindAction("SwapSpell", throwIfNotFound: true);
         m_Player_SwapMagic = m_Player.FindAction("SwapMagic", throwIfNotFound: true);
         m_Player_SwapWeapon = m_Player.FindAction("SwapWeapon", throwIfNotFound: true);
+        m_Player_UsePotion = m_Player.FindAction("UsePotion", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -383,6 +404,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SwapSpell;
     private readonly InputAction m_Player_SwapMagic;
     private readonly InputAction m_Player_SwapWeapon;
+    private readonly InputAction m_Player_UsePotion;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -393,6 +415,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @SwapSpell => m_Wrapper.m_Player_SwapSpell;
         public InputAction @SwapMagic => m_Wrapper.m_Player_SwapMagic;
         public InputAction @SwapWeapon => m_Wrapper.m_Player_SwapWeapon;
+        public InputAction @UsePotion => m_Wrapper.m_Player_UsePotion;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -420,6 +443,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @SwapWeapon.started += instance.OnSwapWeapon;
             @SwapWeapon.performed += instance.OnSwapWeapon;
             @SwapWeapon.canceled += instance.OnSwapWeapon;
+            @UsePotion.started += instance.OnUsePotion;
+            @UsePotion.performed += instance.OnUsePotion;
+            @UsePotion.canceled += instance.OnUsePotion;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -442,6 +468,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @SwapWeapon.started -= instance.OnSwapWeapon;
             @SwapWeapon.performed -= instance.OnSwapWeapon;
             @SwapWeapon.canceled -= instance.OnSwapWeapon;
+            @UsePotion.started -= instance.OnUsePotion;
+            @UsePotion.performed -= instance.OnUsePotion;
+            @UsePotion.canceled -= instance.OnUsePotion;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -467,5 +496,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnSwapSpell(InputAction.CallbackContext context);
         void OnSwapMagic(InputAction.CallbackContext context);
         void OnSwapWeapon(InputAction.CallbackContext context);
+        void OnUsePotion(InputAction.CallbackContext context);
     }
 }
