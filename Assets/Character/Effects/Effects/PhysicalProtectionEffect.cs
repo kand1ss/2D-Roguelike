@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class PhysicalProtectionEffect : BuffEffectBase
 {
+    private readonly CharacterResists strikerResists;
+    
     public override EffectType EffectType => EffectType.Buff;
     public override Sprite EffectIcon => Resources.Load<Sprite>("Sprites/Effects/PhysicalProtectionEffect");
 
-    private readonly CharacterResists strikerResists;
 
     public PhysicalProtectionEffect(ICharacterEffectSusceptible effectStriker, int buffValue, float duration) : base(effectStriker, buffValue, duration)
     {

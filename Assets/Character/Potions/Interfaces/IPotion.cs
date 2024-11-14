@@ -1,4 +1,7 @@
-public interface IPotion
+using UnityEngine;
+
+public interface IPotion : IEffect
 {
-    void ApplyBuff();
+    int BuffValue { get; }
+    Sprite PotionSprite { get; }
 }

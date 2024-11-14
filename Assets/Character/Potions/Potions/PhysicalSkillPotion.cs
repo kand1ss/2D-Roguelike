@@ -1,20 +1,20 @@
-public class PhysicalSkillPotion : TemporaryBuffPotion
+using UnityEngine;
+
+public class PhysicalSkillPotion : TimedBuffPotion
 {
-    private readonly CharacterSkills targetSkills;
-    
-    public PhysicalSkillPotion(ICharacter target, int buff, float buffDuration) : base(target, buff, buffDuration)
+    public override Sprite EffectIcon => Resources.Load<Sprite>("Sprites/Effects/PhysicalSkillEffect");
+    public override Sprite PotionSprite => Resources.Load<Sprite>("Sprites/Potions/PhysicalPotion");
+
+    public PhysicalSkillPotion(ICharacterEffectSusceptible target, int buff, float buffDuration) : base(target, buff, buffDuration)
     {
-        targetSkills = target.Skills;
-        
-        ApplyBuff();
     }
 
-    public override void ApplyBuff()
+    public override void ApplyEffect()
     {
         targetSkills.physicalSkillLevel += buffValue;
     }
 
-    public override void RemoveBuff()
+    protected override void RemoveBuff()
     {
         targetSkills.physicalSkillLevel -= buffValue;
     }

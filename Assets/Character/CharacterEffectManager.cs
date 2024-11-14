@@ -7,7 +7,7 @@ public class CharacterEffectManager
     private readonly List<EffectType> characterEffectResists;
     public List<IEffect> ActiveEffects { get; private set; } = new();
     
-    private readonly List<IEffect> effectsToRemove = new();
+    private List<IEffect> effectsToRemove = new();
 
     public UnityAction<IEffect> EffectAdded;
     public UnityAction<IEffect> EffectRemoved;
@@ -22,9 +22,10 @@ public class CharacterEffectManager
         if (ActiveEffects.Contains(effect)) 
             return;
         
-        if (!characterEffectResists.Contains(effect.EffectType))
+        if (!characterEffectResists.Contains(effect.EffectType) || effect.EffectType == EffectType.Buff)
         {
             ActiveEffects.Add(effect);
+            effect.ApplyEffect();
             EffectAdded?.Invoke(effect);
         }
         else
@@ -52,6 +53,9 @@ public class CharacterEffectManager
             if (effect is TimedEffect tickableEffect)
                 tickableEffect.CheckPerSecond();
         }
+        
+        if(effectsToRemove.Count > 0)
+            Debug.LogWarning($"Effects to Remove: {effectsToRemove.Count}");
 
         foreach (var effect in effectsToRemove)
         {

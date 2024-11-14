@@ -1,30 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class EnemyStateAttacking : FsmState
+public class EnemyStateSwordAttacking : FsmAttackingState
 {
-    private readonly Enemy enemy;
-    private readonly Player target;
-
-    private readonly float attackInterval;
-    private float attackTimer;
-
     private int attackIndexPointer;
     private IList<SwordAttackType> comboAttackList;
 
-    private readonly float attackingStartDistance;
-
-    public EnemyStateAttacking(Enemy enemy, Fsm fsm, Player player, float attackDistance, float attackInterval) :
-        base(fsm)
+    public EnemyStateSwordAttacking(Enemy enemy, Fsm fsm, Player player, float attackDistance, float attackInterval) : base(enemy, fsm, player, attackDistance, attackInterval)
     {
-        this.enemy = enemy;
-        target = player;
-
-        attackingStartDistance = attackDistance;
-        this.attackInterval = attackInterval;
-
-        attackTimer = 0;
     }
 
     public override void Enter()
@@ -36,17 +19,10 @@ public class EnemyStateAttacking : FsmState
     public override void Update()
     {
         attackTimer -= Time.deltaTime;
-
         if (attackTimer <= 0)
         {
             if (enemy is IEnemyWithWeapon enemyWithWeapon)
             {
-                if (enemyWithWeapon.WeaponController.ChosenWeapon is Staff enemyStaff)
-                {
-                    SelectSpellByDistance(enemyStaff);
-                    enemyStaff.UseWeapon();
-                }
-
                 if (enemyWithWeapon.WeaponController.ChosenWeapon is Sword enemySword)
                     ExecuteComboAttack(enemySword);
             }
@@ -57,35 +33,6 @@ public class EnemyStateAttacking : FsmState
         enemy.agent.SetDestination(target.transform.position);
 
         ChasingStateTransition();
-    }
-
-    private void ChasingStateTransition()
-    {
-        if (enemy.DistanceToPlayer > attackingStartDistance)
-            Fsm.SetState<EnemyStateChasing>();
-    }
-
-    private void SelectSpellByDistance(Staff staff)
-    {
-        var spells = staff.GetMagicComponent().CurrentMagic.Spells;
-        var distanceToPlayer = enemy.DistanceToPlayer;
-        
-        var suitableSpells = 
-            spells.Where(spell => spell.projectilePrefab.ProjectileRange >= distanceToPlayer).ToList();
-
-        if (suitableSpells.Count == 0)
-        {
-            staff.GetMagicComponent().ChosenSpellIndex = 0;
-            return;
-        }
-        
-        suitableSpells.Sort((spell1, spell2) => 
-            spell1.projectilePrefab.ProjectileRange.CompareTo(spell2.projectilePrefab.ProjectileRange));
-
-        var chosenSpell = suitableSpells.First();
-        var chosenSpellIndex = spells.IndexOf(chosenSpell);
-        
-        staff.GetMagicComponent().ChosenSpellIndex = chosenSpellIndex;
     }
 
     private void SelectNewCombo()
@@ -105,8 +52,6 @@ public class EnemyStateAttacking : FsmState
             Debug.LogWarning($"Selected Combo: {comboList[comboIndex].GetType().Name}");
 
             comboAttackList = comboList[comboIndex].GetAttackSequence;
-
-            //enemyWithSword.GetComboManager().ComboController.ClearLastRegisteredAttackList();
 
             attackIndexPointer = 0;
         }

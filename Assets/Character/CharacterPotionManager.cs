@@ -1,57 +1,25 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
+using UnityEngine.Events;
 
 public class CharacterPotionManager
 {
-    public List<TemporaryBuffPotion> ActivePotionBuffs { get; private set; } = new();
-    private List<TemporaryBuffPotion> buffsToRemove = new();
-
+    private ICharacterEffectSusceptible owner;
     private IPotion chosenPotion;
+    public event UnityAction<IPotion> PotionChanged;
 
-    public void UseChosenPotion()
+    public CharacterPotionManager(ICharacterEffectSusceptible owner)
     {
-        if (chosenPotion == null)
-            return;
-        
-        if (chosenPotion is TemporaryBuffPotion tempPotion)
-            ActivePotionBuffs.Add(tempPotion);
-
-        chosenPotion.ApplyBuff();
-        Debug.LogWarning($"Used {chosenPotion.GetType().Name}");
+        this.owner = owner;
     }
-
-    public void RemoveBuff(TemporaryBuffPotion buffPotion)
-    {
-        if (ActivePotionBuffs.Contains(buffPotion))
-            buffsToRemove.Add(buffPotion);
-    }
-
-    public void ReplaceChosenPotion(IPotion potion)
+    
+    public void SetPotion(IPotion potion)
     {
         chosenPotion = potion;
+        PotionChanged?.Invoke(potion);
     }
-
-    public void UpdateTemporaryBuff()
+    
+    public void UsePotion()
     {
-        if (ActivePotionBuffs.Count == 0)
-            return;
-        
-        foreach (var buff in ActivePotionBuffs)
-        {
-            buff?.CheckPerSecond();
-        }
-
-        foreach (var removeBuff in buffsToRemove)
-        {
-            ActivePotionBuffs.Remove(removeBuff);
-        }
-        buffsToRemove.Clear();
-    }
-
-    public void InitPlayerInput(IInputProvider inputProvider)
-    {
-        inputProvider.ButtonsController.ActionInput.OnPotionUsed += UseChosenPotion;
+        owner.EffectManager.ApplyEffect(chosenPotion);
     }
 }
