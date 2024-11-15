@@ -21,16 +21,19 @@ public class EnemyStateIdle : FsmState
 
     public override void Update()
     {
-        RoamingStateTransition();
+        CheckStateTransitions();
+    }
+
+    private void CheckStateTransitions()
+    {
+        idleStateTimer -= Time.deltaTime;
+        if (idleStateTimer <= 0)
+            RoamingStateTransition();
     }
 
     private void RoamingStateTransition()
     {
-        idleStateTimer -= Time.deltaTime;
-        if (idleStateTimer <= 0)
-        {
-            Fsm.SetState<EnemyStateRoaming>();
-        }
+        Fsm.SetState<EnemyStateRoaming>();
     }
 
     public override void Exit()

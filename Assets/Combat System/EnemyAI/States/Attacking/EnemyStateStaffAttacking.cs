@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class EnemyStateStaffAttacking : FsmAttackingState
 {
+    private IEnemyWithWeapon enemyWithWeapon;
+    private Staff enemyStaff;
+    
     public EnemyStateStaffAttacking(Enemy enemy, Fsm fsm, Player player, float attackDistance, float attackInterval) : base(enemy, fsm, player, attackDistance, attackInterval)
     {
+        enemyWithWeapon = enemy as IEnemyWithWeapon;
+        enemyStaff = enemyWithWeapon?.WeaponController.ChosenWeapon as Staff;
     }
 
     public override void Enter()
@@ -17,14 +22,8 @@ public class EnemyStateStaffAttacking : FsmAttackingState
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
-            if (enemy is IEnemyWithWeapon enemyWithWeapon)
-            {
-                if (enemyWithWeapon.WeaponController.ChosenWeapon is Staff enemyStaff)
-                {
-                    SelectSpellByDistance(enemyStaff);
-                    enemyStaff.UseWeapon();
-                }
-            }
+            SelectSpellByDistance();
+            enemyStaff.UseWeapon();
             
             attackTimer = attackInterval;
         }
@@ -34,9 +33,9 @@ public class EnemyStateStaffAttacking : FsmAttackingState
         ChasingStateTransition();
     }
     
-    private void SelectSpellByDistance(Staff staff)
+    private void SelectSpellByDistance()
     {
-        var spells = staff.GetMagicComponent().CurrentMagic.Spells;
+        var spells = enemyStaff.GetMagicComponent().CurrentMagic.Spells;
         var distanceToPlayer = enemy.DistanceToPlayer;
         
         var suitableSpells = 
@@ -44,7 +43,7 @@ public class EnemyStateStaffAttacking : FsmAttackingState
 
         if (suitableSpells.Count == 0)
         {
-            staff.GetMagicComponent().ChosenSpellIndex = 0;
+            enemyStaff.GetMagicComponent().ChosenSpellIndex = 0;
             return;
         }
         
@@ -54,7 +53,7 @@ public class EnemyStateStaffAttacking : FsmAttackingState
         var chosenSpell = suitableSpells.First();
         var chosenSpellIndex = spells.IndexOf(chosenSpell);
         
-        staff.GetMagicComponent().ChosenSpellIndex = chosenSpellIndex;
+        enemyStaff.GetMagicComponent().ChosenSpellIndex = chosenSpellIndex;
     }
 
     public override void Exit()

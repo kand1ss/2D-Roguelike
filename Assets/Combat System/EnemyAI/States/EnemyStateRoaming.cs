@@ -32,32 +32,6 @@ public class EnemyStateRoaming : FsmState
         Roaming();
     }
 
-    public override void Update()
-    {
-        CheckStateTransitions();
-    }
-
-    private void CheckStateTransitions()
-    {
-        IdleStateTransition();
-    }
-
-    private void IdleStateTransition()
-    {
-        roamingTimer -= Time.deltaTime;
-        if (Vector3.Distance(enemy.transform.position, roamPosition) < 0.1f || roamingTimer <= 0)
-        {
-            Fsm.SetState<EnemyStateIdle>();
-        }
-    }
-
-    public override void Exit()
-    {
-        Debug.Log("Roaming State: [EXIT]");
-        
-        enemy.agent.ResetPath();
-    }
-
     private void Roaming()
     {
         roamPosition = GetRoamingPosition();
@@ -73,5 +47,27 @@ public class EnemyStateRoaming : FsmState
     {
         return new Vector3(
             UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
+    }
+
+    public override void Update()
+    {
+        CheckStateTransitions();
+    }
+
+    private void CheckStateTransitions()
+    {
+        IdleStateTransition();
+    }
+
+    private void IdleStateTransition()
+    {
+        roamingTimer -= Time.deltaTime;
+        if (Vector3.Distance(enemy.transform.position, roamPosition) < 0.1f || roamingTimer <= 0)
+            Fsm.SetState<EnemyStateIdle>();
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Roaming State: [EXIT]");
     }
 }

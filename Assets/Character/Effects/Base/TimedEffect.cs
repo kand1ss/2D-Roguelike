@@ -5,12 +5,13 @@ using UnityEngine.Events;
 public abstract class TimedEffect
 {
     private const float EffectApplyInterval = 1f;
+    
     private float intervalTimer;
 
-    private float effectDuration;
+    private readonly float effectDuration;
     private float remainingDuration;
     
-    protected UnityAction EffectApplied;
+    protected UnityAction EffectAppliedByInterval;
     protected UnityAction EffectRemoved;
 
     protected TimedEffect(float duration)
@@ -20,7 +21,7 @@ public abstract class TimedEffect
         intervalTimer = EffectApplyInterval;
     }
 
-    public void CheckPerSecond()
+    public void UpdatePerSecond()
     {
         intervalTimer -= Time.deltaTime;
         if (intervalTimer <= 0)
@@ -32,7 +33,7 @@ public abstract class TimedEffect
                 EffectRemoved?.Invoke();
                 return;
             }
-            EffectApplied?.Invoke();
+            EffectAppliedByInterval?.Invoke();
         
             intervalTimer = EffectApplyInterval;
         }

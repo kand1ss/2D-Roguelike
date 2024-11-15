@@ -8,9 +8,9 @@ public class PhysicalProtectionEffect : BuffEffectBase
     public override Sprite EffectIcon => Resources.Load<Sprite>("Sprites/Effects/PhysicalProtectionEffect");
 
 
-    public PhysicalProtectionEffect(ICharacterEffectSusceptible effectStriker, int buffValue, float duration) : base(effectStriker, buffValue, duration)
+    public PhysicalProtectionEffect(ICharacterEffectSusceptible effectTarget, int buffValue, float duration) : base(effectTarget, buffValue, duration)
     {
-        strikerResists = effectStriker.Resists;
+        strikerResists = effectTarget.Resists;
         
         ApplyEffect();
     }
@@ -23,6 +23,6 @@ public class PhysicalProtectionEffect : BuffEffectBase
     public override void RemoveEffect()
     {
         strikerResists.PhysicalResistance -= buffBonus;
-        effectStriker.EffectManager.RemoveEffect(this);
+        effectTarget.EffectManager.RemoveEffect(this);
     }
 }

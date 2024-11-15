@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 
-public class ChargeHandler : MonoBehaviour, IChargeable
+public class ChargeHandler : MonoBehaviour
 {
     private bool isCharging;
     public bool IsCharging => isCharging;
@@ -15,6 +15,7 @@ public class ChargeHandler : MonoBehaviour, IChargeable
         
     private Coroutine holdingCoroutine;
 
+    
     private void Start()
     {
         OnChargeAttackStart += progressBar.ShowProgressBar;
@@ -37,21 +38,10 @@ public class ChargeHandler : MonoBehaviour, IChargeable
         holdingCoroutine = StartCoroutine(ChargeRoutine(holdTime));
     }
 
-    public void StopCharging()
-    {
-        if (holdingCoroutine != null)
-        {
-            StopCoroutine(holdingCoroutine);
-            holdingCoroutine = null;
-        }
-        isCharging = false;
-        OnChargeAttackStopped?.Invoke();
-    }
-
     private IEnumerator ChargeRoutine(float holdTime)
     {
         isCharging= true;
-        float chargingHoldTimer = 0f;
+        var chargingHoldTimer = 0f;
 
         OnChargeAttackStart?.Invoke(holdTime);
         while (chargingHoldTimer < holdTime)
@@ -68,5 +58,17 @@ public class ChargeHandler : MonoBehaviour, IChargeable
         }
 
         StopCharging();
+    }
+
+    public void StopCharging()
+    {
+        if (holdingCoroutine != null)
+        {
+            StopCoroutine(holdingCoroutine);
+            holdingCoroutine = null;
+        }
+        isCharging = false;
+        
+        OnChargeAttackStopped?.Invoke();
     }
 }

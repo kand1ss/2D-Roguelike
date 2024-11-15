@@ -3,22 +3,20 @@ using UnityEngine.AI;
 
 public class Enemy : Entity, IEnemyAI
 {
-    protected Fsm fsm;
-    
-    private NavMeshAgent navMeshAgent;
-    public NavMeshAgent agent => navMeshAgent;
-    
     [SerializeField] protected Player player;
-    public float DistanceToPlayer => Vector3.Distance(player.transform.position, transform.position);
+    protected Fsm fsm;
 
+    public NavMeshAgent agent { get; private set; }
+
+    public float DistanceToPlayer => Vector3.Distance(player.transform.position, transform.position);
 
     protected override void Awake()
     {
         base.Awake();
         
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.updateRotation = false;
-        navMeshAgent.updateUpAxis = false;
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
         
         fsm = new Fsm();
     }

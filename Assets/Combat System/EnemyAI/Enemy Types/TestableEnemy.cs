@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 using Zenject.SpaceFighter;
 
@@ -15,8 +16,7 @@ public class TestableEnemy : Enemy, IEnemyWithWeapon
     [SerializeField] private float attackingStartDistance;
     [SerializeField] private float attackInterval;
 
-    [SerializeField] private EnemyWeaponController weaponController;
-    public EnemyWeaponController WeaponController => weaponController;
+    [field: SerializeField] public EnemyWeaponController WeaponController { get; private set; }
 
     protected override void Start()
     {
@@ -73,6 +73,6 @@ public class TestableEnemy : Enemy, IEnemyWithWeapon
     private void OnDestroy()
     {
         fsm.CurrentState.Exit();
-        weaponController.ChosenWeapon.DetachWeapon();
+        WeaponController.ChosenWeapon.DetachWeapon();
     }
 }

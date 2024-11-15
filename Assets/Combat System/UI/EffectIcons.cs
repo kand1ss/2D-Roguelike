@@ -11,7 +11,7 @@ public class EffectIcons : MonoBehaviour
     [SerializeField] private GameObject effectIconPrefab;
     private GameObject effectIconsContainer;
     
-    readonly List<GameObject> activeEffectIcons = new List<GameObject>();
+    private readonly List<GameObject> activeEffectIcons = new();
 
     [Inject]
     private void Construct(ICharacterEffectSusceptible containerOwner)

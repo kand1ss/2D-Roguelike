@@ -6,7 +6,7 @@ public class EnemyStateChasing : FsmState
     private readonly IEnemyAI enemy;
     private readonly Player target;
 
-    private float chasingStartDistance;
+    private readonly float chasingStartDistance;
 
     public EnemyStateChasing(IEnemyAI enemy, Fsm fsm, Player target, float startDistance) : base(fsm)
     {
@@ -33,7 +33,7 @@ public class EnemyStateChasing : FsmState
     {
         enemy.agent.SetDestination(target.transform.position);
     }
-
+    
     private void IdleStateTransition()
     {
         var distanceToPlayer = Vector3.Distance(target.transform.position, enemy.transform.position);
@@ -44,7 +44,5 @@ public class EnemyStateChasing : FsmState
     public override void Exit()
     {
         Debug.Log("Chasing State: [EXIT]");
-
-        enemy.agent.ResetPath();
     }
 }

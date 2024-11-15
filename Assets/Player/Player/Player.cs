@@ -37,7 +37,7 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
 
     private void Start()
     {
-        PotionManager.SetPotion(new PhysicalSkillPotion(this, 3, 5f));
+        PotionManager.SetPotion(new HealPotion(this, 3, 5f));
         inputProvider.ButtonsController.ActionInput.OnPotionUsed += PotionManager.UsePotion;
     }
 

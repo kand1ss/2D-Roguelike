@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 99dd90823b3a9164389d224eaf93714b
+guid: b3bfbabf4efd8aa4e85e10c076404b75
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HealEffect_0
+      name: PoisonEffect_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 512
+        width: 851
+        height: 1173
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3003b180ddee7d743911ff0d13845884
-      internalID: 429045660
+      spriteID: 3600d08c350fc9449a24c9f2d2176bef
+      internalID: 1090424100
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      HealEffect_0: 429045660
+      PoisonEffect_0: 1090424100
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
