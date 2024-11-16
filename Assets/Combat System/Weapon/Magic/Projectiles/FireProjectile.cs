@@ -10,6 +10,8 @@ public class FireProjectile : ProjectileBase, IStrikeDamage
 
     public DamageType CurrentDamageType => DamageType.Magical;
 
+    private bool isTargetHit = false;
+
     protected override void Start()
     {
         base.Start();
@@ -33,9 +35,14 @@ public class FireProjectile : ProjectileBase, IStrikeDamage
         {
             if (attackTarget == ProjectileSender)
                 return;
+
+            if (isTargetHit)
+                return;
             
             CinemachineShake.Instance.Shake(0.2f, 0.7f);
             DamageService.SendDamageToTarget(ProjectileSender ,attackTarget, this);
+            
+            isTargetHit = true;
         }
         
         ProjectileImpact();

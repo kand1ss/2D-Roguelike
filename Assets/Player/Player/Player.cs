@@ -7,17 +7,13 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
     
     public PlayerState PlayerState { get; private set; } = PlayerState.Idle;
 
-
     public CharacterPotionManager PotionManager { get; private set; }
     public CharacterEffectManager EffectManager { get; private set; }
     [field: SerializeField] public CharacterResists Resists { get; private set; }
     [field: SerializeField] public CharacterStatsManager StatsManager { get; private set; }
     [field: SerializeField] public CharacterSkills Skills { get; private set; }
-    
 
-    private PlayerWeaponController weaponController;
-    public PlayerWeaponController WeaponController => weaponController;
-    
+    public PlayerWeaponController WeaponController { get; private set; }
     public Rigidbody2D rigidBody { get; private set; }
 
     [Inject]
@@ -32,7 +28,7 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
         PotionManager = new CharacterPotionManager(this);
         
         rigidBody = GetComponent<Rigidbody2D>();
-        weaponController = GetComponentInChildren<PlayerWeaponController>();
+        WeaponController = GetComponentInChildren<PlayerWeaponController>();
     }
 
     private void Start()

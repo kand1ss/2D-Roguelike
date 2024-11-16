@@ -11,11 +11,11 @@ public class PhysicalSkillPotion : TimedBuffPotion
 
     public override void ApplyEffect()
     {
-        targetSkills.physicalSkillLevel += buffValue;
+        targetSkills.PhysicalSkillLevel += buffValue;
     }
 
     protected override void RemoveBuff()
     {
-        targetSkills.physicalSkillLevel -= buffValue;
+        targetSkills.PhysicalSkillLevel -= buffValue;
     }
 }

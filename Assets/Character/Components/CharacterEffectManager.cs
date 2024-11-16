@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,6 +21,9 @@ public class CharacterEffectManager
     public void ApplyEffect(IEffect effect)
     {
         if (ActiveEffects.Contains(effect)) 
+            return;
+
+        if (ActiveEffects.Any(eff => eff.EffectType == EffectType.Stance && effect.EffectType == EffectType.Stance))
             return;
         
         if (!characterEffectResists.Contains(effect.EffectType) || effect.EffectType == EffectType.Buff)

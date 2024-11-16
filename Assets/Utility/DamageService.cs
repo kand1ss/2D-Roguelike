@@ -20,20 +20,14 @@ public static class DamageService
 
         int resultDamage = CalculateFinalDamage(
             weaponDamage, targetResistModifier, attackerSkillMultiplier, distanceMultiplier);
-
-        Debug.Log("-------- Damage Service ---------");
-        Debug.Log($"Target Physical Resist: {(1 - targetResists.GetPhysicalDamageResistance) * 100}%");
-        Debug.Log($"Target Magical Resist: {(1 - targetResists.GetMagicalDamageResistance) * 100}%");
-        Debug.Log($"Distance Multiplier: {distanceMultiplier}");
-        Debug.Log($"Calculated Damage: {resultDamage}");
+        
+        Debug.LogWarning($"{target.GetType().Name}: Get Damage: {resultDamage}");
         
         target.StatsManager.TakeDamage(resultDamage);
     }
 
     public static void SendDamageByEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage)
     {
-        Debug.LogWarning("Damage Service called");
-
         var effectDamage = Mathf.FloorToInt(Random.Range(minDamage, maxDamage));
         
         target.StatsManager.TakeDamage(effectDamage);
@@ -41,7 +35,7 @@ public static class DamageService
 
     private static float GetAttackSkillByDamageType(CharacterSkills skills, DamageType damageType)
     {
-        return damageType == DamageType.Physical ? skills.physicalSkillLevel : skills.magicalSkillLevel;
+        return damageType == DamageType.Physical ? skills.PhysicalSkillLevel : skills.MagicalSkillLevel;
     }
 
     private static float GetAttackerSkillMultiplier(float skill)

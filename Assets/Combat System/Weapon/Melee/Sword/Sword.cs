@@ -95,7 +95,8 @@ public class Sword : MeleeWeapon, IChargeableWeapon
 
         comboManager.InitiateComboAttack(new PushCombo(weaponOwner));
         comboManager.InitiateComboAttack(new BleedingCombo(weaponOwner));
-        comboManager.InitiateComboAttack(new ProtectionCombo(weaponOwner));
+        comboManager.InitiateComboAttack(new StoneStanceCombo(weaponOwner));
+        comboManager.InitiateComboAttack(new WindStanceCombo(weaponOwner, this));
     }
 
     public override void DetachWeapon()

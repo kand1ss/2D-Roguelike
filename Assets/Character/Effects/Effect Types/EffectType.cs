@@ -1,4 +1,4 @@
 public enum EffectType
 {
-    Bleeding, Burning, Poison, Buff
+    Bleeding, Burning, Poison, Buff, Stance
 }

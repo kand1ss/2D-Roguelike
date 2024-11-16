@@ -1674,6 +1674,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3777889938987507109, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4237760976566866225, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
       propertyPath: player
       value: 
