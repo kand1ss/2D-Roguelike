@@ -4,8 +4,12 @@ using Cinemachine;
 
 public class GameplaySceneInstaller : MonoInstaller
 {
+    [SerializeField] private Player player;
+    
     public override void InstallBindings()
     {
-        Debug.Log("GameplaySceneInstaller InstallBindings");
+        Container.Bind<Player>()
+            .FromInstance(player)
+            .AsSingle();
     }
 }

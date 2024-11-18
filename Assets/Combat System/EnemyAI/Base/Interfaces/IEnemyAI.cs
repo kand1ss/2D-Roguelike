@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public interface IEnemyAI
 {
-    NavMeshAgent agent { get; }
+    NavMeshAgent Agent { get; }
+    
     Transform transform { get; }
 }

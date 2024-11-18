@@ -6,9 +6,9 @@ public class EnemyStateStaffAttacking : FsmAttackingState
     private IEnemyWithWeapon enemyWithWeapon;
     private Staff enemyStaff;
     
-    public EnemyStateStaffAttacking(Enemy enemy, Fsm fsm, Player player, float attackDistance, float attackInterval) : base(enemy, fsm, player, attackDistance, attackInterval)
+    public EnemyStateStaffAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player, float attackDistance, float attackInterval) : base(enemyAI, stateMachine, player, attackDistance, attackInterval)
     {
-        enemyWithWeapon = enemy as IEnemyWithWeapon;
+        enemyWithWeapon = enemyAI as IEnemyWithWeapon;
         enemyStaff = enemyWithWeapon?.WeaponController.ChosenWeapon as Staff;
     }
 
@@ -28,7 +28,7 @@ public class EnemyStateStaffAttacking : FsmAttackingState
             attackTimer = attackInterval;
         }
 
-        enemy.agent.SetDestination(target.transform.position);
+        EnemyAI.Agent.SetDestination(target.transform.position);
 
         ChasingStateTransition();
     }
@@ -36,7 +36,7 @@ public class EnemyStateStaffAttacking : FsmAttackingState
     private void SelectSpellByDistance()
     {
         var spells = enemyStaff.GetMagicComponent().CurrentMagic.Spells;
-        var distanceToPlayer = enemy.DistanceToPlayer;
+        var distanceToPlayer = EnemyAI.DistanceToPlayer;
         
         var suitableSpells = 
             spells.Where(spell => spell.projectilePrefab.ProjectileRange >= distanceToPlayer).ToList();

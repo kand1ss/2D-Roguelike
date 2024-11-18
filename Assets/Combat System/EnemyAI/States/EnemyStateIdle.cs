@@ -7,7 +7,7 @@ public class EnemyStateIdle : FsmState
     private float idleStateMaxTime;
     private float idleStateTimer;
 
-    public EnemyStateIdle(IEnemyAI enemy, Fsm fsm, float idleTime) : base(fsm)
+    public EnemyStateIdle(IEnemyAI enemy, Fsm stateMachine, float idleTime) : base(stateMachine)
     {
         this.enemy = enemy;
         idleStateMaxTime = idleTime;
@@ -33,7 +33,7 @@ public class EnemyStateIdle : FsmState
 
     private void RoamingStateTransition()
     {
-        Fsm.SetState<EnemyStateRoaming>();
+        StateMachine.SetState<EnemyStateRoaming>();
     }
 
     public override void Exit()

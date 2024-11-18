@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class CharacterStatsManager
 {
     public UnityAction<float> OnHealthChanged;
+    public UnityAction OnTakeDamage;
 
     [SerializeField] private int maxHealth;
     public int MaxHealth => maxHealth;
@@ -45,5 +46,6 @@ public class CharacterStatsManager
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
+        OnTakeDamage?.Invoke();
     }
 }

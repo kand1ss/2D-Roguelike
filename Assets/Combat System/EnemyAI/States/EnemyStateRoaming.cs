@@ -3,10 +3,11 @@ using UnityEngine.AI;
 
 public class EnemyStateRoaming : FsmState
 {
-    private readonly Enemy enemy;
+    private readonly EnemyAI enemyAI;
 
     private readonly float roamingMaxDistance;
     private readonly float roamingMinDistance;
+    private readonly float roamingSpeed;
 
     private readonly float roamingMaxTime = 4f;
     private float roamingTimer;
@@ -14,19 +15,21 @@ public class EnemyStateRoaming : FsmState
     private Vector3 startPosition;
     private Vector3 roamPosition;
 
-    public EnemyStateRoaming(Enemy enemy, Fsm fsm, float roamDistanceMax, float roamDistanceMin) : base(fsm)
+    public EnemyStateRoaming(EnemyAI enemyAI, Fsm stateMachine, float roamDistanceMax, float roamDistanceMin, float roamSpeed) : base(stateMachine)
     {
-        this.enemy = enemy;
+        this.enemyAI = enemyAI;
+        
         roamingMaxDistance = roamDistanceMax;
         roamingMinDistance = roamDistanceMin;
+        roamingSpeed = roamSpeed;
     }
 
     public override void Enter()
     {
         Debug.Log("Roaming State: [ENTER]");
         
-        startPosition = enemy.agent.transform.position;
-        enemy.agent.speed = 3f;
+        startPosition = enemyAI.Agent.transform.position;
+        enemyAI.Agent.speed = 3f;
         roamingTimer = roamingMaxTime;
         
         Roaming();
@@ -35,7 +38,7 @@ public class EnemyStateRoaming : FsmState
     private void Roaming()
     {
         roamPosition = GetRoamingPosition();
-        enemy.agent.SetDestination(roamPosition);
+        enemyAI.Agent.SetDestination(roamPosition);
     }
 
     private Vector3 GetRoamingPosition()
@@ -62,8 +65,8 @@ public class EnemyStateRoaming : FsmState
     private void IdleStateTransition()
     {
         roamingTimer -= Time.deltaTime;
-        if (Vector3.Distance(enemy.transform.position, roamPosition) < 0.1f || roamingTimer <= 0)
-            Fsm.SetState<EnemyStateIdle>();
+        if (Vector3.Distance(enemyAI.transform.position, roamPosition) < 0.1f || roamingTimer <= 0)
+            StateMachine.SetState<EnemyStateIdle>();
     }
 
     public override void Exit()

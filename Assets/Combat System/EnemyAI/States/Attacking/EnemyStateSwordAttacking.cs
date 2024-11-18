@@ -9,10 +9,10 @@ public class EnemyStateSwordAttacking : FsmAttackingState
     private int attackIndexPointer;
     private IList<SwordAttackType> comboAttackList;
 
-    public EnemyStateSwordAttacking(Enemy enemy, Fsm fsm, Player player, float attackDistance, float attackInterval) :
-        base(enemy, fsm, player, attackDistance, attackInterval)
+    public EnemyStateSwordAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player, float attackDistance, float attackInterval) :
+        base(enemyAI, stateMachine, player, attackDistance, attackInterval)
     {
-        enemyWithWeapon = enemy as IEnemyWithWeapon;
+        enemyWithWeapon = enemyAI as IEnemyWithWeapon;
         enemySword = enemyWithWeapon?.WeaponController.ChosenWeapon as Sword;
     }
 
@@ -45,7 +45,7 @@ public class EnemyStateSwordAttacking : FsmAttackingState
             attackTimer = attackInterval;
         }
         
-        enemy.agent.SetDestination(target.transform.position);
+        EnemyAI.Agent.SetDestination(target.transform.position);
 
         ChasingStateTransition();
     }

@@ -13,7 +13,6 @@ public abstract class WeaponControllerBase : MonoBehaviour, IWeaponController
     public void UseChosenWeapon() => ChosenWeapon.UseWeapon();
 
     public event UnityAction OnWeaponChanged;
-    
 
     [Inject]
     private void Construct(ICharacter character)

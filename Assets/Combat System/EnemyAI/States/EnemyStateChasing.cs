@@ -7,20 +7,22 @@ public class EnemyStateChasing : FsmState
     private readonly Player target;
 
     private readonly float chasingStartDistance;
+    private readonly float chasingSpeed;
 
-    public EnemyStateChasing(IEnemyAI enemy, Fsm fsm, Player target, float startDistance) : base(fsm)
+    public EnemyStateChasing(IEnemyAI enemy, Fsm stateMachine, Player target, float startDistance, float chasingSpeed) : base(stateMachine)
     {
         this.enemy = enemy;
         this.target = target;
 
         chasingStartDistance = startDistance;
+        this.chasingSpeed = chasingSpeed;
     }
 
     public override void Enter()
     {
         Debug.Log("Chasing State: [ENTER]");
 
-        enemy.agent.speed = 5f;
+        enemy.Agent.speed = 5f;
     }
 
     public override void Update()
@@ -31,14 +33,14 @@ public class EnemyStateChasing : FsmState
 
     private void Chasing()
     {
-        enemy.agent.SetDestination(target.transform.position);
+        enemy.Agent.SetDestination(target.transform.position);
     }
     
     private void IdleStateTransition()
     {
         var distanceToPlayer = Vector3.Distance(target.transform.position, enemy.transform.position);
         if (distanceToPlayer > chasingStartDistance)
-            Fsm.SetState<EnemyStateIdle>();
+            StateMachine.SetState<EnemyStateIdle>();
     }
 
     public override void Exit()

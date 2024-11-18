@@ -4,12 +4,12 @@ using UnityEngine;
 public class EnemyInstaller : MonoInstaller
 {
     private EnemyWeaponController weaponController;
-    [SerializeField] private Enemy entity;
+    [SerializeField] private EnemyAI entity;
 
     public override void InstallBindings()
     {
         Container
-            .Bind<Enemy>()
+            .Bind<EnemyAI>()
             .FromInstance(entity)
             .AsSingle();
         Container

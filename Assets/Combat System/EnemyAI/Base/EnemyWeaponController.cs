@@ -1,9 +1,15 @@
-using System;
 using UnityEngine;
+using Zenject;
 
 public class EnemyWeaponController : WeaponControllerBase
 {
-    [SerializeField] private Player player;
+    private Player player;
+
+    [Inject]
+    private void Construct(Player player)
+    {
+        this.player = player;
+    }
 
     private void Awake()
     {

@@ -1,10 +1,10 @@
-public class FsmState
+public abstract class FsmState
 {
-    protected readonly Fsm Fsm;
+    protected readonly Fsm StateMachine;
 
-    public FsmState(Fsm fsm)
+    protected FsmState(Fsm stateMachine)
     {
-        Fsm = fsm;
+        StateMachine = stateMachine;
     }
     
     public virtual void Enter() {}

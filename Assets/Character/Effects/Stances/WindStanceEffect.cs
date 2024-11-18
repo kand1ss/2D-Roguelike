@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class WindStanceEffect : StanceEffectBase
 {
-    private ICharacterEffectSusceptible target;
-    
     private readonly CharacterSkills targetSkills;
     private readonly Sword targetSword;
 
@@ -14,8 +12,6 @@ public class WindStanceEffect : StanceEffectBase
 
     public WindStanceEffect(ICharacterEffectSusceptible effectTarget, Sword sword, float buffValue, int debuffValue, float duration) : base(effectTarget, buffValue, debuffValue, duration)
     {
-        target = effectTarget;
-        
         targetSkills = effectTarget.Skills;
         targetSword = sword;
 
@@ -38,6 +34,6 @@ public class WindStanceEffect : StanceEffectBase
         targetSword.CurrentAttackSpeed = defaultAttackSpeed;
         targetSkills.PhysicalSkillLevel += debuffValue;
         
-        target.EffectManager.RemoveEffect(this);
+        effectTarget.EffectManager.RemoveEffect(this);
     }
 }

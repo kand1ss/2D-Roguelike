@@ -1,6 +1,6 @@
 public abstract class FsmAttackingState : FsmState
 {
-    protected readonly Enemy enemy;
+    protected readonly EnemyAI EnemyAI;
     protected readonly Player target;
 
     protected readonly float attackInterval;
@@ -8,10 +8,10 @@ public abstract class FsmAttackingState : FsmState
     
     protected readonly float attackingStartDistance;
     
-    protected FsmAttackingState(Enemy enemy, Fsm fsm, Player player, float attackDistance, float attackInterval) :
-        base(fsm)
+    protected FsmAttackingState(EnemyAI enemyAI, Fsm stateMachine, Player player, float attackDistance, float attackInterval) :
+        base(stateMachine)
     {
-        this.enemy = enemy;
+        this.EnemyAI = enemyAI;
         target = player;
 
         attackingStartDistance = attackDistance;
@@ -22,7 +22,7 @@ public abstract class FsmAttackingState : FsmState
     
     protected void ChasingStateTransition()
     {
-        if (enemy.DistanceToPlayer > attackingStartDistance)
-            Fsm.SetState<EnemyStateChasing>();
+        if (EnemyAI.DistanceToPlayer > attackingStartDistance)
+            StateMachine.SetState<EnemyStateChasing>();
     }
 }

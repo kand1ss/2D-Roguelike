@@ -1,17 +1,15 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
-using Zenject.SpaceFighter;
 
-public class TestableEnemy : Enemy, IEnemyWithWeapon
+public class TestableEnemy : EnemyAI, IEnemyWithWeapon
 {
     [SerializeField] private float idleTime;
 
     [SerializeField] private float roamingDistanceMin;
     [SerializeField] private float roamingDistanceMax;
+    [SerializeField] private float roamingSpeed;
 
     [SerializeField] private float chasingStartDistance;
+    [SerializeField] private float chasingSpeed;
 
     [SerializeField] private float attackingStartDistance;
     [SerializeField] private float attackInterval;
@@ -22,22 +20,22 @@ public class TestableEnemy : Enemy, IEnemyWithWeapon
     {
         base.Start();
 
-        fsm.AddState(new EnemyStateIdle(this, fsm, idleTime));
-        fsm.AddState(new EnemyStateRoaming(this, fsm, roamingDistanceMax, roamingDistanceMin));
-        fsm.AddState(new EnemyStateChasing(this, fsm, player, chasingStartDistance));
-
+        stateMachine.AddState(new EnemyStateIdle(this, stateMachine, idleTime));
+        stateMachine.AddState(new EnemyStateRoaming(this, stateMachine, roamingDistanceMax, roamingDistanceMin, roamingSpeed));
+        stateMachine.AddState(new EnemyStateChasing(this, stateMachine, player, chasingStartDistance, chasingSpeed));
+        
         if (WeaponController.ChosenWeapon is Sword)
-            fsm.AddState(new EnemyStateSwordAttacking(this, fsm, player, attackingStartDistance, attackInterval));
+            stateMachine.AddState(new EnemyStateSwordAttacking(this, stateMachine, player, attackingStartDistance, attackInterval));
         else if (WeaponController.ChosenWeapon is Staff)
-            fsm.AddState(new EnemyStateStaffAttacking(this, fsm, player, attackingStartDistance, attackInterval));
+            stateMachine.AddState(new EnemyStateStaffAttacking(this, stateMachine, player, attackingStartDistance, attackInterval));
 
-        fsm.SetState<EnemyStateIdle>();
+        stateMachine.SetState<EnemyStateIdle>();
     }
 
     protected override void Update()
     {
         base.Update();
-
+        
         CheckTransitionsFromAnyState();
     }
 
@@ -49,30 +47,30 @@ public class TestableEnemy : Enemy, IEnemyWithWeapon
 
     private void ChasingStateTransition()
     {
-        if (fsm.CurrentState is not EnemyStateChasing && fsm.CurrentState is not FsmAttackingState)
+        if (stateMachine.CurrentState is EnemyStateRoaming || stateMachine.CurrentState is EnemyStateIdle)
         {
-            if (DistanceToPlayer <= chasingStartDistance)
-                fsm.SetState<EnemyStateChasing>();
+            if (DistanceToPlayer <= chasingStartDistance && CanSeePlayer())
+                stateMachine.SetState<EnemyStateChasing>();
         }
     }
 
     private void AttackingStateTransition()
     {
-        if (fsm.CurrentState is not FsmAttackingState)
+        if (stateMachine.CurrentState is not FsmAttackingState)
         {
             if (DistanceToPlayer <= attackingStartDistance)
             {
                 if (WeaponController.ChosenWeapon is Sword)
-                    fsm.SetState<EnemyStateSwordAttacking>();
+                    stateMachine.SetState<EnemyStateSwordAttacking>();
                 else if (WeaponController.ChosenWeapon is Staff)
-                    fsm.SetState<EnemyStateStaffAttacking>();
+                    stateMachine.SetState<EnemyStateStaffAttacking>();
             }
         }
     }
 
     private void OnDestroy()
     {
-        fsm.CurrentState.Exit();
+        stateMachine.CurrentState.Exit();
         WeaponController.ChosenWeapon.DetachWeapon();
     }
 }
