@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyStateSwordAttacking : FsmAttackingState
@@ -8,6 +9,7 @@ public class EnemyStateSwordAttacking : FsmAttackingState
 
     private int attackIndexPointer;
     private IList<SwordAttackType> comboAttackList;
+    private Combo lastUsedCombo;
 
     public EnemyStateSwordAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player, float attackDistance, float attackInterval) :
         base(enemyAI, stateMachine, player, attackDistance, attackInterval)
@@ -30,10 +32,41 @@ public class EnemyStateSwordAttacking : FsmAttackingState
         if (comboCount == 0)
             return;
 
-        var comboIndex = Random.Range(0, comboCount);
+        int comboIndex;
+        bool isComboValid;
+
+        do
+        {
+            comboIndex = Random.Range(0, comboCount);
+            isComboValid = CheckEnemyCanUseCombo(comboIndex);
+        } while (!isComboValid);
+        
         comboAttackList = comboList[comboIndex].GetAttackSequence;
 
         attackIndexPointer = 0;
+    }
+
+    private bool CheckEnemyCanUseCombo(int comboIndex)
+    {
+        var comboList = enemySword.GetComboManager().ComboController.GetActiveComboList();
+        var chosenCombo = comboList[comboIndex];
+        
+        var enemyStatsManager = EnemyAI.StatsManager;
+        var enemyEffectManager = EnemyAI.EffectManager;
+
+        if (chosenCombo is StoneStanceCombo or WindStanceCombo)
+        {
+            if (enemyEffectManager.ActiveEffects.Any(effect => effect is StanceEffectBase))
+                return false;
+        }
+        
+        if (chosenCombo is PushCombo or StoneStanceCombo)
+        {
+            if (enemyStatsManager.CurrentHealth > enemyStatsManager.MaxHealth / 2)
+                return false;
+        }
+        
+        return true;
     }
 
     public override void Update()
@@ -76,5 +109,6 @@ public class EnemyStateSwordAttacking : FsmAttackingState
     public override void Exit()
     {
         Debug.Log("Attacking State: [EXIT]");
+        enemySword.GetComboManager().ComboController.ClearLastRegisteredAttacksList();
     }
 }

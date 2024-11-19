@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class StoneStanceCombo : Combo
 {
-    private ICharacter comboInitiator;
+    private readonly ICharacter comboInitiator;
 
     public StoneStanceCombo(ICharacter comboInitiator) : base()
     {

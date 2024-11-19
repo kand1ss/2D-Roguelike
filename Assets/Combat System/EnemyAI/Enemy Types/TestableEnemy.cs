@@ -20,6 +20,11 @@ public class TestableEnemy : EnemyAI, IEnemyWithWeapon
     {
         base.Start();
 
+        InitializeStates();
+    }
+
+    private void InitializeStates()
+    {
         stateMachine.AddState(new EnemyStateIdle(this, stateMachine, idleTime));
         stateMachine.AddState(new EnemyStateRoaming(this, stateMachine, roamingDistanceMax, roamingDistanceMin, roamingSpeed));
         stateMachine.AddState(new EnemyStateChasing(this, stateMachine, player, chasingStartDistance, chasingSpeed));

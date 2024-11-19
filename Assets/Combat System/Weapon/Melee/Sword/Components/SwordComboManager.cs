@@ -20,7 +20,7 @@ public class SwordComboManager : MonoBehaviour
 
     public void FinalizeComponent()
     {
-        ComboController.ClearCombo();
+        ComboController.ClearRegisteredCombos();
     }
 
     public void SetLastRegisteredAttack(SwordAttackType attackType)

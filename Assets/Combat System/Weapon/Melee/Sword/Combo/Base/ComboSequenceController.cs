@@ -46,7 +46,7 @@ public class ComboSequenceController : MonoBehaviour
             activeComboList.Remove(combo);
     }
 
-    public void ClearCombo()
+    public void ClearRegisteredCombos()
     {
         activeComboList.Clear();
     }
@@ -75,6 +75,11 @@ public class ComboSequenceController : MonoBehaviour
 
         if (lastRegisteredAttacksList.Count == 3)
             StartCoroutine(CheckComboAfterDelay());
+    }
+
+    public void ClearLastRegisteredAttacksList()
+    {
+        lastRegisteredAttacksList.Clear();
     }
 
     private IEnumerator CheckComboAfterDelay()

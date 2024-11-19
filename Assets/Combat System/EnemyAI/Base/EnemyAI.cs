@@ -24,6 +24,11 @@ public class EnemyAI : Entity, IEnemyAI
     {
         base.Awake();
         
+        InitializeAI();
+    }
+
+    private void InitializeAI()
+    {
         Agent = GetComponent<NavMeshAgent>();
         Agent.updateRotation = false;
         Agent.updateUpAxis = false;
@@ -44,13 +49,13 @@ public class EnemyAI : Entity, IEnemyAI
     
     private void SwitchToSuspicionStateAfterDamage()
     {
-        if (stateMachine.CurrentState is not EnemyStateChasing && stateMachine.CurrentState is not FsmAttackingState)
+        if (stateMachine.CurrentState is not EnemyStateChasing or FsmAttackingState)
             stateMachine.SetState<EnemyStateSuspicion>();
     }
     
     private void SuspicionStateTransition()
     {
-        if (stateMachine.CurrentState is FsmAttackingState || stateMachine.CurrentState is EnemyStateChasing && !CanSeePlayer())
+        if (stateMachine.CurrentState is FsmAttackingState or EnemyStateChasing && !CanSeePlayer())
             stateMachine.SetState<EnemyStateSuspicion>();
     }
     
@@ -66,7 +71,7 @@ public class EnemyAI : Entity, IEnemyAI
             if (hit.collider.gameObject == player.gameObject)
                 return true;
         }
-
+        
         return false;
     }
 
