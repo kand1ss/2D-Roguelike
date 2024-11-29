@@ -6,10 +6,9 @@ public class EnemyStateSwordAttacking : FsmAttackingState
 {
     private readonly IEnemyWithWeapon enemyWithWeapon;
     private readonly Sword enemySword;
-
+    
     private int attackIndexPointer;
     private IList<SwordAttackType> comboAttackList;
-    private Combo lastUsedCombo;
 
     public EnemyStateSwordAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player, float attackDistance, float attackInterval) :
         base(enemyAI, stateMachine, player, attackDistance, attackInterval)
@@ -26,7 +25,7 @@ public class EnemyStateSwordAttacking : FsmAttackingState
 
     private void SelectNewCombo()
     {
-        var comboList = enemySword.GetComboManager().ComboController.GetActiveComboList();
+        var comboList = enemySword.GetComboManager().GetActiveComboList();
         var comboCount = comboList.Count;
 
         if (comboCount == 0)
@@ -48,11 +47,11 @@ public class EnemyStateSwordAttacking : FsmAttackingState
 
     private bool CheckEnemyCanUseCombo(int comboIndex)
     {
-        var comboList = enemySword.GetComboManager().ComboController.GetActiveComboList();
+        var comboList = enemySword.GetComboManager().GetActiveComboList();
         var chosenCombo = comboList[comboIndex];
         
-        var enemyStatsManager = EnemyAI.StatsManager;
-        var enemyEffectManager = EnemyAI.EffectManager;
+        var enemyStatsManager = enemyAI.StatsManager;
+        var enemyEffectManager = enemyAI.EffectManager;
 
         if (chosenCombo is StoneStanceCombo or WindStanceCombo)
         {
@@ -78,7 +77,7 @@ public class EnemyStateSwordAttacking : FsmAttackingState
             attackTimer = attackInterval;
         }
         
-        EnemyAI.Agent.SetDestination(target.transform.position);
+        enemyAI.Agent.SetDestination(target.transform.position);
 
         ChasingStateTransition();
     }
@@ -109,6 +108,6 @@ public class EnemyStateSwordAttacking : FsmAttackingState
     public override void Exit()
     {
         Debug.Log("Attacking State: [EXIT]");
-        enemySword.GetComboManager().ComboController.ClearLastRegisteredAttacksList();
+        enemySword.GetComboManager().ClearLastRegisteredAttacks();
     }
 }

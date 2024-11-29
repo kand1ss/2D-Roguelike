@@ -6,6 +6,8 @@ public class EnemyStateChasing : FsmState
     private readonly IEnemyAI enemy;
     private readonly Player target;
 
+    private readonly float initSpeed;
+
     private readonly float chasingStartDistance;
     private readonly float chasingSpeed;
 
@@ -13,6 +15,8 @@ public class EnemyStateChasing : FsmState
     {
         this.enemy = enemy;
         this.target = target;
+
+        initSpeed = enemy.Agent.speed;
 
         chasingStartDistance = startDistance;
         this.chasingSpeed = chasingSpeed;
@@ -22,7 +26,7 @@ public class EnemyStateChasing : FsmState
     {
         Debug.Log("Chasing State: [ENTER]");
 
-        enemy.Agent.speed = 5f;
+        enemy.Agent.speed = chasingSpeed;
     }
 
     public override void Update()
@@ -46,5 +50,7 @@ public class EnemyStateChasing : FsmState
     public override void Exit()
     {
         Debug.Log("Chasing State: [EXIT]");
+        
+        enemy.Agent.speed = initSpeed;
     }
 }

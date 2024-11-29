@@ -15,6 +15,7 @@ public class EnemyStateStaffAttacking : FsmAttackingState
     public override void Enter()
     {
         Debug.Log("Attacking State: [ENTER]");
+        enemyAI.Agent.ResetPath();
     }
 
     public override void Update()
@@ -28,15 +29,13 @@ public class EnemyStateStaffAttacking : FsmAttackingState
             attackTimer = attackInterval;
         }
 
-        EnemyAI.Agent.SetDestination(target.transform.position);
-
         ChasingStateTransition();
     }
     
     private void SelectSpellByDistance()
     {
         var spells = enemyStaff.GetMagicComponent().CurrentMagic.Spells;
-        var distanceToPlayer = EnemyAI.DistanceToPlayer;
+        var distanceToPlayer = enemyAI.DistanceToPlayer;
         
         var suitableSpells = 
             spells.Where(spell => spell.projectilePrefab.ProjectileRange >= distanceToPlayer).ToList();

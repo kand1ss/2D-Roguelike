@@ -77,7 +77,7 @@ public class ComboSequenceController : MonoBehaviour
             StartCoroutine(CheckComboAfterDelay());
     }
 
-    public void ClearLastRegisteredAttacksList()
+    public void ClearLastRegisteredAttacks()
     {
         lastRegisteredAttacksList.Clear();
     }

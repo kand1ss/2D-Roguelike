@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -6,6 +7,7 @@ public class PlayerVisual : MonoBehaviour
     private Player player;
     
     private const string RUN = "Run";
+    private const string TAKE_HIT = "TakeHit";
     
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -20,6 +22,16 @@ public class PlayerVisual : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        player.StatsManager.OnTakeDamage += OnTakeDamage;
+    }
+
+    private void OnTakeDamage()
+    {
+        animator.SetTrigger(TAKE_HIT);
     }
 
     private void Update()

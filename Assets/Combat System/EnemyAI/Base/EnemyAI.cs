@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
-public class EnemyAI : Entity, IEnemyAI
+public abstract class EnemyAI : Entity, IEnemyAI
 {
     protected Player player;
     protected Fsm stateMachine;

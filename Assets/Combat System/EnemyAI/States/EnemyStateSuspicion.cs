@@ -7,7 +7,7 @@ public class EnemyStateSuspicion : FsmState
     
     private Vector3 playerLastPos;
 
-    private float initSpeed;
+    private readonly float initSpeed;
     private readonly float speed;
 
     public EnemyStateSuspicion(IEnemyAI enemy, Fsm stateMachine, Player player, float speed) : base(stateMachine)
@@ -15,12 +15,13 @@ public class EnemyStateSuspicion : FsmState
         this.enemy = enemy;
         this.player = player;
         this.speed = speed;
+
+        initSpeed = enemy.Agent.speed;
     }
 
     public override void Enter()
     {
         Debug.Log("Suspicion State: [ENTER]");
-        initSpeed = enemy.Agent.speed;
         enemy.Agent.speed = speed;
         
         playerLastPos = player.transform.position;

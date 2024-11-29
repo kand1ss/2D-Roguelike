@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 public class SwordCollisionManager : MonoBehaviour
 {
+    private ICharacter weaponOwner;
+    
     [SerializeField] private PolygonCollider2D strongAttackCollision;
     [SerializeField] private SwordCollisionHandler strongAttackHandler;
     [SerializeField] private PolygonCollider2D weakAttackCollision;
@@ -10,6 +13,12 @@ public class SwordCollisionManager : MonoBehaviour
     
     public event UnityAction<ICharacter> OnEntityEnterCollision;
     public event UnityAction<ICharacter> OnEntityExitCollision;
+
+    [Inject]
+    private void Construct(ICharacter character)
+    {
+        weaponOwner = character;
+    }
     
 
     private void Awake()
@@ -58,7 +67,11 @@ public class SwordCollisionManager : MonoBehaviour
             return;
         
         CinemachineShake.Instance.Shake(0.2f, 1.1f);
+        
         OnEntityEnterCollision?.Invoke(entity);
+        
+        var forceDir = entity.transform.position - weaponOwner.transform.position;
+        entity.rigidBody.AddForce(forceDir * 2f, ForceMode2D.Impulse);
     }
     private void HandleTriggerExit(Collider2D collision)
     {

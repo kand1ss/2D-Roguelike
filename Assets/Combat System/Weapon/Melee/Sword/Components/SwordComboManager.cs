@@ -4,28 +4,28 @@ using UnityEngine;
 [RequireComponent(typeof(ComboSequenceController))]
 public class SwordComboManager : MonoBehaviour
 {
-    public ComboSequenceController ComboController { get; private set; }
+    private ComboSequenceController comboController;
 
     public bool attackRegistered = false;
 
     private void Awake()
     {
-        ComboController = GetComponent<ComboSequenceController>();
+        comboController = GetComponent<ComboSequenceController>();
     }
 
     public void InitiateComboAttack(Combo combo)
     {
-        ComboController.AddCombo(combo);
+        comboController.AddCombo(combo);
     }
 
     public void FinalizeComponent()
     {
-        ComboController.ClearRegisteredCombos();
+        comboController.ClearRegisteredCombos();
     }
 
     public void SetLastRegisteredAttack(SwordAttackType attackType)
     {
-        ComboController.lastAttackType = attackType;
+        comboController.lastAttackType = attackType;
     }
 
     public void SetAttackRegisteredFalse()
@@ -33,19 +33,22 @@ public class SwordComboManager : MonoBehaviour
         attackRegistered = false;
     }
 
+    public IList<Combo> GetActiveComboList() => comboController.GetActiveComboList();
+    public void ClearLastRegisteredAttacks() => comboController.ClearLastRegisteredAttacks();
+
     public void AddEntityToCombo(ICharacter entity)
     {
-        ComboController.AddEntityInList(entity);
+        comboController.AddEntityInList(entity);
 
         if (attackRegistered)
             return;
 
-        ComboController.RegisterAttack(ComboController.lastAttackType);
+        comboController.RegisterAttack(comboController.lastAttackType);
         attackRegistered = true;
     }
 
     public void RemoveEntityFromCombo(ICharacter entity)
     {
-        ComboController.RemoveEntityFromList(entity);
+        comboController.RemoveEntityFromList(entity);
     }
 }
