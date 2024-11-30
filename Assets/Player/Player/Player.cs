@@ -6,7 +6,7 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
     private IInputProvider inputProvider;
     
     public PlayerState PlayerState { get; private set; } = PlayerState.Idle;
-
+    
     public CharacterPotionManager PotionManager { get; private set; }
     public CharacterEffectManager EffectManager { get; private set; }
     [field: SerializeField] public CharacterResists Resists { get; private set; }
@@ -33,7 +33,6 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
 
     private void Start()
     {
-        PotionManager.SetPotion(new HealPotion(this, 3, 5f));
         inputProvider.ButtonsController.ActionInput.OnPotionUsed += PotionManager.UsePotion;
     }
 
@@ -42,6 +41,11 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
         HandleMovement();
         UpdateState();
         EffectManager.UpdateEffects();
+        
+        if(Input.GetKey(KeyCode.F1))
+            PotionManager.SetPotion(new HealPotion(this, 9, 5f));
+        if(Input.GetKey(KeyCode.F2))
+            PotionManager.SetPotion(new PhysicalSkillPotion(this, 5, 5f));
     }
 
     private void HandleMovement()

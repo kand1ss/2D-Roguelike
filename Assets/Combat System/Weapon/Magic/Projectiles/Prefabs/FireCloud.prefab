@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6925727040578809409}
   - component: {fileID: 1719267203797987120}
   - component: {fileID: 6129015575118362545}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FireCloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 2766355866002430435}
   - component: {fileID: 1417789049107612395}
   - component: {fileID: 6380896117627375173}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4968,7 +4968,7 @@ GameObject:
   - component: {fileID: 5122298859048260963}
   - component: {fileID: 2886171236477381021}
   - component: {fileID: 6010897106091569604}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ProjectileVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

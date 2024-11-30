@@ -25,4 +25,10 @@ public abstract class FsmAttackingState : FsmState
         if (enemyAI.DistanceToPlayer > attackingStartDistance)
             StateMachine.SetState<EnemyStateChasing>();
     }
+
+    protected void SuspicionStateTransition()
+    {
+        if(!enemyAI.CanSeePlayer())
+            StateMachine.SetState<EnemyStateSuspicion>();
+    }
 }

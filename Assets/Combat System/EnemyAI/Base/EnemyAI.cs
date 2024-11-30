@@ -53,19 +53,13 @@ public abstract class EnemyAI : Entity, IEnemyAI
             stateMachine.SetState<EnemyStateSuspicion>();
     }
     
-    private void SuspicionStateTransition()
-    {
-        if (stateMachine.CurrentState is FsmAttackingState or EnemyStateChasing && !CanSeePlayer())
-            stateMachine.SetState<EnemyStateSuspicion>();
-    }
-    
-    protected bool CanSeePlayer()
+    public bool CanSeePlayer()
     {
         Vector2 playerPosition = player.transform.position;
         Vector2 enemyPosition = transform.position;
         Vector2 directionToPlayer = (playerPosition - enemyPosition).normalized;
 
-        RaycastHit2D hit = Physics2D.Raycast(enemyPosition, directionToPlayer, DistanceToPlayer, ~LayerMask.GetMask("Enemy"));
+        RaycastHit2D hit = Physics2D.Raycast(enemyPosition, directionToPlayer, DistanceToPlayer, ~LayerMask.GetMask("Enemy", "Weapon"));
         if (hit.collider != null)
         {
             if (hit.collider.gameObject == player.gameObject)
@@ -79,17 +73,5 @@ public abstract class EnemyAI : Entity, IEnemyAI
     {
         base.Update();
         stateMachine.Update();
-        
-        HandleRaycastCheck();
-    }
-
-    private void HandleRaycastCheck()
-    {
-        suspicionStateCheckTimer -= Time.deltaTime;
-        if (suspicionStateCheckTimer <= 0)
-        {
-            SuspicionStateTransition();
-            suspicionStateCheckTimer = suspicionStateCheckInterval;
-        }
     }
 }

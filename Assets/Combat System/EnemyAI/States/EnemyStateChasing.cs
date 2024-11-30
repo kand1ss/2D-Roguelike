@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyStateChasing : FsmState
 {
-    private readonly IEnemyAI enemy;
+    private readonly IEnemyAI enemyAI;
     private readonly Player target;
 
     private readonly float initSpeed;
@@ -11,12 +11,12 @@ public class EnemyStateChasing : FsmState
     private readonly float chasingStartDistance;
     private readonly float chasingSpeed;
 
-    public EnemyStateChasing(IEnemyAI enemy, Fsm stateMachine, Player target, float startDistance, float chasingSpeed) : base(stateMachine)
+    public EnemyStateChasing(IEnemyAI enemyAI, Fsm stateMachine, Player target, float startDistance, float chasingSpeed) : base(stateMachine)
     {
-        this.enemy = enemy;
+        this.enemyAI = enemyAI;
         this.target = target;
 
-        initSpeed = enemy.Agent.speed;
+        initSpeed = enemyAI.Agent.speed;
 
         chasingStartDistance = startDistance;
         this.chasingSpeed = chasingSpeed;
@@ -26,7 +26,7 @@ public class EnemyStateChasing : FsmState
     {
         Debug.Log("Chasing State: [ENTER]");
 
-        enemy.Agent.speed = chasingSpeed;
+        enemyAI.Agent.speed = chasingSpeed;
     }
 
     public override void Update()
@@ -37,20 +37,26 @@ public class EnemyStateChasing : FsmState
 
     private void Chasing()
     {
-        enemy.Agent.SetDestination(target.transform.position);
+        enemyAI.Agent.SetDestination(target.transform.position);
     }
     
     private void IdleStateTransition()
     {
-        var distanceToPlayer = Vector3.Distance(target.transform.position, enemy.transform.position);
+        var distanceToPlayer = Vector3.Distance(target.transform.position, enemyAI.transform.position);
         if (distanceToPlayer > chasingStartDistance)
             StateMachine.SetState<EnemyStateIdle>();
+    }
+
+    private void SuspicionStateTransition()
+    {
+        if(!enemyAI.CanSeePlayer())
+            StateMachine.SetState<EnemyStateSuspicion>();
     }
 
     public override void Exit()
     {
         Debug.Log("Chasing State: [EXIT]");
         
-        enemy.Agent.speed = initSpeed;
+        enemyAI.Agent.speed = initSpeed;
     }
 }

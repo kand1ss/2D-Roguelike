@@ -30,6 +30,7 @@ public class EnemyStateStaffAttacking : FsmAttackingState
         }
 
         ChasingStateTransition();
+        SuspicionStateTransition();
     }
     
     private void SelectSpellByDistance()

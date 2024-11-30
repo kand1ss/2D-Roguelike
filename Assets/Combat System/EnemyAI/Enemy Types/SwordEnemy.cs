@@ -14,9 +14,7 @@ public class SwordEnemy : EnemyBehaviourWithWeapon
         if (stateMachine.CurrentState is not FsmAttackingState)
         {
             if (DistanceToPlayer <= attackingStartDistance)
-            {
                 stateMachine.SetState<EnemyStateSwordAttacking>();
-            }
         }
     }
 }

@@ -80,6 +80,7 @@ public class EnemyStateSwordAttacking : FsmAttackingState
         enemyAI.Agent.SetDestination(target.transform.position);
 
         ChasingStateTransition();
+        SuspicionStateTransition();
     }
 
     private void ExecuteComboAttack(Sword sword)

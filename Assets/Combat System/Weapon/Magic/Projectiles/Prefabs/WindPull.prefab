@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5445247511602592964}
   - component: {fileID: 4089617144739227827}
   - component: {fileID: 308353227957059951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ProjectileVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 8037356956049328073}
   - component: {fileID: 3138601435202837798}
   - component: {fileID: 3155314360103268281}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WindPull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 6434010192197917318}
   - component: {fileID: 1167412809757492562}
   - component: {fileID: 8035970692177019032}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}

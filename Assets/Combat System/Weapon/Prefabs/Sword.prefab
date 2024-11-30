@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastAttackType: 0
-  timeUntilComboCleared: 2
+  timeUntilComboReset: 2
 --- !u!114 &5808569245814042807
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - asteroid
+  - ship
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - Weapon
@@ -40,4 +42,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3736387787
+    locked: 0
+  - name: Environment
+    uniqueID: 834742871
+    locked: 0
+  - name: Characters
+    uniqueID: 264706355
+    locked: 0
+  - name: UI
+    uniqueID: 25064083
     locked: 0
