@@ -49,7 +49,9 @@ public abstract class EnemyAI : Entity, IEnemyAI
     
     private void SwitchToSuspicionStateAfterDamage()
     {
-        if (stateMachine.CurrentState is not EnemyStateChasing or FsmAttackingState)
+        if (!(stateMachine.CurrentState is EnemyStateChasing) 
+            && !(stateMachine.CurrentState is FsmAttackingState))
+            
             stateMachine.SetState<EnemyStateSuspicion>();
     }
     

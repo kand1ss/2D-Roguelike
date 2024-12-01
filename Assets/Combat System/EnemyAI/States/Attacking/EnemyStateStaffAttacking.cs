@@ -15,7 +15,6 @@ public class EnemyStateStaffAttacking : FsmAttackingState
     public override void Enter()
     {
         Debug.Log("Attacking State: [ENTER]");
-        enemyAI.Agent.ResetPath();
     }
 
     public override void Update()
@@ -30,7 +29,6 @@ public class EnemyStateStaffAttacking : FsmAttackingState
         }
 
         ChasingStateTransition();
-        SuspicionStateTransition();
     }
     
     private void SelectSpellByDistance()

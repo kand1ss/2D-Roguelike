@@ -33,6 +33,7 @@ public class EnemyStateChasing : FsmState
     {
         Chasing();
         IdleStateTransition();
+        SuspicionStateTransition();
     }
 
     private void Chasing()

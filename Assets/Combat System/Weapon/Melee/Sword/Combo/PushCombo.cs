@@ -35,7 +35,8 @@ public class PushCombo : Combo
             
             Vector2 pushDirection = (cursorPosition - comboInitiator.transform.position).normalized;
             
-            Debug.LogWarning(pushDirection);
+            if(entity is Player entityPlayer)
+                entityPlayer.DisableMovement(1.3f);
 
             entity.rigidBody.AddForce(pushDirection * pushPower, ForceMode2D.Impulse);
         }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,8 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
 
     public PlayerWeaponController WeaponController { get; private set; }
     public Rigidbody2D rigidBody { get; private set; }
+
+    private bool isCanMoving = true;
 
     [Inject]
     private void Construct(IInputProvider input)
@@ -50,15 +53,32 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
 
     private void HandleMovement()
     {
+        if (!isCanMoving)
+            return;
+        
         Vector3 movementVector = inputProvider.GetMovementVector();
         var moveSpeed = StatsManager.WalkingMoveSpeed;
         
         if(Input.GetKey(KeyCode.LeftShift))
-            moveSpeed *= 1.7f;
+            moveSpeed *= 1.5f;
         
         Vector2 movement = transform.position + movementVector * (moveSpeed * Time.deltaTime);
         
         rigidBody.MovePosition(movement);
+    }
+
+    public void DisableMovement(float duration)
+    {
+        StartCoroutine(DisableMovementRoutine(duration));
+    }
+
+    private IEnumerator DisableMovementRoutine(float duration)
+    {
+        isCanMoving = false;
+        
+        yield return new WaitForSeconds(duration);
+        
+        isCanMoving = true;
     }
 
     private void UpdateState()

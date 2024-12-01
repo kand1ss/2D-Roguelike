@@ -70,8 +70,8 @@ public class SwordCollisionManager : MonoBehaviour
         
         OnEntityEnterCollision?.Invoke(entity);
         
-        var forceDir = entity.transform.position - weaponOwner.transform.position;
-        entity.rigidBody.AddForce(forceDir * 2f, ForceMode2D.Impulse);
+        // var forceDir = entity.transform.position - weaponOwner.transform.position;
+        // entity.rigidBody.AddForce(forceDir * 2f, ForceMode2D.Impulse);
     }
     private void HandleTriggerExit(Collider2D collision)
     {

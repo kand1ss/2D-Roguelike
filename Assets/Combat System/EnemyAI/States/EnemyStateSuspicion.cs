@@ -21,7 +21,7 @@ public class EnemyStateSuspicion : FsmState
 
     public override void Enter()
     {
-        Debug.Log("Suspicion State: [ENTER]");
+        Debug.LogWarning("Suspicion State: [ENTER]");
         enemy.Agent.speed = speed;
         
         playerLastPos = player.transform.position;

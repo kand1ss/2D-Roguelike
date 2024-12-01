@@ -21,14 +21,12 @@ public static class DamageService
         int resultDamage = CalculateFinalDamage(
             weaponDamage, targetResistModifier, attackerSkillMultiplier, distanceMultiplier);
         
-        Debug.LogWarning($"{target.GetType().Name}: Get Damage: {resultDamage}");
-        
         target.StatsManager.TakeDamage(resultDamage);
     }
 
     public static void SendDamageByEffect(ICharacterEffectSusceptible target, float minDamage, float maxDamage)
     {
-        var effectDamage = Mathf.FloorToInt(Random.Range(minDamage, maxDamage));
+        var effectDamage = Mathf.RoundToInt(Random.Range(minDamage, maxDamage));
         
         target.StatsManager.TakeDamage(effectDamage);
     }
@@ -56,6 +54,6 @@ public static class DamageService
 
     private static int CalculateFinalDamage(float weaponDamage, float resistModifier, float skillMultiplier, float distance)
     {
-        return Mathf.FloorToInt(weaponDamage * resistModifier * skillMultiplier * distance);
+        return Mathf.RoundToInt(weaponDamage * resistModifier * skillMultiplier * distance);
     }
 }

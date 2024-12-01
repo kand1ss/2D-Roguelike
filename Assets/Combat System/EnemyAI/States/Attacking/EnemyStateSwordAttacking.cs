@@ -77,10 +77,10 @@ public class EnemyStateSwordAttacking : FsmAttackingState
             attackTimer = attackInterval;
         }
         
-        enemyAI.Agent.SetDestination(target.transform.position);
+        if(enemyAI.DistanceToPlayer > 1.3f)
+            enemyAI.Agent.SetDestination(target.transform.position);
 
         ChasingStateTransition();
-        SuspicionStateTransition();
     }
 
     private void ExecuteComboAttack(Sword sword)
