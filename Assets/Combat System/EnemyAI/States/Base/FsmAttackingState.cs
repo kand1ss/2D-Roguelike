@@ -6,7 +6,7 @@ public abstract class FsmAttackingState : FsmState
     protected readonly float attackInterval;
     protected float attackTimer;
     
-    private readonly float attackingStartDistance;
+    protected readonly float attackingStartDistance;
 
     protected FsmAttackingState(EnemyAI enemyAI, Fsm stateMachine, Player player, float attackDistance, float attackInterval) :
         base(stateMachine)

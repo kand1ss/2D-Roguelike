@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -10,9 +11,6 @@ public abstract class EnemyAI : Entity, IEnemyAI
     public NavMeshAgent Agent { get; private set; }
 
     public float DistanceToPlayer => Vector3.Distance(player.transform.position, transform.position);
-
-    private readonly float suspicionStateCheckInterval = 0.5f;
-    private float suspicionStateCheckTimer;
 
     [Inject]
     private void Construct(Player player)
@@ -32,8 +30,6 @@ public abstract class EnemyAI : Entity, IEnemyAI
         Agent = GetComponent<NavMeshAgent>();
         Agent.updateRotation = false;
         Agent.updateUpAxis = false;
-
-        suspicionStateCheckTimer = suspicionStateCheckInterval;
         
         stateMachine = new Fsm();
     }
@@ -50,7 +46,8 @@ public abstract class EnemyAI : Entity, IEnemyAI
     private void SwitchToSuspicionStateAfterDamage()
     {
         if (!(stateMachine.CurrentState is EnemyStateChasing) 
-            && !(stateMachine.CurrentState is FsmAttackingState))
+            && !(stateMachine.CurrentState is FsmAttackingState)
+            && !(stateMachine.CurrentState is FsmRetreatState))
             
             stateMachine.SetState<EnemyStateSuspicion>();
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Fsm
@@ -20,12 +21,22 @@ public class Fsm
         if (CurrentState?.GetType() == type)
             return;
 
-        if (states.TryGetValue(type, out FsmState newState))
+        if (states.TryGetValue(type, out var newState))
         {
-            CurrentState?.Exit();
-            CurrentState = newState;
-            CurrentState?.Enter();
+            TransitionToState(newState);
+            return;
         }
+        
+        var compatibleState = states.Values.FirstOrDefault(state => type.IsAssignableFrom(state.GetType()));
+        if(compatibleState != null)
+            TransitionToState(compatibleState);
+    }
+
+    private void TransitionToState(FsmState newState)
+    {
+        CurrentState?.Exit();
+        CurrentState = newState;
+        CurrentState?.Enter();
     }
 
     public void Update()

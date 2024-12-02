@@ -1,42 +1,26 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class StaffEnemy : EnemyBehaviourWithWeapon
 {
-    [SerializeField] private float fleeStartDistance;
-    [SerializeField] private float fleeSpeed;
-    
+    [SerializeField] protected float retreatStartDistance;
+
     protected override void InitializeStates()
     {
         base.InitializeStates();
         
         stateMachine.AddState(new EnemyStateStaffAttacking(this, stateMachine, player, attackingStartDistance, attackInterval));
-        stateMachine.AddState(new EnemyStateFlee(this, stateMachine, player, fleeStartDistance, fleeSpeed));
+        stateMachine.AddState(new EnemyStateRangeRetreat(this, stateMachine, player, retreatStartDistance, retreatSpeed, attackingStartDistance));
     }
 
-    protected override void CheckTransitionsFromAnyState()
+    protected override bool CheckRetreatStateCondition()
     {
-        base.CheckTransitionsFromAnyState();
-        
-        FleeStateTransition();
-    }
-
-    protected override void AttackingStateTransition()
-    {
-        if (!(stateMachine.CurrentState is FsmAttackingState) && !(stateMachine.CurrentState is EnemyStateFlee))
+        if (!(stateMachine.CurrentState is FsmRetreatState))
         {
-            if (DistanceToPlayer <= attackingStartDistance)
-            {
-                stateMachine.SetState<EnemyStateStaffAttacking>();
-            }
+            if (DistanceToPlayer <= retreatStartDistance)
+                return true;
         }
-    }
 
-    private void FleeStateTransition()
-    {
-        if (stateMachine.CurrentState is not EnemyStateFlee)
-        {
-            if (DistanceToPlayer <= fleeStartDistance)
-                stateMachine.SetState<EnemyStateFlee>();
-        }
+        return false;
     }
 }

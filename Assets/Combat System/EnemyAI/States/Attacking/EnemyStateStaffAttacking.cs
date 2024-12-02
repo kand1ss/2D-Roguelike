@@ -15,9 +15,17 @@ public class EnemyStateStaffAttacking : FsmAttackingState
     public override void Enter()
     {
         Debug.Log("Attacking State: [ENTER]");
+        enemyAI.Agent.ResetPath();
     }
 
     public override void Update()
+    {
+        UseWeaponAtInterval();
+
+        ChasingStateTransition();
+    }
+
+    private void UseWeaponAtInterval()
     {
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
@@ -27,8 +35,6 @@ public class EnemyStateStaffAttacking : FsmAttackingState
             
             attackTimer = attackInterval;
         }
-
-        ChasingStateTransition();
     }
     
     private void SelectSpellByDistance()
