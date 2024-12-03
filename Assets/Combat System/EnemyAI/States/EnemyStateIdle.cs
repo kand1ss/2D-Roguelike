@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class EnemyStateIdle : FsmState
 {
-    private readonly IEnemyAI enemy;
+    private readonly IEnemyAI enemyAi;
+    private readonly EnemyAISettings enemySettings;
 
-    private float idleStateMaxTime;
+    private readonly float idleStateMaxTime;
     private float idleStateTimer;
 
-    public EnemyStateIdle(IEnemyAI enemy, Fsm stateMachine, float idleTime) : base(stateMachine)
+    public EnemyStateIdle(IEnemyAI enemyAi, Fsm stateMachine) : base(stateMachine)
     {
-        this.enemy = enemy;
-        idleStateMaxTime = idleTime;
+        this.enemyAi = enemyAi;
+        enemySettings = enemyAi.AiSettings;
+        
+        idleStateMaxTime = enemySettings.idleTime;
     }
 
     public override void Enter()
@@ -26,14 +29,14 @@ public class EnemyStateIdle : FsmState
 
     private void CheckStateTransitions()
     {
-        idleStateTimer -= Time.deltaTime;
-        if (idleStateTimer <= 0)
-            RoamingStateTransition();
+        RoamingStateTransition();
     }
 
     private void RoamingStateTransition()
     {
-        StateMachine.SetState<EnemyStateRoaming>();
+        idleStateTimer -= Time.deltaTime;
+        if (idleStateTimer <= 0)
+            StateMachine.SetState<EnemyStateRoaming>();
     }
 
     public override void Exit()

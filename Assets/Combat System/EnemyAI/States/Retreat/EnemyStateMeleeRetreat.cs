@@ -1,9 +1,9 @@
 public class EnemyStateMeleeRetreat : FsmRetreatState
 {
     private float attackingStartDistance;
-    public EnemyStateMeleeRetreat(IEnemyAI enemy, Fsm stateMachine, Player target, float startDistance, float retreatSpeed, float attackingDistance) : base(enemy, stateMachine, target, startDistance, retreatSpeed)
+    public EnemyStateMeleeRetreat(IEnemyAI enemyAi, Fsm stateMachine, Player target) : base(enemyAi, stateMachine, target)
     {
-        attackingStartDistance = attackingDistance;
+        attackingStartDistance = enemySettings.attackingStartDistance;
     }
 
     public override void Update()
@@ -19,7 +19,7 @@ public class EnemyStateMeleeRetreat : FsmRetreatState
         if (!(DistanceToTarget < attackingStartDistance)) 
             return;
         
-        if(enemy is IEnemyWithWeapon enemyWeapon)
+        if(enemyAi is IEnemyWithWeapon enemyWeapon)
             enemyWeapon.WeaponController.UseChosenWeapon();
     }
 

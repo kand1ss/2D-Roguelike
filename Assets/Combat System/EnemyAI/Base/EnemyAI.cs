@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -9,6 +8,8 @@ public abstract class EnemyAI : Entity, IEnemyAI
     protected Fsm stateMachine;
 
     public NavMeshAgent Agent { get; private set; }
+    [field: SerializeField] public EnemyAISettings AiSettings { get; private set; }
+    protected EnemyStateTransitionsManager stateTransitionsManager;
 
     public float DistanceToPlayer => Vector3.Distance(player.transform.position, transform.position);
 
@@ -32,6 +33,7 @@ public abstract class EnemyAI : Entity, IEnemyAI
         Agent.updateUpAxis = false;
         
         stateMachine = new Fsm();
+        stateTransitionsManager = new(this, stateMachine);
     }
 
     protected override void Start()
@@ -42,14 +44,15 @@ public abstract class EnemyAI : Entity, IEnemyAI
         
         stateMachine.AddState(new EnemyStateSuspicion(this, stateMachine, player, 5f));
     }
-    
+
+    private void OnDestroy()
+    {
+        StatsManager.OnTakeDamage -= SwitchToSuspicionStateAfterDamage;
+    }
+
     private void SwitchToSuspicionStateAfterDamage()
     {
-        if (!(stateMachine.CurrentState is EnemyStateChasing) 
-            && !(stateMachine.CurrentState is FsmAttackingState)
-            && !(stateMachine.CurrentState is FsmRetreatState))
-            
-            stateMachine.SetState<EnemyStateSuspicion>();
+        stateMachine.SetState<EnemyStateSuspicion>();
     }
     
     public bool CanSeePlayer()

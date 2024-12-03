@@ -46,8 +46,6 @@ public class BowShootManager : ChargeHandler
 
     private void Shoot()
     {
-        Debug.Log("Shoot");
-        
         InstantiateArrow(bow.GetArrowManager().ChoosenArrow);
         cooldownTime = Time.time;
         

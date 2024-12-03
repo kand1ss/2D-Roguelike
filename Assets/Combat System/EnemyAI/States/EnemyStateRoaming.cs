@@ -3,11 +3,14 @@ using UnityEngine.AI;
 
 public class EnemyStateRoaming : FsmState
 {
-    private readonly EnemyAI enemyAI;
+    private readonly IEnemyAI enemyAi;
+    private readonly EnemyAISettings enemySettings;
 
     private readonly float roamingMaxDistance;
     private readonly float roamingMinDistance;
     private readonly float roamingSpeed;
+
+    private readonly float initSpeed;
 
     private readonly float roamingMaxTime = 4f;
     private float roamingTimer;
@@ -15,21 +18,24 @@ public class EnemyStateRoaming : FsmState
     private Vector3 startPosition;
     private Vector3 roamPosition;
 
-    public EnemyStateRoaming(EnemyAI enemyAI, Fsm stateMachine, float roamDistanceMax, float roamDistanceMin, float roamSpeed) : base(stateMachine)
+    public EnemyStateRoaming(IEnemyAI enemyAi, Fsm stateMachine) : base(stateMachine)
     {
-        this.enemyAI = enemyAI;
+        this.enemyAi = enemyAi;
+        enemySettings = enemyAi.AiSettings;
+
+        initSpeed = enemyAi.Agent.speed;
         
-        roamingMaxDistance = roamDistanceMax;
-        roamingMinDistance = roamDistanceMin;
-        roamingSpeed = roamSpeed;
+        roamingMaxDistance = enemySettings.roamingDistanceMax;
+        roamingMinDistance = enemySettings.roamingDistanceMin;
+        roamingSpeed = enemySettings.roamingSpeed;
     }
 
     public override void Enter()
     {
         Debug.Log("Roaming State: [ENTER]");
         
-        startPosition = enemyAI.Agent.transform.position;
-        enemyAI.Agent.speed = 3f;
+        startPosition = enemyAi.Agent.transform.position;
+        enemyAi.Agent.speed = roamingSpeed;
         roamingTimer = roamingMaxTime;
         
         Roaming();
@@ -38,7 +44,7 @@ public class EnemyStateRoaming : FsmState
     private void Roaming()
     {
         roamPosition = GetRoamingPosition();
-        enemyAI.Agent.SetDestination(roamPosition);
+        enemyAi.Agent.SetDestination(roamPosition);
     }
 
     private Vector3 GetRoamingPosition()
@@ -59,18 +65,28 @@ public class EnemyStateRoaming : FsmState
 
     private void CheckStateTransitions()
     {
+        ChasingStateTransition();
         IdleStateTransition();
     }
 
     private void IdleStateTransition()
     {
         roamingTimer -= Time.deltaTime;
-        if (Vector3.Distance(enemyAI.transform.position, roamPosition) < 0.1f || roamingTimer <= 0)
+        if (Vector3.Distance(enemyAi.transform.position, roamPosition) < 0.1f || roamingTimer <= 0)
             StateMachine.SetState<EnemyStateIdle>();
+    }
+
+    private void ChasingStateTransition()
+    {
+        var chasingDistance = enemySettings.chasingStartDistance;
+        
+        if(enemyAi.DistanceToPlayer < chasingDistance && enemyAi.CanSeePlayer())
+            StateMachine.SetState<EnemyStateChasing>();
     }
 
     public override void Exit()
     {
         Debug.Log("Roaming State: [EXIT]");
+        enemyAi.Agent.speed = initSpeed;
     }
 }

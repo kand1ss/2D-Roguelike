@@ -6,7 +6,7 @@ public class EnemyStateStaffAttacking : FsmAttackingState
     private IEnemyWithWeapon enemyWithWeapon;
     private Staff enemyStaff;
     
-    public EnemyStateStaffAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player, float attackDistance, float attackInterval) : base(enemyAI, stateMachine, player, attackDistance, attackInterval)
+    public EnemyStateStaffAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player) : base(enemyAI, stateMachine, player)
     {
         enemyWithWeapon = enemyAI as IEnemyWithWeapon;
         enemyStaff = enemyWithWeapon?.WeaponController.ChosenWeapon as Staff;
@@ -20,9 +20,11 @@ public class EnemyStateStaffAttacking : FsmAttackingState
 
     public override void Update()
     {
+        base.Update();
+        
         UseWeaponAtInterval();
-
-        ChasingStateTransition();
+        
+        RetreatStateTransition();
     }
 
     private void UseWeaponAtInterval()
@@ -58,6 +60,13 @@ public class EnemyStateStaffAttacking : FsmAttackingState
         var chosenSpellIndex = spells.IndexOf(chosenSpell);
         
         enemyStaff.GetMagicComponent().ChosenSpellIndex = chosenSpellIndex;
+    }
+    
+    private void RetreatStateTransition()
+    {
+        var retreatDistance = enemySettings.retreatStartDistance;
+        if (enemyAI.DistanceToPlayer <= retreatDistance && enemyAI.CanSeePlayer())
+            StateMachine.SetState<FsmRetreatState>();
     }
 
     public override void Exit()

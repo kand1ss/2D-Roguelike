@@ -4,6 +4,8 @@ using UnityEngine.AI;
 public class EnemyStateChasing : FsmState
 {
     private readonly IEnemyAI enemyAI;
+    private readonly EnemyAISettings enemySettings;
+    
     private readonly Player target;
 
     private readonly float initSpeed;
@@ -11,15 +13,17 @@ public class EnemyStateChasing : FsmState
     private readonly float chasingStartDistance;
     private readonly float chasingSpeed;
 
-    public EnemyStateChasing(IEnemyAI enemyAI, Fsm stateMachine, Player target, float startDistance, float chasingSpeed) : base(stateMachine)
+    public EnemyStateChasing(IEnemyAI enemyAI, Fsm stateMachine, Player target) : base(stateMachine)
     {
         this.enemyAI = enemyAI;
+        enemySettings = enemyAI.AiSettings;
+        
         this.target = target;
 
         initSpeed = enemyAI.Agent.speed;
 
-        chasingStartDistance = startDistance;
-        this.chasingSpeed = chasingSpeed;
+        chasingStartDistance = enemySettings.chasingStartDistance;
+        this.chasingSpeed = enemySettings.chasingSpeed;
     }
 
     public override void Enter()

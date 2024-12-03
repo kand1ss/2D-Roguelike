@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class EnemyStateSuspicion : FsmState
 {
-    private readonly IEnemyAI enemy;
+    private readonly IEnemyAI enemyAI;
+    private readonly EnemyAISettings enemySettings;
+    
     private readonly Player player;
     
     private Vector3 playerLastPos;
@@ -10,32 +12,50 @@ public class EnemyStateSuspicion : FsmState
     private readonly float initSpeed;
     private readonly float speed;
 
-    public EnemyStateSuspicion(IEnemyAI enemy, Fsm stateMachine, Player player, float speed) : base(stateMachine)
+    public EnemyStateSuspicion(IEnemyAI enemyAi, Fsm stateMachine, Player player, float speed) : base(stateMachine)
     {
-        this.enemy = enemy;
+        enemyAI = enemyAi;
+        enemySettings = enemyAi.AiSettings;
+        
         this.player = player;
         this.speed = speed;
 
-        initSpeed = enemy.Agent.speed;
+        initSpeed = enemyAi.Agent.speed;
     }
 
     public override void Enter()
     {
         Debug.LogWarning("Suspicion State: [ENTER]");
-        enemy.Agent.speed = speed;
+        enemyAI.Agent.speed = speed;
+
+        if (enemyAI is ICharacter enemyCharacter)
+            enemyCharacter.StatsManager.OnTakeDamage += SetDestinationToPlayer;
         
+        SetDestinationToPlayer();
+    }
+
+    private void SetDestinationToPlayer()
+    {
         playerLastPos = player.transform.position;
-        enemy.Agent.SetDestination(playerLastPos);
+        enemyAI.Agent.SetDestination(playerLastPos);
     }
 
     public override void Update()
     {
-        if (Vector3.Distance(enemy.transform.position, playerLastPos) <= 0.5f)
+        IdleStateTransition();
+    }
+
+    private void IdleStateTransition()
+    {
+        if (Vector3.Distance(enemyAI.transform.position, playerLastPos) <= 0.5f)
             StateMachine.SetState<EnemyStateIdle>();
     }
 
     public override void Exit()
     {
-        enemy.Agent.speed = initSpeed;
+        enemyAI.Agent.speed = initSpeed;
+        
+        if (enemyAI is ICharacter enemyCharacter)
+            enemyCharacter.StatsManager.OnTakeDamage -= SetDestinationToPlayer;
     }
 }

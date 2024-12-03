@@ -30,9 +30,6 @@ public class PushCombo : Combo
             else
                 cursorPosition = entity.transform.position;
             
-            Debug.LogWarning(cursorPosition);
-            Debug.LogWarning(comboInitiator.transform.position);
-            
             Vector2 pushDirection = (cursorPosition - comboInitiator.transform.position).normalized;
             
             if(entity is Player entityPlayer)

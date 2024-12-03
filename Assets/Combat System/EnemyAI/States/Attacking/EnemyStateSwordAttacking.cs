@@ -10,8 +10,8 @@ public class EnemyStateSwordAttacking : FsmAttackingState
     private int attackIndexPointer;
     private IList<SwordAttackType> comboAttackList;
 
-    public EnemyStateSwordAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player, float attackDistance, float attackInterval) :
-        base(enemyAI, stateMachine, player, attackDistance, attackInterval)
+    public EnemyStateSwordAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player) :
+        base(enemyAI, stateMachine, player)
     {
         enemyWithWeapon = enemyAI as IEnemyWithWeapon;
         enemySword = enemyWithWeapon?.WeaponController.ChosenWeapon as Sword;
@@ -70,17 +70,23 @@ public class EnemyStateSwordAttacking : FsmAttackingState
 
     public override void Update()
     {
+        base.Update();
+        
+        RetreatStateTransition();
+        HandleState();
+
+        if(enemyAI.DistanceToPlayer > 1.3f)
+            enemyAI.Agent.SetDestination(target.transform.position);
+    }
+
+    private void HandleState()
+    {
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
             ExecuteComboAttack(enemySword);
             attackTimer = attackInterval;
         }
-        
-        if(enemyAI.DistanceToPlayer > 1.3f)
-            enemyAI.Agent.SetDestination(target.transform.position);
-
-        ChasingStateTransition();
     }
 
     private void ExecuteComboAttack(Sword sword)
@@ -104,6 +110,16 @@ public class EnemyStateSwordAttacking : FsmAttackingState
 
         if (attackIndexPointer == comboAttackList.Count)
             SelectNewCombo();
+    }
+    
+    private void RetreatStateTransition()
+    {
+        var retreatDistance = enemySettings.attackingStartDistance;
+        var statsManager = enemyAI.StatsManager;
+        
+        if (enemyAI.DistanceToPlayer <= retreatDistance && enemyAI.CanSeePlayer())
+            if (statsManager.CurrentHealth < statsManager.MaxHealth / 4)
+                StateMachine.SetState<FsmRetreatState>();
     }
 
     public override void Exit()

@@ -17,8 +17,6 @@ public class ProjectileMagic : Magic
     
     public override void CastSpell(int spellIndex)
     {
-        Debug.Log(Spells[spellIndex].spellName);
-
         InstantiateSpellProjectile(Spells[spellIndex].projectilePrefab);
     }
 
