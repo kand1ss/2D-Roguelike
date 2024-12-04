@@ -42,6 +42,17 @@ public class CharacterEffectManager
         EffectRemoved?.Invoke(effect);
     }
 
+    public bool HasEffectType(EffectType effectType)
+    {
+        foreach (var effect in ActiveEffects)
+        {
+            if (effect.EffectType == effectType)
+                return true;
+        }
+
+        return false;
+    }
+
     public void ClearAllEffects()
     {
         foreach (var effect in ActiveEffects)

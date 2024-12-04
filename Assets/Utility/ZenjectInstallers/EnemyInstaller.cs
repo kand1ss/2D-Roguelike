@@ -16,6 +16,14 @@ public class EnemyInstaller : MonoInstaller
             .BindInterfacesAndSelfTo<Entity>()
             .FromInstance(entity)
             .AsSingle();
+
+        if (entity is IPotionUser entityPotionUser)
+        {
+            Container
+                .Bind<IPotionUser>()
+                .FromInstance(entityPotionUser)
+                .AsSingle();
+        }
     }
     
     [Inject]

@@ -8,7 +8,8 @@ public class CharacterPotionManager
     private ICharacterEffectSusceptible owner;
     
     private IPotion chosenPotion;
-    private int chosenPotionUsesNumber;
+    public int PotionRemainingUsesNumber { get; private set; }
+    
     public event UnityAction<IPotion> PotionChanged;
 
     public CharacterPotionManager(ICharacterEffectSusceptible owner)
@@ -24,14 +25,20 @@ public class CharacterPotionManager
         PotionChanged?.Invoke(potion);
     }
 
-    public void ResetPotionUsage() => chosenPotionUsesNumber = MAX_POTION_USES_COUNT;
-    
     public void UsePotion()
     {
-        if (chosenPotionUsesNumber > 0)
+        if (CanUsePotion())
         {
-            chosenPotionUsesNumber--;
+            PotionRemainingUsesNumber--;
             owner.EffectManager.ApplyEffect(chosenPotion);
         }
+        
+        if(PotionRemainingUsesNumber <= 0)
+            SetPotion(null);
     }
+
+    public bool CanUsePotion() => chosenPotion != null && PotionRemainingUsesNumber > 0;
+    public void ResetPotionUsage() => PotionRemainingUsesNumber = MAX_POTION_USES_COUNT;
+    
+    public EffectType GetChosenPotionEffectType() => chosenPotion.EffectType;
 }

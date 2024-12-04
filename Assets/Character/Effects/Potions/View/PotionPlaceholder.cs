@@ -47,6 +47,10 @@ public class PotionPlaceholder : MonoBehaviour
 
     private void ShowPotionView(IPotion potion)
     {
-        spriteRenderer.sprite = potion.PotionSprite;
+        Sprite potionSprite = null;
+        if(potion != null)
+            potionSprite = potion.PotionSprite;
+
+        spriteRenderer.sprite = potionSprite;
     }
 }

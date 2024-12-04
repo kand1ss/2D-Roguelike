@@ -7,7 +7,6 @@ public class SwordEnemy : EnemyBehaviourWithWeapon
         base.InitializeStates();
 
         stateMachine.AddState(new EnemyStateSwordAttacking(this, stateMachine, player));
-        
         stateMachine.AddState(new EnemyStateMeleeRetreat(this, stateMachine, player));
     }
 }
