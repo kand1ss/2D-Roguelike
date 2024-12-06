@@ -1,6 +1,8 @@
+using UnityEngine;
 
 [System.Serializable]
-public class EnemyAISettings
+[CreateAssetMenu(menuName = "AiSettings")]
+public class EnemyAISettings : ScriptableObject
 {
     public float idleTime;
     

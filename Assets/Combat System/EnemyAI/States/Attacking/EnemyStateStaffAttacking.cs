@@ -22,12 +22,22 @@ public class EnemyStateStaffAttacking : FsmAttackingState
     {
         base.Update();
         
-        UseWeaponAtInterval();
-        
+        UseWeaponByInterval();
+        AdjustMovementByDistance();
+
         RetreatStateTransition();
     }
 
-    private void UseWeaponAtInterval()
+    private void AdjustMovementByDistance()
+    {
+        var stopMovingDistance = enemySettings.attackingStartDistance - 0.5f;
+        if(enemyAI.DistanceToPlayer > stopMovingDistance)
+            enemyAI.Agent.SetDestination(target.transform.position);
+        else
+            enemyAI.Agent.ResetPath();
+    }
+
+    private void UseWeaponByInterval()
     {
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
