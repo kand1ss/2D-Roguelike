@@ -63,6 +63,7 @@ public class EnemyStateTransitionsManager
             new List<Type>()
             {
                 typeof(FsmAttackingState),
+                typeof(EnemyStateChasing),
                 typeof(EnemyStateRoaming),
                 typeof(EnemyStateIdle)
             });

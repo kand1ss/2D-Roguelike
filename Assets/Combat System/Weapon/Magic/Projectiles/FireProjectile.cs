@@ -47,12 +47,4 @@ public class FireProjectile : ProjectileBase, IStrikeDamage
         
         ProjectileImpact();
     }
-
-    protected override void OnProjectileHits()
-    {
-        ProjectileRb.velocity = Vector2.zero;
-        ProjectileRb.angularVelocity = 0f;
-
-        TurnSpellParticles(false);
-    }
 }

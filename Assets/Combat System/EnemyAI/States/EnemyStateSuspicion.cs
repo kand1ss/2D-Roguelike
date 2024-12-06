@@ -32,12 +32,37 @@ public class EnemyStateSuspicion : FsmState
             enemyCharacter.StatsManager.OnTakeDamage += SetDestinationToPlayer;
         
         SetDestinationToPlayer();
+        AlertNearbyEnemies();
     }
 
     private void SetDestinationToPlayer()
     {
         playerLastPos = player.transform.position;
         enemyAI.Agent.SetDestination(playerLastPos);
+    }
+
+    private void AlertNearbyEnemies()
+    {
+        var hitColliders = GetEnemiesByRadius();
+
+        foreach (var hitCollider in hitColliders)
+        {
+            EnemyAI allertedEnemyAi = hitCollider.GetComponent<EnemyAI>();
+
+            if (allertedEnemyAi != null && allertedEnemyAi != (EnemyAI)enemyAI)
+                allertedEnemyAi.SetState<EnemyStateSuspicion>();
+        }
+    }
+
+    private Collider2D[] GetEnemiesByRadius()
+    {
+        var alertRadius = 6.5f;
+        LayerMask enemyLayerMask = LayerMask.GetMask("Enemy");
+        
+        Collider2D[] hitColliders = 
+            Physics2D.OverlapCircleAll(enemyAI.transform.position, alertRadius, enemyLayerMask);
+        
+        return hitColliders;
     }
 
     public override void Update()

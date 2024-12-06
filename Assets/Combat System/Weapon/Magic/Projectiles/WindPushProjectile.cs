@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class WindPushProjectile : ProjectileBase
 {
@@ -13,21 +14,18 @@ public class WindPushProjectile : ProjectileBase
         OnProjectileImpact -= OnProjectileHits;
     }
 
-    protected override void OnProjectileHits()
-    {
-        ProjectileRb.velocity = Vector2.zero;
-        ProjectileRb.angularVelocity = 0f;
-
-        TurnSpellParticles(false);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.TryGetComponent(out Entity entity)) 
+        if (collision.TryGetComponent(out ICharacter character) && character == ProjectileSender)
             return;
-        
-        Rigidbody2D entityRb = entity.GetComponent<Rigidbody2D>();
 
-        entityRb.AddForce(ProjectileRb.velocity, ForceMode2D.Impulse);
+        if (collision.TryGetComponent(out Entity entity))
+        {
+            Rigidbody2D entityRb = entity.GetComponent<Rigidbody2D>();
+
+            entityRb.AddForce(ProjectileRb.velocity, ForceMode2D.Impulse);
+        }
+        else
+            ProjectileImpact();
     }
 }

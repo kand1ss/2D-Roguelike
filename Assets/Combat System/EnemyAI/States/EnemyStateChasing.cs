@@ -38,6 +38,7 @@ public class EnemyStateChasing : FsmState
         Chasing();
         IdleStateTransition();
         SuspicionStateTransition();
+        RetreatStateTransition();
     }
 
     private void Chasing()
@@ -56,6 +57,16 @@ public class EnemyStateChasing : FsmState
     {
         if(!enemyAI.CanSeePlayer())
             StateMachine.SetState<EnemyStateSuspicion>();
+    }
+
+    private void RetreatStateTransition()
+    {
+        var retreatDistance = enemySettings.chasingStartDistance;
+        var statsManager = ((EnemyAI)enemyAI).StatsManager;
+        
+        if (enemyAI.DistanceToPlayer <= retreatDistance && enemyAI.CanSeePlayer())
+            if (statsManager.CurrentHealth < statsManager.MaxHealth / 4)
+                StateMachine.SetState<FsmRetreatState>();
     }
 
     public override void Exit()

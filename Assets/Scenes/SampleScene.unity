@@ -125715,14 +125715,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1508316362262882332, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2248935182871012950, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1083235911}
+    - target: {fileID: 3299547145759850525, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299547145759850525, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.12
+      objectReference: {fileID: 0}
     - target: {fileID: 4406469217892582053, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1083235911}
+    - target: {fileID: 5455042270110833142, guid: 2de09c2bab9f17546aedc2717841920e, type: 3}
+      propertyPath: <AiSettings>k__BackingField.retreatSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -125742,7 +125758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3777889938987507109, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6090540227707989074, guid: 7a2a5a18da95de74bb7651b212f66916, type: 3}
       propertyPath: player

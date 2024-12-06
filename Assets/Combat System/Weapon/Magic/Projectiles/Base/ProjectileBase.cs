@@ -35,6 +35,7 @@ public class ProjectileBase : MonoBehaviour, IProjectileEvents
     }
     protected void ProjectileImpact()
     {
+        Debug.Log("Projectile impacted");
         OnProjectileImpact?.Invoke();
     }
     protected virtual void Start()
@@ -72,5 +73,11 @@ public class ProjectileBase : MonoBehaviour, IProjectileEvents
         emission.enabled = turn;
     }
 
-    protected virtual void OnProjectileHits() { }
+    protected virtual void OnProjectileHits()
+    {
+        ProjectileRb.velocity = Vector2.zero;
+        ProjectileRb.angularVelocity = 0f;
+
+        TurnSpellParticles(false);
+    }
 }

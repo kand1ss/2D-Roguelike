@@ -15,7 +15,7 @@ public class FireCloud : ProjectileBase, IStrikeDamage
     {
         ProjectileImpact();
 
-        if (!collision.TryGetComponent<ICharacterEffectSusceptible>(out ICharacterEffectSusceptible character))
+        if (!collision.TryGetComponent(out ICharacterEffectSusceptible character))
             return;
 
         if (character == ProjectileSender)

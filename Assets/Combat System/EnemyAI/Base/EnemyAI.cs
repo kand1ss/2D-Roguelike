@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using Zenject;
 
 public abstract class EnemyAI : Entity, IEnemyAI
@@ -48,6 +49,11 @@ public abstract class EnemyAI : Entity, IEnemyAI
     private void OnDestroy()
     {
         StatsManager.OnTakeDamage -= SwitchToSuspicionStateAfterDamage;
+    }
+
+    public void SetState<T>() where T: FsmState
+    {
+        stateMachine.SetState<T>();
     }
 
     private void SwitchToSuspicionStateAfterDamage()
