@@ -17,6 +17,20 @@ public class EnemyInstaller : MonoInstaller
             .FromInstance(entity)
             .AsSingle();
 
+        weaponController = entity.GetComponentInChildren<EnemyWeaponController>();
+        Container
+            .BindInterfacesAndSelfTo<WeaponControllerBase>()
+            .FromInstance(weaponController);
+        
+        var progressBar = entity.GetComponentInChildren<ActionProgressBar>();
+        Container
+            .BindInterfacesAndSelfTo<ActionProgressBar>()
+            .FromInstance(progressBar);
+
+        Container
+            .BindFactory<WeaponBase, Transform, WeaponBase, WeaponFactory>()
+            .FromFactory<WeaponFactory>();
+        
         if (entity is IPotionUser entityPotionUser)
         {
             Container
@@ -24,15 +38,5 @@ public class EnemyInstaller : MonoInstaller
                 .FromInstance(entityPotionUser)
                 .AsSingle();
         }
-    }
-    
-    [Inject]
-    private void InitializeComponents()
-    {
-        weaponController = entity.GetComponentInChildren<EnemyWeaponController>();
-        
-        Container
-            .BindInterfacesAndSelfTo<WeaponControllerBase>()
-            .FromInstance(weaponController);
     }
 }

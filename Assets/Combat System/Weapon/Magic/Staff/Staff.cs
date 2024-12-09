@@ -34,7 +34,7 @@ public class Staff : WeaponBase, IChargeableWeapon
     public override void DetachWeapon()
     {
         visual.FinalizeVisual();
-        visual = null;
+        visual = null; 
 
         FinalizeComponents();
     }

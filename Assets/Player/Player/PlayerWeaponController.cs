@@ -6,8 +6,8 @@ public class PlayerWeaponController : WeaponControllerBase
 {
     private IInputProvider inputProvider;
 
-    [SerializeField] private WeaponBase firstWeapon;
-    [SerializeField] private WeaponBase secondWeapon;
+    [field: SerializeField] public WeaponBase firstWeapon { get; private set; }
+    [field: SerializeField] public WeaponBase secondWeapon { get; private set; }
 
     [Inject]
     private void Construct(IInputProvider input)
@@ -41,6 +41,16 @@ public class PlayerWeaponController : WeaponControllerBase
         inputProvider.ButtonsController.WeaponInput.OnWeaponSwap -= SwapCurrentWeapon;
         inputProvider.ButtonsController.WeaponInput.OnUseWeapon -= UseChosenWeapon;
     }
+
+    public void SetFirstWeapon(WeaponBase weapon)
+    {
+        firstWeapon = weapon;
+    }
+
+    public void SetSecondWeapon(WeaponBase weapon)
+    {
+        secondWeapon = weapon;
+    }
     
     private void SwapCurrentWeapon()
     {
@@ -56,7 +66,7 @@ public class PlayerWeaponController : WeaponControllerBase
         Debug.Log($"Оружие изменено: {chosenWeapon.GetType().Name}");
     }
 
-    private void AttachChosenWeapon()
+    public void AttachChosenWeapon()
     {
         var weaponVisual = chosenWeapon.GetComponentInChildren<WeaponVisualBase>();
         weaponVisual.AttachPlayerEvents();
@@ -64,7 +74,7 @@ public class PlayerWeaponController : WeaponControllerBase
         chosenWeapon.gameObject.SetActive(true);
         chosenWeapon.InitWeapon();
     }
-    private void DetachChosenWeapon()
+    public void DetachChosenWeapon()
     {
         var weaponVisual = chosenWeapon.GetComponentInChildren<WeaponVisualBase>();
         weaponVisual.DetachPlayerEvents();

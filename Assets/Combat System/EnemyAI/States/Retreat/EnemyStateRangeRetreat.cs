@@ -10,7 +10,7 @@ public class EnemyStateRangeRetreat : FsmRetreatState
     {
         base.Update();
         
-        if(enemyAi is IEnemyWithWeapon enemyWeapon)
+        if(enemyAi is IHasWeapon enemyWeapon)
             enemyWeapon.WeaponController.UseChosenWeapon();
         
         AttackingStateTransition();

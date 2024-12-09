@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
+public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser, IHasWeapon
 {
     private IInputProvider inputProvider;
     
@@ -14,7 +14,9 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
     [field: SerializeField] public CharacterStatsManager StatsManager { get; private set; }
     [field: SerializeField] public CharacterSkills Skills { get; private set; }
 
-    public PlayerWeaponController WeaponController { get; private set; }
+    public PlayerWeaponController PlayerWeaponController { get; private set; }
+    public WeaponControllerBase WeaponController => PlayerWeaponController;
+    
     public Rigidbody2D rigidBody { get; private set; }
 
     private bool isCanMoving = true;
@@ -31,7 +33,7 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
         PotionManager = new CharacterPotionManager(this);
         
         rigidBody = GetComponent<Rigidbody2D>();
-        WeaponController = GetComponentInChildren<PlayerWeaponController>();
+        PlayerWeaponController = GetComponentInChildren<PlayerWeaponController>();
     }
 
     private void Start()
@@ -43,12 +45,34 @@ public class Player : MonoBehaviour, ICharacterEffectSusceptible, IPotionUser
     {
         HandleMovement();
         UpdateState();
+        CheckInteractableObjects();
         EffectManager.UpdateEffects();
         
         if(Input.GetKey(KeyCode.F1))
             PotionManager.SetPotion(new HealPotion(this, 9, 5f));
         if(Input.GetKey(KeyCode.F2))
             PotionManager.SetPotion(new PhysicalSkillPotion(this, 5, 5f));
+    }
+
+    private void CheckInteractableObjects()
+    {
+        if (!Input.GetKeyDown(KeyCode.E))
+            return;
+        
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
+        Ray2D ray = new Ray2D(mousePosition, Vector2.zero); 
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 2f);
+        
+        if (hit.collider != null)
+        {
+            var distance = Vector2.Distance(transform.position, hit.collider.transform.position);
+            if (distance < 2f)
+            {
+                IInteractable interactable = hit.collider.gameObject.GetComponent<IInteractable>();
+                if (interactable != null)
+                    interactable.Interact(this);
+            }
+        }
     }
 
     private void HandleMovement()

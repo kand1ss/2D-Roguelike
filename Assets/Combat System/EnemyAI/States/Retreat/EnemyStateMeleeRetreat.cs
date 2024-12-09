@@ -19,7 +19,7 @@ public class EnemyStateMeleeRetreat : FsmRetreatState
         if (!(DistanceToTarget < attackingStartDistance)) 
             return;
         
-        if(enemyAi is IEnemyWithWeapon enemyWeapon)
+        if(enemyAi is IHasWeapon enemyWeapon)
             enemyWeapon.WeaponController.UseChosenWeapon();
     }
 

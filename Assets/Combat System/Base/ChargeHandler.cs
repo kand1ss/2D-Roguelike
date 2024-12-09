@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-
+using Zenject;
 public class ChargeHandler : MonoBehaviour
 {
     private bool isCharging;
     public bool IsCharging => isCharging;
     
-    [SerializeField] private ActionProgressBar progressBar;
+    [Inject] private ActionProgressBar progressBar;
     
     public event UnityAction<float> OnChargeAttackStart;
     public event UnityAction OnChargeAttackStopped;

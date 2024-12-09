@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class PotionPlaceholder : MonoBehaviour
+public class PotionVisual : MonoBehaviour
 {
     private IPotionUser potionUser;
 

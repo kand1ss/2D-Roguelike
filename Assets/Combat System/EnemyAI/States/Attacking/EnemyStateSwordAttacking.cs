@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyStateSwordAttacking : FsmAttackingState
 {
-    private readonly IEnemyWithWeapon enemyWithWeapon;
+    private readonly IHasWeapon enemyWithWeapon;
     private readonly Sword enemySword;
     
     private int attackIndexPointer;
@@ -13,7 +13,7 @@ public class EnemyStateSwordAttacking : FsmAttackingState
     public EnemyStateSwordAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player) :
         base(enemyAI, stateMachine, player)
     {
-        enemyWithWeapon = enemyAI as IEnemyWithWeapon;
+        enemyWithWeapon = enemyAI as IHasWeapon;
         enemySword = enemyWithWeapon?.WeaponController.ChosenWeapon as Sword;
     }
 

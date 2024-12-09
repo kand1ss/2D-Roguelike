@@ -11,5 +11,8 @@ public class GameplaySceneInstaller : MonoInstaller
         Container.Bind<Player>()
             .FromInstance(player)
             .AsSingle();
+
+        // Container.BindInterfacesTo<WeaponFactory>()
+        //     .AsSingle();
     }
 }

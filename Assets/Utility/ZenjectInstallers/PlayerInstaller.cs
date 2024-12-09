@@ -17,15 +17,19 @@ public class PlayerInstaller : MonoInstaller
             .BindInterfacesAndSelfTo<Player>()
             .FromInstance(playerInstance)
             .AsSingle();
-    }
-
-    [Inject]
-    private void InitializeComponents()
-    {
-        weaponController = playerInstance.GetComponentInChildren<PlayerWeaponController>();
         
+        weaponController = playerInstance.GetComponentInChildren<PlayerWeaponController>();
         Container
             .BindInterfacesAndSelfTo<WeaponControllerBase>()
             .FromInstance(weaponController);
+        
+        var progressBar = playerInstance.GetComponentInChildren<ActionProgressBar>();
+        Container
+            .BindInterfacesAndSelfTo<ActionProgressBar>()
+            .FromInstance(progressBar);
+        
+        Container
+            .BindFactory<WeaponBase, Transform, WeaponBase, WeaponFactory>()
+            .FromFactory<WeaponFactory>();
     }
 }

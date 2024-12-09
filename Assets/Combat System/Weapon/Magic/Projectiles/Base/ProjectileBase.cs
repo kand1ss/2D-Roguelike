@@ -35,7 +35,6 @@ public class ProjectileBase : MonoBehaviour, IProjectileEvents
     }
     protected void ProjectileImpact()
     {
-        Debug.Log("Projectile impacted");
         OnProjectileImpact?.Invoke();
     }
     protected virtual void Start()

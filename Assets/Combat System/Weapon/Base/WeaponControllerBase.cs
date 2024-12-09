@@ -9,6 +9,9 @@ public abstract class WeaponControllerBase : MonoBehaviour, IWeaponController
 
     [SerializeField] protected WeaponBase chosenWeapon;
     public WeaponBase ChosenWeapon => chosenWeapon;
+
+    [Inject] private WeaponFactory _weaponFactory;
+    
     
     public void UseChosenWeapon() => ChosenWeapon.UseWeapon();
 
@@ -23,6 +26,29 @@ public abstract class WeaponControllerBase : MonoBehaviour, IWeaponController
     private void Update()
     {
         FollowDirection();
+    }
+
+    public void SetWeapon(WeaponBase newWeapon)
+    {
+        var weapon = _weaponFactory.Create(newWeapon, transform);
+        
+        if (this is PlayerWeaponController playerWeaponController)
+        {
+            if(chosenWeapon == playerWeaponController.firstWeapon)
+                playerWeaponController.SetFirstWeapon(weapon);
+            else 
+            if(chosenWeapon == playerWeaponController.secondWeapon)
+                playerWeaponController.SetSecondWeapon(weapon);
+            
+            playerWeaponController.DetachChosenWeapon();
+        }
+
+        if (chosenWeapon != null)
+            Destroy(ChosenWeapon.gameObject);
+
+        chosenWeapon = weapon;
+        if (this is PlayerWeaponController playerController)
+            playerController.AttachChosenWeapon();
     }
 
     private void FollowDirection()

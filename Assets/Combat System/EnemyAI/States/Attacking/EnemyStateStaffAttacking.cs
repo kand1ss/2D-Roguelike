@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class EnemyStateStaffAttacking : FsmAttackingState
 {
-    private IEnemyWithWeapon enemyWithWeapon;
-    private Staff enemyStaff;
+    private readonly Staff enemyStaff;
     
     public EnemyStateStaffAttacking(EnemyAI enemyAI, Fsm stateMachine, Player player) : base(enemyAI, stateMachine, player)
     {
-        enemyWithWeapon = enemyAI as IEnemyWithWeapon;
-        enemyStaff = enemyWithWeapon?.WeaponController.ChosenWeapon as Staff;
+        if(enemyAI is IHasWeapon enemyWithWeapon)
+            enemyStaff = enemyWithWeapon?.WeaponController.ChosenWeapon as Staff;
+        else
+            Debug.LogWarning("Not Has Weapon");
     }
 
     public override void Enter()
